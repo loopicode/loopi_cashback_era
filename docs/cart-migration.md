@@ -24,7 +24,7 @@ The router fetches fresh Shopify cart data and a Shopify-rendered metadata secti
 
 ## Configuration and deployment
 
-The Circuly checkout key is read from the theme setting `circuly_api_key`. Its value is intentionally not included in this commit: approval is needed before retaining the existing checkout key in GitHub configuration. Rental handoff shows a recoverable error until that value is configured. No new credentials were created. `loopi_cart_upsells` controls recommendations.
+The Circuly checkout key is read from the theme setting `circuly_api_key`. The existing browser checkout key is configured here with the merchant’s approval; it is no longer hardcoded in theme scripts. This browser integration renders the value to the storefront, so a theme setting is configurable rather than a secret vault. Use only the intended Circuly storefront checkout key. No new credentials were created. `loopi_cart_upsells` controls recommendations.
 
 Deploy through a GitHub pull request into `dev` and the existing Shopify GitHub integration. This change targets the existing unpublished `loopi_cashback_era/dev` theme, ID `201053864310`. No direct Shopify theme-file API writes are used. Publishing and main-branch updates are outside this change.
 
