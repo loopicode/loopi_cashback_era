@@ -49,7 +49,7 @@ Theme Check was run for all changed theme files using Shopify’s official valid
 
 ## Limits before production
 
-Circuly’s external create endpoint and mixed-basket totals still require a controlled end-to-end test. The router uses the create contract from Nick’s March cart migration. Preview checks reached Shopify checkout for a purchase-only basket and Circuly checkout for a rental-only basket at the correct CHF 9 monthly price. No payment or order was submitted.
+The router uses the create contract from Nick’s March cart migration. Preview checks reached Shopify checkout for a purchase-only basket and Circuly checkout for rental-only and mixed baskets. Payment completion and post-payment reconciliation remain untested; no payment or order was submitted.
 
 Shopify discounts are intentionally omitted from rental/mixed Circuly baskets at the merchant’s request. Those baskets display original prices and undiscounted totals in the drawer and cart page; purchase-only Shopify checkout retains the store’s normal discount behavior. Rental baskets containing custom line properties, gift cards or Shopify selling-plan allocations are explicitly blocked rather than silently losing unverified data. These require an agreed mapping before production use. Purchase-only baskets continue through normal Shopify checkout.
 
@@ -64,3 +64,15 @@ The old layout referenced the sticky control with a section-group tag although i
 Recommendation selectors are rounded, use compact rental/purchase labels, and show price separately. Colour or model qualifiers remain when needed to distinguish variants. Purchase duration fields are hidden. Recommendations scroll within a bounded region to keep cart items and the direct checkout button visible. The extra View cart action was removed from the drawer; the full cart page remains a fallback.
 
 The Circuly checkout currently defaults to English; forwarding storefront language still needs a supported integration setting. Shopify Pay remains disabled as configured by the merchant. Payment completion is outside these preview checks.
+
+## Browser check — 2026-10-14
+
+GitHub commit `b729c1743c062feb3d34b160e019aef6d1e0c577` synced to the existing unpublished dev theme. Shopify checksums matched the updated router, CSS, cart drawer, recommendation section and compact-label snippet.
+
+- Mixed basket: direct drawer checkout reached Circuly with one CHF 179 footmuff marked One-time and one CHF 9 cocoon marked monthly. Both quantities were 1; Total Due was CHF 188, matching the undiscounted drawer total. Shopify automatic discount was intentionally omitted.
+- Purchase cart line retained condition and colour, and omitted the minimum-duration option. Rental minimum duration remained visible.
+- Recommendation selectors had 24px rounded corners and compact labels. Selecting Sleepytroll `12m · Neu` updated its displayed price from CHF 17/month to CHF 11/month without adding an item.
+- Earlier preview checks confirmed purchase-only Shopify routing, rental-only Circuly routing, recommendation add and count updates, and sticky-to-main purchase variant synchronization with one successful addition.
+- All 17 standalone router tests passed. Official Theme Check passed the latest refinement files; the three existing layout script warnings/errors documented above remain baseline findings.
+
+No address, email or payment details were entered, no order was placed, Shopify Pay was not enabled, and the live theme was not published or changed. Two test items remain in this preview session for merchant review. Full localization, comprehensive responsive visual checks and payment completion remain on the checklist.
