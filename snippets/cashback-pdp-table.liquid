@@ -1,0 +1,51 @@
+{%- comment -%}
+  Rueckkaufwert-Tabelle fuer das Cashback-Akkordeon der Produktseite: Prozent UND CHF-Betrag, Basis = Neupreis bei loopi.
+  Aufruf in sections/collapsible-content.liquid (Zeile mit Haken "show_cashback_table"):
+  render 'cashback-pdp-table', block: block, product: product
+  Beschriftungen kommen aus den Block-Einstellungen (cb_table_*), damit sie im Customizer und in den Uebersetzungen pflegbar sind.
+{%- endcomment -%}
+{%- capture cb_data -%}{%- render 'cashback-pdp-data', product: product -%}{%- endcapture -%}
+{%- assign cb = cb_data | strip | split: '|' -%}
+{%- assign cb_price = cb[0] | plus: 0 -%}
+{%- if cb_price > 0 -%}
+  {{ 'cashback-pdp.css' | asset_url | stylesheet_tag }}
+  {%- assign pct_arr = cb[1] | split: ',' -%}
+  {%- assign boost_arr = cb[2] | split: ',' -%}
+  {%- assign cb_active = cb[3] | plus: 0 -%}
+  {%- assign col_labels = block.settings.cb_table_cols | split: '|' -%}
+  {%- assign row_labels = block.settings.cb_table_rows | split: '|' -%}
+  {%- capture price_fmt -%}{%- render 'cashback-chf', n: cb_price -%}{%- endcapture -%}
+  <div class="cb-pdp-table__wrap">
+    <table class="cb-pdp-table">
+      <thead>
+        <tr>
+          <th scope="col">{{ block.settings.cb_table_corner | escape }}</th>
+          {%- for c in (0..2) -%}<th scope="col">{{ col_labels[c] | strip | escape }}</th>{%- endfor -%}
+        </tr>
+      </thead>
+      <tbody>
+        {%- for r in (0..2) -%}
+          <tr>
+            <th scope="row">{{ row_labels[r] | strip | escape }}</th>
+            {%- for c in (0..2) -%}
+              {%- assign idx = r | times: 3 | plus: c -%}
+              {%- assign pct = pct_arr[idx] | plus: 0 -%}
+              {%- assign amt = cb_price | times: pct | divided_by: 100.0 | round -%}
+              {%- capture amt_fmt -%}{%- render 'cashback-chf', n: amt -%}{%- endcapture -%}
+              <td{% if boost_arr[idx] contains '1' %} class="is-boosted"{% endif %}>
+                <span class="cb-pdp-table__pct">{{ pct }} %</span>
+                <span class="cb-pdp-table__amt">CHF {{ amt_fmt }}</span>
+              </td>
+            {%- endfor -%}
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+  </div>
+  {%- if cb_active == 1 and block.settings.cb_table_promo != blank -%}
+    <p class="cb-pdp-table__promo">{{ block.settings.cb_table_promo | replace: '[date]', cb[4] | escape }}</p>
+  {%- endif -%}
+  {%- if block.settings.cb_table_note != blank -%}
+    <p class="cb-pdp-table__note">{{ block.settings.cb_table_note | replace: '[price]', price_fmt | escape }}</p>
+  {%- endif -%}
+{%- endif -%}

@@ -1,0 +1,515 @@
+{% doc %}
+  @prompt
+    Ich möchte eine "so funktioniert es" sektion erstellen mit nummerierung
+    
+    1. Betrag per TWINT oder IBAN einzahlen (ab CHF 900 gibt es CHF 100 Mehrwert dazu )
+    2. Adresse und email bei Zahlung angeben
+    3. loopi sendet die Geschenkkarte physisch oder Digital mit einem einmaligen CODE zu
+    4. Gutschein Verschenken
+    5. Die beschenkten können online oder im Loopi Lokal die Produkte ihrer Wahl beziehen, make the number of tiles variable so I can add or remove them
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-how-it-works-{{ ai_gen_id }} {
+    padding: {{ block.settings.padding_top }}px 20px {{ block.settings.padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-how-it-works-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.container_width }}px;
+    margin: 0 auto;
+  }
+
+  .ai-how-it-works-heading-{{ ai_gen_id }} {
+    text-align: {{ block.settings.heading_alignment }};
+    color: {{ block.settings.heading_color }};
+    font-size: {{ block.settings.heading_size }}px;
+    margin: 0 0 {{ block.settings.heading_spacing }}px;
+  }
+
+  .ai-how-it-works-steps-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: {{ block.settings.step_spacing }}px;
+    margin-top: {{ block.settings.steps_top_spacing }}px;
+  }
+
+  .ai-how-it-works-step-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.step_content_spacing }}px;
+    padding: {{ block.settings.step_padding }}px;
+    background-color: {{ block.settings.step_background_color }};
+    border-radius: {{ block.settings.step_border_radius }}px;
+    border: {{ block.settings.step_border_width }}px solid {{ block.settings.step_border_color }};
+  }
+
+  .ai-how-it-works-step-number-{{ ai_gen_id }} {
+    width: {{ block.settings.number_size }}px;
+    height: {{ block.settings.number_size }}px;
+    border-radius: 50%;
+    background-color: {{ block.settings.number_background_color }};
+    color: {{ block.settings.number_text_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: {{ block.settings.number_font_size }}px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .ai-how-it-works-step-title-{{ ai_gen_id }} {
+    color: {{ block.settings.step_title_color }};
+    font-size: {{ block.settings.step_title_size }}px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .ai-how-it-works-step-description-{{ ai_gen_id }} {
+    color: {{ block.settings.step_description_color }};
+    font-size: {{ block.settings.step_description_size }}px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-how-it-works-steps-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-how-it-works-heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.8);
+    }
+  }
+{% endstyle %}
+
+<div class="ai-how-it-works-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-how-it-works-container-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-how-it-works-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="ai-how-it-works-steps-{{ ai_gen_id }}">
+      {% assign step_count = 0 %}
+      {% for i in (1..10) %}
+        {% liquid
+          assign title_key = 'step_' | append: i | append: '_title'
+          assign description_key = 'step_' | append: i | append: '_description'
+          assign title = block.settings[title_key]
+          assign description = block.settings[description_key]
+        %}
+        
+        {% if title != blank %}
+          {% assign step_count = step_count | plus: 1 %}
+          <div class="ai-how-it-works-step-{{ ai_gen_id }}">
+            <div class="ai-how-it-works-step-number-{{ ai_gen_id }}">{{ step_count }}</div>
+            <h3 class="ai-how-it-works-step-title-{{ ai_gen_id }}">{{ title }}</h3>
+            {% if description != blank %}
+              <p class="ai-how-it-works-step-description-{{ ai_gen_id }}">{{ description }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "So funktioniert es",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Überschrift"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Überschrift",
+      "default": "So funktioniert es"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Schriftgröße",
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Ausrichtung",
+      "options": [
+        {
+          "value": "left",
+          "label": "Links"
+        },
+        {
+          "value": "center",
+          "label": "Zentriert"
+        },
+        {
+          "value": "right",
+          "label": "Rechts"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Farbe",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Abstand unten",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Schritt 1"
+    },
+    {
+      "type": "text",
+      "id": "step_1_title",
+      "label": "Titel",
+      "default": "Betrag einzahlen"
+    },
+    {
+      "type": "textarea",
+      "id": "step_1_description",
+      "label": "Beschreibung",
+      "default": "Betrag per TWINT oder IBAN einzahlen (ab CHF 900 gibt es CHF 100 Mehrwert dazu)"
+    },
+    {
+      "type": "header",
+      "content": "Schritt 2"
+    },
+    {
+      "type": "text",
+      "id": "step_2_title",
+      "label": "Titel",
+      "default": "Adresse angeben"
+    },
+    {
+      "type": "textarea",
+      "id": "step_2_description",
+      "label": "Beschreibung",
+      "default": "Adresse und E-Mail bei Zahlung angeben"
+    },
+    {
+      "type": "header",
+      "content": "Schritt 3"
+    },
+    {
+      "type": "text",
+      "id": "step_3_title",
+      "label": "Titel",
+      "default": "Geschenkkarte erhalten"
+    },
+    {
+      "type": "textarea",
+      "id": "step_3_description",
+      "label": "Beschreibung",
+      "default": "loopi sendet die Geschenkkarte physisch oder digital mit einem einmaligen CODE zu"
+    },
+    {
+      "type": "header",
+      "content": "Schritt 4"
+    },
+    {
+      "type": "text",
+      "id": "step_4_title",
+      "label": "Titel",
+      "default": "Gutschein verschenken"
+    },
+    {
+      "type": "textarea",
+      "id": "step_4_description",
+      "label": "Beschreibung"
+    },
+    {
+      "type": "header",
+      "content": "Schritt 5"
+    },
+    {
+      "type": "text",
+      "id": "step_5_title",
+      "label": "Titel",
+      "default": "Produkte beziehen"
+    },
+    {
+      "type": "textarea",
+      "id": "step_5_description",
+      "label": "Beschreibung",
+      "default": "Die Beschenkten können online oder im Loopi Lokal die Produkte ihrer Wahl beziehen"
+    },
+    {
+      "type": "header",
+      "content": "Schritt 6"
+    },
+    {
+      "type": "text",
+      "id": "step_6_title",
+      "label": "Titel"
+    },
+    {
+      "type": "textarea",
+      "id": "step_6_description",
+      "label": "Beschreibung"
+    },
+    {
+      "type": "header",
+      "content": "Schritt 7"
+    },
+    {
+      "type": "text",
+      "id": "step_7_title",
+      "label": "Titel"
+    },
+    {
+      "type": "textarea",
+      "id": "step_7_description",
+      "label": "Beschreibung"
+    },
+    {
+      "type": "header",
+      "content": "Schritt 8"
+    },
+    {
+      "type": "text",
+      "id": "step_8_title",
+      "label": "Titel"
+    },
+    {
+      "type": "textarea",
+      "id": "step_8_description",
+      "label": "Beschreibung"
+    },
+    {
+      "type": "header",
+      "content": "Schritt 9"
+    },
+    {
+      "type": "text",
+      "id": "step_9_title",
+      "label": "Titel"
+    },
+    {
+      "type": "textarea",
+      "id": "step_9_description",
+      "label": "Beschreibung"
+    },
+    {
+      "type": "header",
+      "content": "Schritt 10"
+    },
+    {
+      "type": "text",
+      "id": "step_10_title",
+      "label": "Titel"
+    },
+    {
+      "type": "textarea",
+      "id": "step_10_description",
+      "label": "Beschreibung"
+    },
+    {
+      "type": "header",
+      "content": "Schritt-Design"
+    },
+    {
+      "type": "range",
+      "id": "number_size",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Nummerngröße",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "number_font_size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Nummern-Schriftgröße",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "number_background_color",
+      "label": "Nummern-Hintergrund",
+      "default": "#F47045"
+    },
+    {
+      "type": "color",
+      "id": "number_text_color",
+      "label": "Nummern-Textfarbe",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "step_title_size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Titel-Schriftgröße",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "step_title_color",
+      "label": "Titel-Farbe",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "step_description_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Beschreibung-Schriftgröße",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "step_description_color",
+      "label": "Beschreibung-Farbe",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "step_padding",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Innenabstand",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "step_background_color",
+      "label": "Hintergrundfarbe",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "step_border_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Eckenradius",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "step_border_width",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "label": "Rahmenbreite",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "step_border_color",
+      "label": "Rahmenfarbe",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "range",
+      "id": "step_content_spacing",
+      "min": 5,
+      "max": 30,
+      "step": 5,
+      "unit": "px",
+      "label": "Inhaltsabstand",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 600,
+      "max": 1400,
+      "step": 50,
+      "unit": "px",
+      "label": "Container-Breite",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "step_spacing",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Abstand zwischen Schritten",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "steps_top_spacing",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Abstand oben",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding oben",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding unten",
+      "default": 50
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Hintergrundfarbe",
+      "default": "#f3f3f3"
+    }
+  ],
+  "presets": [
+    {
+      "name": "So funktioniert es"
+    }
+  ]
+}
+{% endschema %}

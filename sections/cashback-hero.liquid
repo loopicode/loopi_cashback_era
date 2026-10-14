@@ -1,0 +1,139 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+{{ 'loopi-type.css' | asset_url | stylesheet_tag }}
+
+{%- stylesheet -%}
+  .cb-hero { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+  @media screen and (min-width: 750px) {
+    .cb-hero--right { grid-template-columns: minmax(0, 1fr) minmax(0, var(--cb-img-w, 40%)); gap: 5rem; }
+    .cb-hero--left { grid-template-columns: minmax(0, var(--cb-img-w, 40%)) minmax(0, 1fr); gap: 5rem; }
+    .cb-hero--left .cb-hero__media { order: -1; }
+  }
+  @media screen and (max-width: 749px) { .cb-hero--img-first-mobile .cb-hero__media { order: -1; } }
+  .cb-hero__content { min-width: 0; align-self: center; }
+  .cb-hero__content--left { text-align: left; }
+  .cb-hero__content--center { text-align: center; }
+  .cb-hero__content--right { text-align: right; }
+  .cb-hero__text { margin-top: 2rem; }
+  .cb-hero__buttons { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 3rem; }
+  .cb-hero__content--center .cb-hero__buttons { justify-content: center; }
+  .cb-hero__content--right .cb-hero__buttons { justify-content: flex-end; }
+  .cb-hero__media { min-width: 0; align-self: var(--cb-img-valign, center); }
+  .cb-hero__img { display: block; width: 100%; height: auto; }
+  .cb-hero__frame { aspect-ratio: var(--cb-img-ratio, auto); overflow: hidden; border-radius: var(--media-radius); }
+  .cb-hero__frame .cb-hero__img { height: 100%; object-fit: cover; }
+  .cb-photo-placeholder { display: flex; align-items: center; justify-content: center; min-height: 24rem; height: 100%; padding: 2rem; text-align: center; font-size: 1.3rem; border: 1px dashed rgba(var(--color-foreground), 0.4); border-radius: var(--media-radius); color: rgba(var(--color-foreground), 0.7); }
+{%- endstylesheet -%}
+
+{%- liquid
+  assign cb_parts = section.settings.heading | split: ':'
+  assign cb_main = cb_parts[0] | strip
+  assign cb_sub = section.settings.heading | remove_first: cb_parts[0] | remove_first: ':' | strip
+  assign cb_s = section.settings.title_size | plus: 0
+  assign cb_ss = section.settings.subtitle_size | plus: 0
+  assign cb_has_image = false
+  if section.settings.image_position != 'none'
+    if section.settings.image != blank or request.design_mode
+      assign cb_has_image = true
+    endif
+  endif
+  assign cb_ratio = 'auto'
+  case section.settings.image_ratio
+    when 'square'
+      assign cb_ratio = '1 / 1'
+    when 'landscape'
+      assign cb_ratio = '4 / 3'
+    when 'portrait'
+      assign cb_ratio = '3 / 4'
+    when 'wide'
+      assign cb_ratio = '16 / 9'
+  endcase
+  assign cb_img_alt = section.settings.image.alt | default: cb_main
+-%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="cb-hero{% if cb_has_image %} cb-hero--{{ section.settings.image_position }}{% if section.settings.mobile_image_first %} cb-hero--img-first-mobile{% endif %}{% endif %}" style="--cb-img-w: {{ section.settings.image_width }}%; --cb-img-ratio: {{ cb_ratio }}; --cb-img-valign: {{ section.settings.image_valign }};">
+      <div class="cb-hero__content cb-hero__content--{{ section.settings.text_align }}">
+        {%- if cb_main != blank -%}
+          <h1 class="lp-h1" style="{% if cb_s > 0 %}--lp-size: {{ cb_s }}px; --lp-size-t: {{ cb_s | times: 0.85 | round }}px; --lp-size-m: {{ cb_s | times: 0.75 | round }}px;{% endif %}{% if cb_ss > 0 %}--lp-sub: {{ cb_ss }}px; --lp-sub-t: {{ cb_ss | times: 0.95 | round }}px; --lp-sub-m: {{ cb_ss | times: 0.9 | round }}px;{% endif %}">
+            {{- cb_main -}}
+            {%- if cb_sub != blank -%}<span class="lp-h1__sub">{{ cb_sub }}</span>{%- endif -%}
+          </h1>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="cb-hero__text lp-body rte">{{ section.settings.text }}</div>
+        {%- endif -%}
+        {%- if section.settings.button_label != blank or section.settings.button_label_2 != blank -%}
+          <div class="cb-hero__buttons">
+            {%- if section.settings.button_label != blank -%}
+              <a class="button button--primary" {% if section.settings.button_link != blank %}href="{{ section.settings.button_link }}"{% else %}role="link" aria-disabled="true"{% endif %}>{{ section.settings.button_label | escape }}</a>
+            {%- endif -%}
+            {%- if section.settings.button_label_2 != blank -%}
+              <a class="button button--secondary" {% if section.settings.button_link_2 != blank %}href="{{ section.settings.button_link_2 }}"{% else %}role="link" aria-disabled="true"{% endif %}>{{ section.settings.button_label_2 | escape }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+      {%- if cb_has_image -%}
+        <div class="cb-hero__media">
+          <div class="cb-hero__frame">
+            {%- if section.settings.image != blank -%}
+              {{ section.settings.image | image_url: width: 1400 | image_tag: class: 'cb-hero__img', alt: cb_img_alt, loading: 'eager', widths: '500, 800, 1100, 1400' }}
+            {%- else -%}
+              <div class="cb-photo-placeholder">Foto-Platz: Bild im Customizer unter &laquo;Image&raquo; auswählen</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cashback hero",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "header", "content": "Title (H1)" },
+    { "type": "text", "id": "heading", "label": "Title", "default": "Circular Cashback: Neu kaufen mit Rückkaufgarantie", "info": "Alles vor dem ersten Doppelpunkt ist der Titel, danach der Untertitel (wie auf den Produktseiten). Alles bleibt ein H1." },
+    { "type": "range", "id": "title_size", "label": "Title size (0 = standard)", "min": 0, "max": 72, "step": 1, "unit": "px", "default": 0, "info": "Standard: 40px Desktop, 34px Tablet, 30px Mobile." },
+    { "type": "range", "id": "subtitle_size", "label": "Subtitle size (0 = standard)", "min": 0, "max": 36, "step": 1, "unit": "px", "default": 0, "info": "Standard: 18px." },
+    { "type": "select", "id": "text_align", "label": "Text alignment", "default": "center",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ] },
+    { "type": "header", "content": "Text and buttons" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Du kaufst neu bei loopi und kannst das Produkt später an uns zurückgeben. Du bekommst einen Teil des Neupreises zurück, wir holen es gratis bei dir ab und das Produkt geht zurück in den Kreislauf. Zum Beispiel Kinderwagen, Veloanhänger und weitere Produkte, laufend mehr.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Produkte mit Circular Cashback ansehen" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "text", "id": "button_label_2", "label": "Second button label (optional)" },
+    { "type": "url", "id": "button_link_2", "label": "Second button link" },
+    { "type": "header", "content": "Image (optional)" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "select", "id": "image_position", "label": "Image position", "default": "none",
+      "options": [ { "value": "none", "label": "No image" }, { "value": "right", "label": "Right of text" }, { "value": "left", "label": "Left of text" } ] },
+    { "type": "range", "id": "image_width", "label": "Image width", "min": 20, "max": 70, "step": 5, "unit": "%", "default": 40 },
+    { "type": "select", "id": "image_ratio", "label": "Image shape", "default": "original",
+      "options": [ { "value": "original", "label": "Original" }, { "value": "square", "label": "Square 1:1" }, { "value": "landscape", "label": "Landscape 4:3" }, { "value": "portrait", "label": "Portrait 3:4" }, { "value": "wide", "label": "Wide 16:9" } ] },
+    { "type": "select", "id": "image_valign", "label": "Image vertical position", "default": "center",
+      "options": [ { "value": "start", "label": "Top" }, { "value": "center", "label": "Middle" }, { "value": "end", "label": "Bottom" } ] },
+    { "type": "checkbox", "id": "mobile_image_first", "label": "Image above text on mobile", "default": false },
+    { "type": "header", "content": "Layout" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 24 }
+  ],
+  "presets": [ { "name": "Cashback hero" } ]
+}
+{% endschema %}

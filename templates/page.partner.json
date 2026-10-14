@@ -1,0 +1,252 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_hero": {
+          "type": "heading",
+          "settings": {
+            "heading": "Unsere Partner und B2B-Projekte",
+            "heading_size": "h0"
+          }
+        },
+        "text_hero": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Kreislaufwirtschaft funktioniert nur gemeinsam. Diese Partner machen sie möglich.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_hero",
+        "text_hero"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 16
+      }
+    },
+    "awina": {
+      "type": "partner-feature",
+      "settings": {
+        "logo": "shopify://shop_images/awina-corporate.png",
+        "logo_width": 360,
+        "layout": "image_first",
+        "heading": "Awina",
+        "heading_size": "h1",
+        "text": "<p>Awina bietet ein echtes Rundum-Paket für Eltern, Kitas und Fachkräfte gleichermassen. Das Team hinter Awina macht die Kita-Suche für Eltern so einfach wie Online-Shopping. Kitas ermöglicht Awina durch ihre digitale Plattform mehr Sichtbarkeit und einen einfachen Weg mit Elternanfragen umzugehen. Über die Awina Jobplattform bringt Awina zudem Kitas und Fachkräfte zusammen und erleichtert so die Personalrekrutierung und Jobsuche in der kinderbetreuung.</p>",
+        "button_label": "Finde deine Kita mit Awina",
+        "button_link": "https://www.awina.ch",
+        "button_style_secondary": false,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "partner_feature_CFazRr": {
+      "type": "partner-feature",
+      "settings": {
+        "logo": "shopify://shop_images/Screenshot_2026-10-06_at_16.38.44.png",
+        "logo_width": 600,
+        "layout": "text_first",
+        "heading": "Kita-Klub",
+        "heading_size": "h1",
+        "text": "<p>Gemeinsam mit Awina-Partnerkitas macht loopi den Einstieg in ein nachhaltiges Mietmodell für Familien besonders einfach. Über ihre Kita profitieren sie von einem exklusiven Rabatt auf die Miete unseres Produktsortiments und haben so Zugang zu allen Vorteilen des loopi Angebots. Den Rabattcode gibt es direkt über die eigene Kita. Melde dich, falls deine Kita auch Interesse hat.</p>",
+        "button_label": "Ich will auch in den Kita-Klub",
+        "button_link": "mailto:hey@loopi.ch?subject=Kita-Klub%20Partnerschaft",
+        "button_style_secondary": false,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "kitas": {
+      "type": "partner-logos",
+      "blocks": {
+        "kita_kunterbunt": {
+          "type": "partner",
+          "settings": {
+            "logo": "shopify://shop_images/kita-villa-kunterbunt-logo.png",
+            "name": "Kita Villa Kunterbunt",
+            "subtitle": "Orpund BE",
+            "description": "Kindliche Neugier steht im Mittelpunkt – eine Kita als Abenteuerspielplatz.",
+            "note": "",
+            "link": "https://www.auneo.ch/",
+            "link_label": "Zur Website"
+          }
+        },
+        "kita_benken": {
+          "type": "partner",
+          "settings": {
+            "logo": "shopify://shop_images/kita-benken-logo.png",
+            "name": "Kita Benken",
+            "subtitle": "Benken SG",
+            "description": "Familienergänzende Kita und Lehrbetrieb mit Naturgarten.",
+            "note": "",
+            "link": "https://www.kita-benken.ch/",
+            "link_label": "Zur Website"
+          }
+        },
+        "kita_kiddieland": {
+          "type": "partner",
+          "settings": {
+            "logo": "shopify://shop_images/kiddieland-logo.png",
+            "name": "KiddieLand",
+            "subtitle": "Zürich ZH",
+            "description": "Zweisprachig (EN/DE), QualiKita-zertifiziert, mit Bio-Küche, zentral gelegen.",
+            "note": "",
+            "link": "https://kiddieland.ch/",
+            "link_label": "Zur Website"
+          }
+        },
+        "kita_chraeuel": {
+          "type": "partner",
+          "settings": {
+            "logo": "shopify://shop_images/kita-villa-chraeuel-logo.jpg",
+            "name": "Kita Villa Chräuel",
+            "subtitle": "Kollbrunn ZH",
+            "description": "Kleine, familiäre Kita mit grossem Garten und konstantem Team.",
+            "note": "",
+            "link": "https://xn--villa-chruel-ocb.ch/",
+            "link_label": "Zur Website"
+          }
+        },
+        "kita_tigerente": {
+          "type": "partner",
+          "settings": {
+            "logo": "shopify://shop_images/kita-tigerente-logo.png",
+            "name": "Kita TigerEnte",
+            "subtitle": "Wetzikon ZH",
+            "description": "Kinderwerkstatt, gemeinsames Kochen und der Wald vor der Tür.",
+            "note": "",
+            "link": "https://www.kita-tigerente.ch/",
+            "link_label": "Zur Website"
+          }
+        }
+      },
+      "block_order": [
+        "kita_kunterbunt",
+        "kita_benken",
+        "kita_kiddieland",
+        "kita_chraeuel",
+        "kita_tigerente"
+      ],
+      "settings": {
+        "heading": "Kita-Partner",
+        "heading_size": "h2",
+        "text": "<p>Diese Kitas gehören bereits zum Kita-Klub — und profitieren gemeinsam mit ihren Familien vom Angebot.</p>",
+        "columns_desktop": 3,
+        "logo_height": 110,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "lieferanten": {
+      "type": "partner-logos",
+      "blocks": {
+        "lieferant_post": {
+          "type": "partner",
+          "settings": {
+            "logo": "shopify://shop_images/schweizer-post-logo.png",
+            "name": "Schweizer Post",
+            "subtitle": "Kreislauflogistik-Partner",
+            "description": "Ermöglicht loopi eine zuverlässige Zustellung und Abholung der Produkte – damit es für unsere Kundinnen und Kunden möglichst einfach ist. Lieferung und Rücksendung sind bei loopi grundsätzlich inklusive.",
+            "note": "Ausnahmen sind möglich, z. B. bei der Rücksendung eines Produkts in der Probezeit.",
+            "link": "https://www.post.ch/de/geschaeftsloesungen/kreislaufwirtschaft",
+            "link_label": "Zur Website"
+          }
+        },
+        "lieferant_bugaboo": {
+          "type": "partner",
+          "settings": {
+            "logo": "shopify://shop_images/bugaboo-logo-black.png",
+            "name": "Bugaboo",
+            "subtitle": "Exklusiver Mietpartner in der Schweiz",
+            "description": "Unser Premium-Kinderwagen-Partner erster Wahl. Die enge Zusammenarbeit mit Bugaboo ermöglicht es uns Familien einen nachhaltigen und flexiblen Zugang zur Familienmobilität zu gewährleisten und höchste Qualität sicherzustellen.",
+            "note": "",
+            "link": "https://www.bugaboo.com/ch-de",
+            "link_label": "Zur Website"
+          }
+        }
+      },
+      "block_order": [
+        "lieferant_post",
+        "lieferant_bugaboo"
+      ],
+      "settings": {
+        "heading": "Unsere Lieferanten",
+        "heading_size": "h1",
+        "text": "",
+        "columns_desktop": 2,
+        "logo_height": 110,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "cta": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_cta": {
+          "type": "heading",
+          "settings": {
+            "heading": "Partner werden?",
+            "heading_size": "h1"
+          }
+        },
+        "text_cta": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Interesse an einer Partnerschaft mit loopi? Schreib uns.</p>"
+          }
+        },
+        "button_cta": {
+          "type": "button",
+          "settings": {
+            "button_label": "Partnerschaft anfragen",
+            "button_link": "mailto:hey@loopi.ch?subject=loopi%20Partnerschaft",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_cta",
+        "text_cta",
+        "button_cta"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 28,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "awina",
+    "partner_feature_CFazRr",
+    "kitas",
+    "lieferanten",
+    "cta"
+  ]
+}

@@ -1,0 +1,62 @@
+/* loopi Typografie-Standard v2 (2026-10-10). Vorerst von den Cashback-Sections genutzt, dazu Kern-Ueberschriften nur auf der Cashback-Seite. Gilt spaeter sitewide (nach Freigabe). */
+:root { --lp-green: #97A74D; --lp-green-dark: #5C6B4D; --lp-green-tint: #F0F2E6; --lp-grey: #646464; --lp-whatsapp: #25D366; }
+
+/* H1 = Seitentitel (einmal pro Seite). Untertitel nach dem Doppelpunkt in .lp-h1__sub */
+.lp-h1.lp-h1 { font-size: var(--lp-size, 44px) !important; font-weight: 700 !important; line-height: 1.2 !important; letter-spacing: 0 !important; margin: 0 !important; }
+.lp-h1__sub { display: block; margin-top: 0.5em; font-size: var(--lp-sub, 18px); font-weight: 400; line-height: 1.3; color: var(--lp-grey); }
+/* H2 = Section-Titel */
+.lp-h2.lp-h2 { font-size: var(--lp-size, 34px) !important; font-weight: 700 !important; line-height: 1.25 !important; letter-spacing: 0 !important; margin: 0 !important; }
+/* H3 = Unterblock-Titel */
+.lp-h3.lp-h3 { font-size: var(--lp-size, 24px) !important; font-weight: 600 !important; line-height: 1.3 !important; letter-spacing: 0 !important; margin: 0 !important; }
+/* Item-Titel (Icon-Listen, Karten) */
+.lp-item-title.lp-item-title { font-size: 18px !important; font-weight: 700 !important; line-height: 1.3 !important; letter-spacing: 0 !important; margin: 0 !important; }
+/* Fliesstext */
+.lp-body { font-size: 16px; line-height: 1.8; color: rgba(var(--color-foreground), 0.75); }
+.lp-body p { margin: 0 0 1em; }
+.lp-body > *:last-child { margin-bottom: 0; }
+
+@media (max-width: 1024px) {
+  .lp-h1.lp-h1 { font-size: var(--lp-size-t, 36px) !important; }
+  .lp-h1__sub { font-size: var(--lp-sub-t, 17px); }
+  .lp-h2.lp-h2 { font-size: var(--lp-size-t, 30px) !important; }
+  .lp-h3.lp-h3 { font-size: var(--lp-size-t, 22px) !important; }
+}
+@media (max-width: 480px) {
+  .lp-h1.lp-h1 { font-size: var(--lp-size-m, 30px) !important; }
+  .lp-h1__sub { font-size: var(--lp-sub-m, 16px); }
+  .lp-h2.lp-h2 { font-size: var(--lp-size-m, 26px) !important; }
+  .lp-h3.lp-h3 { font-size: var(--lp-size-m, 20px) !important; }
+}
+
+/* gemeinsamer Section-Kopf */
+.lp-head { margin-bottom: 3.2rem; }
+.lp-head--left { text-align: left; }
+.lp-head--center { text-align: center; }
+.lp-head--right { text-align: right; }
+.lp-head .lp-body { margin-top: 1.2rem; }
+
+/* Kern-Ueberschriften (Customizer "Heading size") nur auf der Cashback-Seite */
+body:has(.cb-hero) .h0.h0 { font-size: 44px !important; font-weight: 700 !important; line-height: 1.2 !important; }
+body:has(.cb-hero) .h1.h1 { font-size: 34px !important; font-weight: 700 !important; line-height: 1.25 !important; }
+body:has(.cb-hero) .h2.h2 { font-size: 24px !important; font-weight: 600 !important; line-height: 1.3 !important; }
+@media (max-width: 1024px) {
+  body:has(.cb-hero) .h0.h0 { font-size: 36px !important; }
+  body:has(.cb-hero) .h1.h1 { font-size: 30px !important; }
+  body:has(.cb-hero) .h2.h2 { font-size: 22px !important; }
+}
+@media (max-width: 480px) {
+  body:has(.cb-hero) .h0.h0 { font-size: 30px !important; }
+  body:has(.cb-hero) .h1.h1 { font-size: 26px !important; }
+  body:has(.cb-hero) .h2.h2 { font-size: 20px !important; }
+}
+
+/* Cashback-Seite: Kacheln, 6px Radius (AE1) */
+body:has(.cb-hero) [id$="__benefits"] .cb-il__item { background:#fff !important; padding:24px !important; border-radius:6px !important; }
+body:has(.cb-hero) [id$="__steps"] .cb-il__item { background:#f3f3f3 !important; padding:24px !important; border-radius:6px !important; }
+body:has(.cb-hero) [id$="__promo_table"], body:has(.cb-hero) [id$="__table"], body:has(.cb-hero) [id$="__promo_table"] > .gradient, body:has(.cb-hero) [id$="__table"] > .gradient { background:#F0F2E6 !important; }
+body:has(.cb-hero) [id$="__table"] .cb-table__wrap { background:#fff !important; border-radius:6px !important; padding:16px !important; }
+body:has(.cb-hero) [id$="__conditions"] .cb-cond__card { background:#f3f3f3 !important; border:0 !important; border-radius:6px !important; }
+body:has(.cb-hero) [id$="__conditions"] .cb-cond__tips { background:#f3f3f3 !important; border-radius:6px !important; padding:24px !important; }
+body:has(.cb-hero) [id$="__terms"] .rich-text__blocks { background:#f3f3f3 !important; border-radius:6px !important; padding:24px !important; }
+body:has(.cb-hero) [id$="__inspiration"] .cb-insp__card { border-radius:6px !important; }
+body:has(.cb-hero) [id$="__faq"] details { background:#fff !important; border:0 !important; border-radius:6px !important; padding:0 16px !important; margin-bottom:8px !important; }

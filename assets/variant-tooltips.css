@@ -1,0 +1,288 @@
+/**
+ * Variant option tooltips – Condition / Rental period info icons.
+ * Icon + content are rendered by snippets/variant-tooltip-icon.liquid;
+ * this file only styles them. Click-to-open modal behaviour is in variant-tooltips.js.
+ *
+ * Typographic system shared between the desktop hover bubble
+ * (.variant-tooltip-desktop) and the modal (.variant-tooltip-modal-text),
+ * so the same content looks the same wherever it renders:
+ * Tier 0 (h1, 21px) > Tier 1 (h2 + metafield "label" paragraphs, 18px)
+ * > Tier 2 (h3/h4, 16px) > Tier 3 (body text, 14px).
+ * Spacing rule: every block sets only its own bottom margin (top always 0) —
+ * 4px after a heading/label, 16px after body text, 0 on the last child.
+ *
+ * IMPORTANT: the "label paragraph" boost (p:has(> strong:only-child)) is
+ * scoped to .variant-tooltip-desktop and .variant-tooltip-modal-mobile-only
+ * ONLY — never to the general .variant-tooltip-modal-text. Reason: CSS
+ * :only-child ignores surrounding text nodes, so it would also match any
+ * ordinary Page paragraph that happens to contain exactly one inline
+ * <strong> for emphasis (e.g. "...gelangen als **pre-loved** in die
+ * Miete...") — wrongly blowing it up to label size. The metafield-sourced
+ * blocks (bubble + .variant-tooltip-modal-mobile-only) are safe because we
+ * fully control their structure: label paragraphs there are ALWAYS just
+ * <p><strong>Label</strong></p> with nothing else.
+ */
+
+.variant-tooltip-desktop strong,
+.variant-tooltip-modal-text strong {
+  font-weight: bold;
+}
+
+.variant-tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-left: 6px;
+}
+
+.variant-tooltip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #F47045;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: italic;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.variant-tooltip-icon:hover,
+.variant-tooltip-icon:focus-visible {
+  transform: scale(1.12);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.22);
+}
+
+.variant-tooltip-icon:focus-visible {
+  outline: 2px solid #c85a34;
+  outline-offset: 2px;
+}
+
+.variant-tooltip-icon::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1.5px solid #F47045;
+  opacity: 0.6;
+  animation: variant-tooltip-pulse 5s ease-out infinite;
+}
+
+@keyframes variant-tooltip-pulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.55;
+  }
+  25% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .variant-tooltip-icon::before {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+.variant-tooltip-desktop {
+  display: none;
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 300px;
+  padding: 14px;
+  background: #666;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+  white-space: normal;
+  word-wrap: break-word;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+}
+
+.variant-tooltip-wrapper:hover .variant-tooltip-desktop {
+  display: block;
+}
+
+.variant-tooltip-desktop p,
+.variant-tooltip-modal-text p {
+  margin: 0 0 16px;
+}
+
+.variant-tooltip-desktop p:has(> strong:only-child),
+.variant-tooltip-modal-mobile-only p:has(> strong:only-child) {
+  font-size: 18px;
+  margin: 0 0 4px;
+}
+
+.variant-tooltip-desktop p:last-child,
+.variant-tooltip-modal-text p:last-child {
+  margin-bottom: 0;
+}
+
+.variant-tooltip-desktop ul,
+.variant-tooltip-desktop ol,
+.variant-tooltip-modal-text ul,
+.variant-tooltip-modal-text ol {
+  margin: 0 0 16px;
+  padding-left: 20px;
+}
+
+.variant-tooltip-desktop ul:last-child,
+.variant-tooltip-desktop ol:last-child,
+.variant-tooltip-modal-text ul:last-child,
+.variant-tooltip-modal-text ol:last-child {
+  margin-bottom: 0;
+}
+
+.variant-tooltip-desktop li,
+.variant-tooltip-modal-text li {
+  margin-bottom: 4px;
+}
+
+.variant-tooltip-cta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffab85;
+  cursor: pointer;
+}
+
+.variant-tooltip-cta:focus-visible {
+  outline: 2px solid #ffab85;
+  outline-offset: 2px;
+}
+
+.variant-tooltip-cta-arrow {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.variant-tooltip-wrapper:hover .variant-tooltip-cta-arrow {
+  transform: translateX(3px);
+}
+
+.variant-tooltip-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+}
+
+.variant-tooltip-modal.is-open {
+  display: flex;
+}
+
+.variant-tooltip-modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 80%;
+  padding: 24px;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.variant-tooltip-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 0;
+  font-size: 28px;
+  font-weight: normal;
+  line-height: 1;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.variant-tooltip-modal-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.variant-tooltip-modal-mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .variant-tooltip-modal-mobile-only {
+    display: block;
+  }
+}
+
+.variant-tooltip-divider {
+  border: none;
+  border-top: 1px solid #e5e5e5;
+  margin: 16px 0;
+}
+
+.variant-tooltip-modal-text h1 {
+  font-size: 21px !important;
+  font-weight: bold !important;
+  line-height: 1.3 !important;
+  margin: 0 0 4px !important;
+}
+
+.variant-tooltip-modal-text h2 {
+  font-size: 18px !important;
+  font-weight: bold !important;
+  line-height: 1.3 !important;
+  margin: 0 0 4px !important;
+}
+
+.variant-tooltip-modal-text h3,
+.variant-tooltip-modal-text h4 {
+  font-size: 16px !important;
+  font-weight: bold !important;
+  line-height: 1.3 !important;
+  margin: 0 0 4px !important;
+}
+
+.variant-tooltip-modal-text a {
+  color: #F47045;
+  text-decoration: underline;
+}
+
+.variant-tooltip-modal-text a:hover {
+  color: #c85a34;
+}
+
+.variant-tooltip-modal-text img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 12px 0;
+}
+
+@media (max-width: 768px) {
+  .variant-tooltip-wrapper:hover .variant-tooltip-desktop {
+    display: none;
+  }
+}

@@ -1,0 +1,50 @@
+{%- comment -%}
+  Icon-Bibliothek fuer Circular-Cashback-Sections. Zeigt die loopi-Icons aus dem Design-System (assets/loopi-icon-*.svg).
+  Farbe = currentColor (kommt aus der Section, z. B. icon_color). Aufruf: render 'cashback-icon', name: 'space', size: 100
+  Namen: space, time, money, leaf, recycle, truck, shield, camera, chat, mail, check, search, cart, calendar, gift, star
+{%- endcomment -%}
+{%- stylesheet -%}
+  .cb-icon { display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; vertical-align: middle; }
+  .cb-icon svg { width: 100%; height: 100%; display: block; }
+{%- endstylesheet -%}
+{%- liquid
+  assign cb_icon_size = size | default: 28
+  case name
+    when 'space'
+      assign cb_file = 'haus'
+    when 'time'
+      assign cb_file = 'uhr'
+    when 'money'
+      assign cb_file = 'muenze'
+    when 'leaf'
+      assign cb_file = 'blatt'
+    when 'recycle'
+      assign cb_file = 'kreislauf'
+    when 'truck'
+      assign cb_file = 'lkw'
+    when 'shield'
+      assign cb_file = 'schild'
+    when 'camera'
+      assign cb_file = 'kamera'
+    when 'chat'
+      assign cb_file = 'chat'
+    when 'mail'
+      assign cb_file = 'email'
+    when 'check'
+      assign cb_file = 'haken'
+    when 'search'
+      assign cb_file = 'lupe'
+    when 'cart'
+      assign cb_file = 'tasche'
+    when 'calendar'
+      assign cb_file = 'kalender'
+    when 'gift'
+      assign cb_file = 'geschenk'
+    when 'star'
+      assign cb_file = 'stern'
+    else
+      assign cb_file = 'haken'
+  endcase
+  assign cb_path = 'loopi-icon-' | append: cb_file | append: '.svg'
+-%}
+<span class="cb-icon" style="width: {{ cb_icon_size }}px; height: {{ cb_icon_size }}px;" aria-hidden="true">{{ cb_path | inline_asset_content }}</span>

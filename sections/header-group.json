@@ -1,0 +1,295 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement_nrmkzq": {
+          "type": "announcement",
+          "settings": {
+            "text": "Swiss Made 🇨🇭 Kreislaufwirtschaft | Easy Abo mit TWINT | Gratis Versand! | angenehme Monatspreise | 5-Sterne bei Google",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "announcement_nrmkzq"
+      ],
+      "custom_css": [],
+      "settings": {
+        "color_scheme": "scheme-5",
+        "show_line_separator": true,
+        "show_social": false,
+        "auto_rotate": true,
+        "change_slides_speed": 3,
+        "enable_country_selector": false,
+        "enable_language_selector": true
+      }
+    },
+    "1772140546508b67b8": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_442903e_G4qK3t": {
+          "type": "ai_gen_block_442903e",
+          "settings": {
+            "background_color": "#e0e0e0",
+            "text_color": "#121212",
+            "font_size": 12,
+            "icon_size": 12,
+            "show_location": true,
+            "location_text": "Shop in Zug",
+            "show_location_modal": true,
+            "location_modal_title": "Our location",
+            "google_maps_embed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2189.3012179761868!2d8.515774075609151!3d47.179225971153805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48ca27cc99317041%3A0xad7a616123f8aa12!2sloopi%20business%20gmbh!5e1!3m2!1sen!2sch!4v1772140983526!5m2!1sen!2sch\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "map_height": 400,
+            "show_phone": false,
+            "phone_number": "+41 41 539 11 91",
+            "show_whatsapp": false,
+            "whatsapp_number": "+41772928109",
+            "whatsapp_label": "WhatsApp",
+            "show_hours": true,
+            "hours_label": "Öffnungszeiten",
+            "hours_modal_title": "Öffnungszeiten",
+            "monday_label": "Monday",
+            "monday_hours": "10:00 - 17:00",
+            "tuesday_label": "Tuesday",
+            "tuesday_hours": "10:00 - 17:00",
+            "wednesday_label": "Wednesday",
+            "wednesday_hours": "10:00 - 17:00",
+            "thursday_label": "Thursday",
+            "thursday_hours": "12:00 - 17:00",
+            "friday_label": "Friday",
+            "friday_hours": "10:00 - 17:00",
+            "saturday_label": "Saturday",
+            "saturday_hours": "Closed",
+            "sunday_label": "Sunday",
+            "sunday_hours": "Closed",
+            "modal_background_color": "#ffffff",
+            "modal_text_color": "#121212"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_442903e_G4qK3t"
+      ],
+      "settings": {}
+    },
+    "176546045526983e4b": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_fc12cde_amjkcg": {
+          "type": "ai_gen_block_fc12cde",
+          "disabled": true,
+          "settings": {
+            "container_width": 1200,
+            "alignment": "center",
+            "vertical_padding": 6,
+            "item_spacing": 24,
+            "background_color": "#f3f3f3",
+            "text_color": "#121212",
+            "link_background_color": "#ffffff",
+            "text_hover_color": "#ffffff",
+            "hover_background_color": "#F47045",
+            "highlight_background_color": "#F47045",
+            "highlight_text_color": "#ffffff",
+            "highlight_hover_background_color": "#121212",
+            "highlight_hover_text_color": "#ffffff",
+            "font_size": 14,
+            "font_weight": "500",
+            "emoji_size": 18,
+            "link_padding_vertical": 8,
+            "link_padding_horizontal": 16,
+            "link_border_radius": 40,
+            "border_thickness": 1,
+            "border_color": "#e0e0e0",
+            "entry_1_enabled": true,
+            "entry_1_type": "page",
+            "entry_1_collection": "",
+            "entry_1_page": "loopi-wertgutscheine-zugang-schenken-fur-familie-und-freunde",
+            "entry_1_label": "Gutscheine",
+            "entry_1_emoji": "🎄",
+            "entry_1_highlight": false,
+            "entry_2_enabled": true,
+            "entry_2_type": "collection",
+            "entry_2_collection": "alle-kinderwagen",
+            "entry_2_page": "",
+            "entry_2_label": "Kinderwagen",
+            "entry_2_emoji": "💎",
+            "entry_2_highlight": false,
+            "entry_3_enabled": false,
+            "entry_3_type": "page",
+            "entry_3_collection": "",
+            "entry_3_page": "loopi-guide-flexibles-angebot-finden",
+            "entry_3_label": "Mieten? Kaufen?",
+            "entry_3_emoji": "⭐️",
+            "entry_3_highlight": false,
+            "entry_4_enabled": false,
+            "entry_4_type": "collection",
+            "entry_4_collection": "",
+            "entry_4_page": "",
+            "entry_4_label": "",
+            "entry_4_emoji": "",
+            "entry_4_highlight": false,
+            "entry_5_enabled": false,
+            "entry_5_type": "collection",
+            "entry_5_collection": "",
+            "entry_5_page": "",
+            "entry_5_label": "",
+            "entry_5_emoji": "",
+            "entry_5_highlight": false
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_fc12cde_amjkcg"
+      ],
+      "settings": {}
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "product_product_LVe3ng": {
+          "type": "product_product",
+          "settings": {
+            "product": "bugaboo-donkey-5-duo-der-geschwisterwagen"
+          }
+        },
+        "product_product_WN3H8B": {
+          "type": "product_product",
+          "settings": {
+            "product": "membantu-federwiege-set"
+          }
+        },
+        "product_product_A9MjYc": {
+          "type": "product_product",
+          "settings": {
+            "product": "thule-urban-glide-3-jogging-kinderwagen"
+          }
+        },
+        "product_product_xLqT6X": {
+          "type": "product_product",
+          "settings": {
+            "product": "thule-chariot-sport-2-veloanhanger"
+          }
+        },
+        "image_product_nErhVK": {
+          "type": "image_product",
+          "settings": {
+            "mega_order": "1",
+            "image": "shopify://shop_images/loopi_Kinderwagen_Bugaboo_Donkey_Kinderwagen_Vater_Kind_Baby.jpg",
+            "button_label": "Produkte endecken",
+            "button_link": "shopify://collections/alle-kinderwagen",
+            "btn_bg_color": "#F47045",
+            "btn_text_color": "#ffffff"
+          }
+        },
+        "image_product_9JjNtd": {
+          "type": "image_product",
+          "settings": {
+            "mega_order": "3",
+            "image": "shopify://shop_images/loopi_Velo-Anhaenger_Thule_Chariot_Cab_Mutter_und_Kind_velofahrer.jpg",
+            "button_label": "Produkte endecken",
+            "button_link": "shopify://collections/velo-anhanger",
+            "btn_bg_color": "#F47045",
+            "btn_text_color": "#ffffff"
+          }
+        },
+        "image_product_eYNaNx": {
+          "type": "image_product",
+          "settings": {
+            "mega_order": "4",
+            "image": "shopify://shop_images/loopi_Fedewiegen_Membantu_Federwiege_wohnraum_mit_familie.jpg",
+            "button_label": "Produkte endecken",
+            "button_link": "shopify://collections/babybett",
+            "btn_bg_color": "#F47045",
+            "btn_text_color": "#ffffff"
+          }
+        },
+        "image_product_RVYCcW": {
+          "type": "image_product",
+          "settings": {
+            "mega_order": "5",
+            "image": "shopify://shop_images/loopi_Zubehoer_Bugaboo_Performance_Footmuff_mit_kind.jpg",
+            "button_label": "Produkte endecken",
+            "button_link": "shopify://collections/zubehoer",
+            "btn_bg_color": "#F47045",
+            "btn_text_color": "#ffffff"
+          }
+        },
+        "image_product_gENcmx": {
+          "type": "image_product",
+          "settings": {
+            "mega_order": "8",
+            "image": "shopify://shop_images/loopi_Wohnen_Bugaboo_Giraffe_kinderstuhle_mit_Familie.jpg",
+            "button_label": "Produkte endecken",
+            "button_link": "shopify://collections/wohnen",
+            "btn_bg_color": "#F47045",
+            "btn_text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "product_product_LVe3ng",
+        "product_product_WN3H8B",
+        "product_product_A9MjYc",
+        "product_product_xLqT6X",
+        "image_product_nErhVK",
+        "image_product_9JjNtd",
+        "image_product_eYNaNx",
+        "image_product_RVYCcW",
+        "image_product_gENcmx"
+      ],
+      "settings": {
+        "logo_position": "middle-center",
+        "menu": "main-menu-v2",
+        "rider_menu": "rider",
+        "menu_type_desktop": "drawer",
+        "sticky_header_type": "on-scroll-up",
+        "show_line_separator": true,
+        "color_scheme": "scheme-1",
+        "menu_color_scheme": "scheme-1",
+        "enable_country_selector": false,
+        "enable_language_selector": true,
+        "enable_customer_avatar": false,
+        "mobile_logo_position": "center",
+        "margin_bottom": 0,
+        "padding_top": 4,
+        "padding_bottom": 4
+      }
+    },
+    "breadcrumb_ewPxQW": {
+      "type": "breadcrumb",
+      "settings": {
+        "breadcrumbs_home_icon_bool": false,
+        "breadcrumb_delimeter": "angle_right",
+        "breadcrumb_bg_color": "#ffffff",
+        "breadcrumb_text_color": "#121212",
+        "breadcrumb_accent_color_bool": true,
+        "breadcrumb_accent_color": "#121212",
+        "enable_product_page": true,
+        "enable_collection_page": true,
+        "enable_complete_site": false,
+        "nav_menu_handle": "main-menu-v2"
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "1772140546508b67b8",
+    "176546045526983e4b",
+    "header",
+    "breadcrumb_ewPxQW"
+  ]
+}

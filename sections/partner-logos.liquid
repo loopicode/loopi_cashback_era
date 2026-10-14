@@ -1,0 +1,99 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- stylesheet -%}
+  .partner-logos__header { text-align: center; margin-bottom: 3.2rem; }
+  .partner-logos__grid { display: grid; grid-template-columns: 1fr; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+  @media screen and (min-width: 750px) { .partner-logos__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media screen and (min-width: 990px) { .partner-logos__grid { grid-template-columns: repeat(var(--partner-columns, 3), 1fr); } }
+  .partner-card__inner { display: flex; flex-direction: column; height: 100%; padding: 2.4rem; color: inherit; text-decoration: none; border: 1px solid rgba(var(--color-foreground), 0.1); border-radius: var(--text-boxes-radius); }
+  a.partner-card__inner:hover { border-color: rgba(var(--color-foreground), 0.4); }
+  .partner-card__logo { display: block; width: 100%; height: var(--partner-logo-height, 110px); object-fit: contain; margin-bottom: 2rem; }
+  .partner-card__name { margin: 0; }
+  .partner-card__subtitle { margin: 0.4rem 0 0; }
+  .partner-card__text { margin: 1.2rem 0 0; }
+  .partner-card__note { margin: 1rem 0 0; font-size: 1.2rem; line-height: 1.4; opacity: 0.7; }
+  .partner-card__cta { margin-top: 1.6rem; }
+  .partner-card__text + .partner-card__cta,
+  .partner-card__note + .partner-card__cta { margin-top: auto; padding-top: 1.6rem; }
+{%- endstylesheet -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding" style="--partner-columns: {{ section.settings.columns_desktop }}; --partner-logo-height: {{ section.settings.logo_height }}px;">
+    {%- if section.settings.heading != blank or section.settings.text != blank -%}
+      <div class="partner-logos__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="inline-richtext {{ section.settings.heading_size }}">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="rte">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    <ul class="partner-logos__grid" role="list">
+      {%- for block in section.blocks -%}
+        <li class="partner-card" {{ block.shopify_attributes }}>
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="partner-card__inner" target="_blank" rel="noopener">
+          {%- else -%}
+            <div class="partner-card__inner">
+          {%- endif -%}
+            {%- if block.settings.logo != blank -%}
+              {{ block.settings.logo | image_url: width: 600 | image_tag: class: 'partner-card__logo', alt: block.settings.name, loading: 'lazy', widths: '200, 400, 600' }}
+            {%- endif -%}
+            {%- if block.settings.name != blank -%}<h3 class="partner-card__name h4">{{ block.settings.name | escape }}</h3>{%- endif -%}
+            {%- if block.settings.subtitle != blank -%}<p class="partner-card__subtitle caption-with-letter-spacing">{{ block.settings.subtitle | escape }}</p>{%- endif -%}
+            {%- if block.settings.description != blank -%}<p class="partner-card__text">{{ block.settings.description | escape }}</p>{%- endif -%}
+            {%- if block.settings.note != blank -%}<p class="partner-card__note">{{ block.settings.note | escape }}</p>{%- endif -%}
+            {%- if block.settings.link != blank and block.settings.link_label != blank -%}
+              <span class="partner-card__cta link animate-arrow">{{ block.settings.link_label | escape }}<span class="svg-wrapper"><span class="icon-wrap">&nbsp;{{ 'icon-arrow.svg' | inline_asset_content }}</span></span></span>
+            {%- endif -%}
+          {%- if block.settings.link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Partner logos",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Unsere Partner" },
+    { "type": "select", "id": "heading_size", "label": "Heading size", "default": "h1",
+      "options": [ { "value": "h2", "label": "Medium" }, { "value": "h1", "label": "Large" }, { "value": "h0", "label": "Extra large" } ] },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "range", "id": "columns_desktop", "label": "Columns on desktop", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "range", "id": "logo_height", "label": "Logo height", "min": 60, "max": 200, "step": 10, "unit": "px", "default": 110 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 }
+  ],
+  "blocks": [
+    { "type": "partner", "name": "Partner", "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo" },
+      { "type": "text", "id": "name", "label": "Name" },
+      { "type": "text", "id": "subtitle", "label": "Subtitle (e.g. location)" },
+      { "type": "textarea", "id": "description", "label": "Short description" },
+      { "type": "textarea", "id": "note", "label": "Small print (optional)" },
+      { "type": "url", "id": "link", "label": "Link" },
+      { "type": "text", "id": "link_label", "label": "Link label", "default": "Zur Website" }
+    ] }
+  ],
+  "presets": [ { "name": "Partner logos", "blocks": [ { "type": "partner" }, { "type": "partner" }, { "type": "partner" } ] } ]
+}
+{% endschema %}

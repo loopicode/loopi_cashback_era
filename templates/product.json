@@ -1,0 +1,528 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "custom_liquid_ntNHci": {
+          "type": "custom_liquid",
+          "name": "Custom Liquid_title-format",
+          "settings": {
+            "custom_liquid": "<style>\n.product h1, h1.product-title, .product__title, .main-product h1 {\n  font-size: 2.9rem !important;\n  font-weight: 700 !important;\n  color: #000;\n  line-height: 1.2;\n  margin-bottom: 0;\n}\n@media screen and (min-width: 750px) {\n  .product h1, h1.product-title, .product__title, .main-product h1 {\n    font-size: 3.4rem !important;\n  }\n}\n.product-subtitle {\n  display: block;\n  font-size: 1.6rem;\n  font-weight: 400;\n  color: #646464;\n  margin-top: 0.5em;\n  line-height: 1.3;\n}\n.product .price .price-item {\n  font-size: 2.2rem !important;\n  font-weight: 700 !important;\n  letter-spacing: normal !important;\n}\n[id^=\"price-\"] .price--on-sale .price-item--regular {\n  font-size: 1.3rem !important;\n  font-weight: 400 !important;\n  color: rgba(var(--color-foreground), 0.75) !important;\n}\n.accordion__title {\n  font-size: 1.6rem !important;\n  font-weight: 400 !important;\n}\n.product .form__label {\n  font-size: 1.4rem !important;\n}\n.accordion summary {\n  align-items: center;\n}\n.accordion .summary__title {\n  align-items: center;\n}\n.accordion .summary__title .svg-wrapper {\n  transform: translateY(-8px);\n}\n.product__tax {\n  margin-top: -2.6rem !important;\n  margin-bottom: 0.5rem !important;\n}\n.per-month, .one-time {\n  font-size: 1rem !important;\n  letter-spacing: 0.07rem !important;\n  font-weight: 400 !important;\n  color: rgba(var(--color-foreground), 0.75) !important;\n}\n@media screen and (min-width: 750px) {\n  .per-month, .one-time {\n    font-size: 1.2rem !important;\n  }\n}\n.product-description-content h2,\n.product-description-content h3 {\n  font-size: 1.6rem !important;\n  font-weight: 400 !important;\n}\n.product-description-content p,\n.product-description-content li {\n  font-size: 1.4rem !important;\n  line-height: 1.4 !important;\n}\n.multicolumn-card__info h3 {\n  font-size: 1.6rem !important;\n  font-weight: 400 !important;\n}\n.multicolumn-card__info .rte p {\n  font-size: 1.4rem !important;\n  line-height: 1.4 !important;\n}\nfieldset.product-form__input--pill {\n  display: flex !important;\n  flex-wrap: wrap !important;\n  gap: 0.8rem !important;\n  width: 100% !important;\n  max-width: 100% !important;\n}\nfieldset.product-form__input--pill legend {\n  width: 100% !important;\n  flex: 0 0 100% !important;\n  margin-bottom: 1.2rem !important;\n}\nfieldset.product-form__input--pill input[type='radio']:not(.color-input) + label:not(.color-shape),\nfieldset.product-form__input--pill label.non-color-option:not(.color-shape) {\n  flex: 0 0 calc(50% - 0.4rem) !important;\n  max-width: calc(50% - 0.4rem) !important;\n  min-width: calc(50% - 0.4rem) !important;\n  width: calc(50% - 0.4rem) !important;\n  margin: 0 !important;\n  box-sizing: border-box !important;\n  display: inline-flex !important;\n  height: 47px !important;\n  min-height: 47px !important;\n  align-items: center !important;\n  justify-content: center !important;\n  padding: 0 1.5rem !important;\n  line-height: 1 !important;\n}\n.product-form__input--swatch .swatch-input__input + .swatch-input__label {\n  --swatch-input--size: 47px !important;\n}\n.price .price__badge-sale,\n.price .price__badge-sold-out {\n  font-size: 1.2rem !important;\n  font-weight: 400 !important;\n  letter-spacing: 0.02rem !important;\n  border-radius: 6px !important;\n  padding: 0.5rem 1.3rem 0.6rem 1.3rem !important;\n  line-height: 1 !important;\n}\n.price .price__badge-sale {\n  background-color: rgba(244, 112, 69, 0.13) !important;\n  color: #F47045 !important;\n}\n.price .price__badge-sold-out {\n  background-color: #000000 !important;\n  color: #ffffff !important;\n}\n[id^=\"price-\"] .price {\n  display: flex !important;\n  flex-wrap: wrap !important;\n  align-items: flex-start !important;\n  row-gap: 0 !important;\n  column-gap: 10px !important;\n}\n[id^=\"price-\"] .price > .price__container { order: 1 !important; }\n[id^=\"price-\"] .price > .wrapper { order: 2 !important; }\n[id^=\"price-\"] .price > .product__tax {\n  display: block !important;\n  order: 4 !important;\n  flex: 0 0 100% !important;\n  margin-top: -10px !important;\n  margin-bottom: 0 !important;\n  color: rgba(var(--color-foreground), 0.75) !important;\n}\n.status-badge-slot {\n  order: 5 !important;\n  flex: 0 0 calc(50% - 0.4rem) !important;\n  width: calc(50% - 0.4rem) !important;\n  margin-top: 5px !important;\n}\n.status-badge-slot .badge {\n  display: flex !important;\n  align-items: center !important;\n  justify-content: center !important;\n  width: 100% !important;\n  height: 100%;\n  text-align: center;\n}\n@media screen and (min-width: 750px) {\n  .status-badge-slot {\n    order: 3 !important;\n    align-self: center !important;\n    margin-left: auto !important;\n    margin-top: 0 !important;\n    flex: 1 1 0% !important;\n    max-width: calc(50% - 0.4rem) !important;\n    width: auto !important;\n    min-width: 0 !important;\n  }\n}\n[id^=\"price-\"] + .product__tax { display: none !important; }\n</style>\n<script>\n(function() {\n  function splitProductTitle() {\n    const selectors = [\n      '.product__title h1',\n      '.product h1',\n      'h1.product-title',\n      '.main-product h1',\n      '.product-info h1',\n      'h1[class*=\"product\"]'\n    ];\n    let title = null;\n    for (let selector of selectors) {\n      title = document.querySelector(selector);\n      if (title && title.textContent.includes(':')) {\n        break;\n      }\n    }\n    if (title && title.textContent.includes(':') && !title.dataset.split) {\n      const fullText = title.textContent;\n      const colonIndex = fullText.indexOf(':');\n      const mainPart = fullText.substring(0, colonIndex).trim();\n      const subPart = fullText.substring(colonIndex + 1).trim();\n      title.innerHTML = mainPart + '<br><span class=\"product-subtitle\">' + subPart + '</span>';\n      title.dataset.split = 'true';\n    }\n  }\n  if (document.readyState === 'loading') {\n    document.addEventListener('DOMContentLoaded', splitProductTitle);\n  } else {\n    splitProductTitle();\n  }\n})();\n</script>"
+          }
+        },
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase",
+            "center_align": false,
+            "top_gap_none": false
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "popup_3je4gX": {
+          "type": "popup",
+          "disabled": true,
+          "settings": {
+            "text": "Neu / Pre-loved, was heisst das? ℹ️",
+            "page": "zustand-occasion-pre-loved"
+          }
+        },
+        "custom_liquid_delivery_note": {
+          "type": "custom_liquid",
+          "name": "Custom Liquid_delivery-note",
+          "settings": {
+            "custom_liquid": "<style>\n.delivery-note-icon { display:inline-flex; flex-shrink:0; width:24px; height:24px; color:#5C6B4D; }\n.delivery-note-icon svg { width:100%; height:100%; display:block; }\n</style>\n{% if product.metafields.custom.delivery_note.value != blank %}\n  {%- liquid\n    assign use_icon = true\n  -%}\n  <div class=\"delivery-note-badge\" style=\"margin-top:8px;padding:8px 12px;background:rgba(203,195,171,0.4);border-radius:6px;font-size:14px;font-weight:normal;display:flex;align-items:center;gap:8px;\">\n    <span class=\"delivery-note-icon\">\n      {% if use_icon %}{{ 'loopi-icon-lkw.svg' | inline_asset_content }}{% else %}🚚{% endif %}\n    </span>\n    <span>{{ product.metafields.custom.delivery_note.value }}</span>\n  </div>\n{% endif %}"
+          }
+        },
+        "custom_liquid_garantie_badge": {
+          "type": "custom_liquid",
+          "name": "Custom Liquid_garantie-badge",
+          "settings": {
+            "custom_liquid": "<style>\n.garantie-badge-icon { display:inline-flex; flex-shrink:0; width:24px; height:24px; color:#5C6B4D; }\n.garantie-badge-icon svg { width:100%; height:100%; display:block; }\n</style>\n{% if product.metafields.custom.garantie_badge_text.value != blank %}\n  {%- liquid\n    assign use_icon = true\n    assign zustand_match = false\n    assign laufzeit_match = false\n    for opt in product.selected_or_first_available_variant.selected_options\n      if opt.name == 'Zustand' and opt.value == 'Pre-loved'\n        assign zustand_match = true\n      endif\n      if opt.name == 'Mindestlaufzeit' and opt.value == 'Kaufen'\n        assign laufzeit_match = true\n      endif\n    endfor\n    assign initial_show = false\n    if zustand_match and laufzeit_match\n      assign initial_show = true\n    endif\n  -%}\n  <div class=\"garantie-badge\" id=\"GarantieBadge-{{ section.id }}\" style=\"margin-top:8px;padding:8px 12px;background:rgba(203,195,171,0.4);border-radius:6px;font-size:14px;font-weight:normal;display:{% if initial_show %}flex{% else %}none{% endif %};align-items:center;gap:8px;\">\n    <span class=\"garantie-badge-icon\">\n      {% if use_icon %}{{ 'loopi-icon-schild.svg' | inline_asset_content }}{% else %}✓{% endif %}\n    </span>\n    <span><strong>Garantie</strong> — {{ product.metafields.custom.garantie_badge_text.value }}</span>\n  </div>\n  <script>\n  (function() {\n    var sectionId = {{ section.id | json }};\n    function init() {\n      var badge = document.getElementById('GarantieBadge-' + sectionId);\n      if (!badge) return;\n      function update() {\n        var root = document.getElementById('variant-selects-' + sectionId);\n        if (!root) return;\n        var zustand = root.querySelector('input[name^=\"Zustand-\"]:checked, select[name^=\"Zustand-\"]');\n        var laufzeit = root.querySelector('input[name^=\"Mindestlaufzeit-\"]:checked, select[name^=\"Mindestlaufzeit-\"]');\n        var show = zustand && laufzeit && zustand.value === 'Pre-loved' && laufzeit.value === 'Kaufen';\n        badge.style.display = show ? 'flex' : 'none';\n      }\n      document.addEventListener('change', function(e) {\n        var root = document.getElementById('variant-selects-' + sectionId);\n        if (root && root.contains(e.target)) update();\n      });\n    }\n    if (document.readyState === 'loading') {\n      document.addEventListener('DOMContentLoaded', init);\n    } else {\n      init();\n    }\n  })();\n  </script>\n{% endif %}"
+          }
+        },
+        "custom_liquid_cashback_badge": {
+          "type": "custom_liquid",
+          "name": "Custom Liquid_cashback-badge",
+          "settings": {
+            "custom_liquid": "<style>\n.cashback-badge-icon { display:inline-flex; flex-shrink:0; width:24px; height:24px; color:#5C6B4D; }\n.cashback-badge-icon svg { width:100%; height:100%; display:block; }\n</style>\n{% if product.metafields.custom.cashback_badge_text.value != blank %}\n  {%- liquid\n    assign use_icon = true\n  -%}\n  <div class=\"cashback-badge\" style=\"margin-top:8px;padding:8px 12px;background:rgba(151,167,77,0.15);border-radius:6px;font-size:14px;font-weight:normal;display:flex;align-items:center;gap:8px;\">\n    <span class=\"cashback-badge-icon\">\n      {% if use_icon %}{{ 'loopi-icon-kreislauf.svg' | inline_asset_content }}{% else %}♻️{% endif %}\n    </span>\n    <span><strong>Circular Cashback</strong> — {{ product.metafields.custom.cashback_badge_text.value }}<br><a href=\"#CashbackAccordion\" data-cb-accordion style=\"font-size:13px;text-decoration:underline;color:rgba(var(--color-foreground),0.75);\">Rückkaufwerte und Details siehst du weiter unten</a></span>\n  </div>\n  <script>\n  (function(){\n    var link=document.currentScript.previousElementSibling.querySelector('[data-cb-accordion]');\n    if(!link) return;\n    link.addEventListener('click',function(e){\n      var row=document.getElementById('CashbackAccordion');\n      if(!row) return;\n      e.preventDefault();\n      var d=row.querySelector('details'); if(d) d.open=true;\n      row.scrollIntoView({behavior:'smooth',block:'center'});\n      try{window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'cashback_badge_click'});}catch(x){}\n    });\n  })();\n  </script>\n{% endif %}"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button"
+          }
+        },
+        "text_RKjYAm": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Laufzeit ist die Mindestdauer, danach einfach monatlich weitermieten.",
+            "text_style": "body",
+            "center_align": false,
+            "top_gap_none": false
+          }
+        },
+        "custom_liquid_mieten_erklaerung": {
+          "type": "custom_liquid",
+          "name": "Custom Liquid_mieten-erklaerung",
+          "settings": {
+            "custom_liquid": "{%- liquid\n  assign is_rentable = false\n  for option in product.options_with_values\n    if option.name == 'Mindestlaufzeit'\n      for value in option.values\n        unless value contains 'Kaufen'\n          assign is_rentable = true\n        endunless\n      endfor\n    endif\n  endfor\n-%}\n{%- if is_rentable -%}\n<div class=\"product__accordion accordion quick-add-hidden\" {{ block.shopify_attributes }}>\n  <details id=\"Details-{{ block.id }}-{{ section.id }}\">\n    <summary>\n      <div class=\"summary__title\">\n        <style>.loopi-acc-icon{width:calc(var(--font-heading-scale) * 2rem);height:calc(var(--font-heading-scale) * 2rem);margin-right:calc(var(--font-heading-scale) * 1rem);color:#121212;flex-shrink:0;align-self:center}.loopi-acc-icon svg{width:100%;height:100%;display:block}</style><span class=\"svg-wrapper loopi-acc-icon\">{{ 'loopi-icon-blatt.svg' | inline_asset_content }}</span>\n        <h2 class=\"h4 accordion__title inline-richtext\">Mieten bei loopi - so einfach gehts</h2>\n      </div>\n      {{- 'icon-caret.svg' | inline_asset_content -}}\n    </summary>\n    <div class=\"accordion__content rte\" id=\"ProductAccordion-{{ block.id }}-{{ section.id }}\">\n      <ol><li>Produkt in Warenkorb und <strong>Startdatum festlegen 📆</strong></li><li>Bestellung abschliessen und erste Monatsmiete bezahlen</li><li>Produkt erhalten <strong>inkl. gratis Versand </strong>und  nach dem ersten Monat <strong>monatlich bezahlen</strong></li></ol><p></p><ul><li>Produkt kann <strong>jederzeit aus der Miete herausgekauft </strong>werden zum Restwert</li><li>oder einfach nach der Mindestdauer <strong>gratis abholen lassen</strong></li></ul><p></p>\n    </div>\n  </details>\n</div>\n{%- endif -%}"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "icon_with_text_hJPRjE": {
+          "type": "icon-with-text",
+          "settings": {
+            "layout": "horizontal",
+            "top_gap": false,
+            "icon_1": "heart",
+            "image_1": "shopify://shop_images/twint.avif",
+            "image_size": 120,
+            "heading_1": "TWINT",
+            "icon_2": "return",
+            "image_2": "shopify://shop_images/mastercard.avif",
+            "heading_2": "Mastercard",
+            "icon_3": "truck",
+            "image_3": "shopify://shop_images/visa.avif",
+            "heading_3": "VISA"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "disabled": true,
+          "settings": {}
+        },
+        "rocket_google_reviews_app_block_T4PwzM": {
+          "type": "shopify://apps/google-reviews-rocket/blocks/app-block/d11c8893-a181-4aff-a280-7446d42cec3b",
+          "settings": {
+            "widget_layout": "badge-I"
+          }
+        },
+        "trust_seal_konsumentenbund": {
+          "type": "trust_seal",
+          "settings": {
+            "image": "shopify://shop_images/Konsumentenbund_Kundenversprechen_Siegel.png",
+            "page": "kundenversprechen",
+            "caption_title": "Kundenversprechen",
+            "caption_text": "Gütesiegel des Schweizerischen Konsumentenbunds",
+            "link_label": "Mehr erfahren",
+            "seal_size": 100,
+            "seal_size_mobile": 88
+          }
+        },
+        "trust_style_vertrauen": {
+          "type": "trust_style",
+          "settings": {
+            "pay_frame": "outline",
+            "pay_font_size": 12,
+            "pay_icon_size": 34,
+            "pay_gap": 8,
+            "pay_padding": 18,
+            "pay_padding_adjust": -6,
+            "google_card": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        },
+        "cashback_rechner": {
+          "type": "cashback_rechner",
+          "settings": {
+            "banner_label": "Circular Cashback",
+            "banner_text": "Bis zu CHF [amount] zurück beim Rückverkauf",
+            "button_label": "Rückkaufwert berechnen",
+            "banner_note": "Prozentsatz vom Neupreis bei loopi, abhängig von Zustand und Besitzdauer.",
+            "modal_title": "Dein Rückkaufwert",
+            "modal_intro": "Wähle Zustand und Besitzdauer und sieh, was du bei Circular Cashback zurückbekommst.",
+            "label_condition": "Zustand bei Rückgabe",
+            "condition_1": "So gut wie neu",
+            "condition_2": "Leichte Gebrauchsspuren",
+            "condition_3": "Deutliche Gebrauchsspuren",
+            "condition_help": "Prüfe das Produkt zuhause genau. Frag dich: Würdest du es guten Gewissens selbst als Secondhand kaufen?",
+            "label_duration": "Besitzdauer",
+            "duration_1": "6 Monate",
+            "duration_2": "12 Monate",
+            "duration_3": "24 Monate",
+            "result_price": "Neupreis bei loopi",
+            "result_refund": "Rückkaufwert",
+            "result_net": "Nutzungspreis nach [months] Monaten",
+            "promo_note": "Erhöhte Werte der Einführungsaktion für Käufe bis [date].",
+            "disclaimer": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi. Der konkrete Betrag wird nach der Prüfung bestätigt.",
+            "back_label": "Zurück zum Produkt"
+          }
+        }
+      },
+      "block_order": [
+        "custom_liquid_ntNHci",
+        "vendor",
+        "title",
+        "price",
+        "popup_3je4gX",
+        "custom_liquid_delivery_note",
+        "custom_liquid_garantie_badge",
+        "custom_liquid_cashback_badge",
+        "variant_picker",
+        "text_RKjYAm",
+        "custom_liquid_mieten_erklaerung",
+        "cashback_rechner",
+        "buy_buttons",
+        "icon_with_text_hJPRjE",
+        "quantity_selector",
+        "rocket_google_reviews_app_block_T4PwzM",
+        "trust_seal_konsumentenbund",
+        "trust_style_vertrauen",
+        "description",
+        "share"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "mobile_thumbnails": "hide",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "cta_button_text": "Jetzt bestellen",
+        "padding_top": 4,
+        "padding_bottom": 4
+      }
+    },
+    "custom_liquid_EARdR9": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"page-width product-description-content\">\n{{ product.description }}\n</div>",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 0
+      }
+    },
+    "collapsible_content_Bdt4g4": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_9NKgmY": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "{{ product.metafields.custom.accordion_heading_5.value }}",
+            "icon": "none",
+            "row_content": "{{ product.metafields.custom.accordion_heading_5_content | metafield_tag }}",
+            "page": "",
+            "show_cashback_table": true,
+            "cb_table_corner": "Zustand / Besitzdauer",
+            "cb_table_cols": "6 Monate|12 Monate|24 Monate",
+            "cb_table_rows": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+            "cb_table_promo": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+            "cb_table_note": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt."
+          }
+        },
+        "collapsible_row_V3mBjK": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "{{ product.metafields.custom.accordion_heading_1.value }}",
+            "icon": "none",
+            "row_content": "{{ product.metafields.custom.accordion_heading_1_content_ | metafield_tag }}",
+            "page": ""
+          }
+        },
+        "collapsible_row_inExJw": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "{{ product.metafields.custom.accordion_heading_2.value }}",
+            "icon": "none",
+            "row_content": "{{ product.metafields.custom.accordion_heading_2_content_ | metafield_tag }}",
+            "page": ""
+          }
+        },
+        "collapsible_row_YX94fi": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "{{ product.metafields.custom.accordion_heading_3.value }}",
+            "icon": "none",
+            "row_content": "{{ product.metafields.custom.accordion_heading_3_content_ | metafield_tag }}",
+            "page": ""
+          }
+        },
+        "collapsible_row_BaAgca": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "{{ product.metafields.custom.accordion_heading_4.value }}",
+            "icon": "none",
+            "row_content": "{{ product.metafields.custom.accordion_heading_4_content | metafield_tag }}",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_9NKgmY",
+        "collapsible_row_V3mBjK",
+        "collapsible_row_inExJw",
+        "collapsible_row_YX94fi",
+        "collapsible_row_BaAgca"
+      ],
+      "settings": {
+        "narrow_width": false,
+        "caption": "",
+        "heading": "",
+        "heading_size": "h2",
+        "heading_alignment": "left",
+        "layout": "none",
+        "btn_link": "",
+        "btn_text": "Mehr erfahren",
+        "button_alignment": "left",
+        "color_scheme": "",
+        "container_color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn_c7aTgz": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_Yt4xgy": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/loopi-icon-lkw.svg",
+            "title": "<p>Gratis Lieferung</p>",
+            "text": "<p>Geniesse von einer kostenlosen Lieferung und Rücksendung mit deinem loopi Abo.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_TCw3De": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/loopi-icon-kreislauf.svg",
+            "title": "<p>Unkompliziert wechseln</p>",
+            "text": "<p>Nach deiner Mindestvertragslaufzeit kannst du ganz unkompliziert dein Produkt  austauschen.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_pnCr4G": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/loopi-icon-muenze.svg",
+            "title": "<p>Produkt aus der Miete auskaufen</p>",
+            "text": "<p>Erhalte eine Kauf-Offerte zu einem beliebigen Zeitpunkt in der Miete um das Produkt zum Restwert aus dem Abo herauszukaufen</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_Yt4xgy",
+        "column_TCw3De",
+        "column_pnCr4G"
+      ],
+      "settings": {
+        "change_direction": false,
+        "verically_centered": false,
+        "title": "",
+        "description": "",
+        "heading_size": "h1",
+        "image_size": 100,
+        "full_width_image": false,
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "none",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Hast du alles, was du brauchst?",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "columns_mobile": "2",
+        "padding_top": 72,
+        "padding_bottom": 28
+      }
+    },
+    "multicolumn_WahfmE": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_J3AnA3": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/loopi-icon-kinderwagen.svg",
+            "title": "<p><strong>Wähle dein Produkt</strong></p>",
+            "text": "<p>Wähle das passende Produkt - mit, ohne oder nur Zubehör. Wie du willst.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_hPjNLK": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/loopi-icon-kalender.svg",
+            "title": "<p><strong>Mindestlaufzeit</strong></p>",
+            "text": "<p>Zwischen 3 Monaten und 24 Monaten Mindestlaufzeit. Je kürzer desto flexibler - Je länger desto günstiger!</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_ddcWUE": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/loopi-icon-kiste.svg",
+            "title": "<p><strong>Austauschen, verlängern, zurücksenden oder Rauskaufen</strong></p>",
+            "text": "<p>Tauschen, verlängern, zurücksenden oder kaufen - ganz unkompliziert.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_J3AnA3",
+        "column_hPjNLK",
+        "column_ddcWUE"
+      ],
+      "settings": {
+        "change_direction": false,
+        "verically_centered": false,
+        "title": "So funktioniert das loopi Abo",
+        "description": "bequem - flexibel - nachhaltig",
+        "heading_size": "h2",
+        "image_size": 100,
+        "full_width_image": false,
+        "columns_desktop": 3,
+        "column_alignment": "center",
+        "background_style": "none",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "product_faq_4aEDAT": {
+      "type": "product-faq",
+      "blocks": {
+        "collapsible_row_HBaJTw": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "{{ product.metafields.custom.prooduct_faq_heading_1.value }}",
+            "icon": "none",
+            "row_content": "<p>{{ product.metafields.custom.prooduct_faq_description_1 | metafield_tag }}</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_wUVKRi": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "{{ product.metafields.custom.prooduct_faq_heading_2.value }}",
+            "icon": "none",
+            "row_content": "<p>{{ product.metafields.custom.prooduct_faq_description_2 | metafield_tag }}</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_yTDcrn": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "{{ product.metafields.custom.prooduct_faq_heading_3.value }}",
+            "icon": "none",
+            "row_content": "<p>{{ product.metafields.custom.prooduct_faq_description_3 | metafield_tag }}</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_jzebG6": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "{{ product.metafields.custom.prooduct_faq_heading_4.value }}",
+            "icon": "none",
+            "row_content": "<p>{{ product.metafields.custom.prooduct_faq_description_4 | metafield_tag }}</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_HBaJTw",
+        "collapsible_row_wUVKRi",
+        "collapsible_row_yTDcrn",
+        "collapsible_row_jzebG6"
+      ],
+      "settings": {
+        "narrow_width": false,
+        "caption": "",
+        "heading": "FAQ",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "btn_link": "",
+        "btn_text": "Mehr erfahren",
+        "button_alignment": "left",
+        "color_scheme": "",
+        "container_color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_liquid_EARdR9",
+    "collapsible_content_Bdt4g4",
+    "multicolumn_c7aTgz",
+    "related-products",
+    "multicolumn_WahfmE",
+    "product_faq_4aEDAT"
+  ]
+}

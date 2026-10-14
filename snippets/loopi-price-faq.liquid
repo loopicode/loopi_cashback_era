@@ -1,0 +1,196 @@
+{%- comment -%}
+  loopi Preis-FAQ "Was kostet … bei loopi?" (v1.59, AEO/GEO)
+  Erzeugt die Antwort automatisch aus den Varianten, damit Preise nie veralten.
+  Miete/Kauf-Regel wie Theme + Circuly (main-product.liquid): eine Variante gilt als Miete,
+  solange custom.subscription nicht ausdrücklich false ist.
+  Mindestlaufzeit: custom.subscription_length, sonst Zahl aus dem Optionswert (z. B. "12+ Monate").
+  Sprachunabhängig: Zustand über den Wert "Pre-loved" (in allen Sprachen gleich), Cashback über "cashback" im Variantentitel.
+  Nur verfügbare Varianten zählen (ausverkaufte Miete wird nicht beworben). Reine Kaufprodukte ohne Pre-loved/Cashback
+  (Gutschein, Kartonbox) bekommen keinen Block.
+  Aufruf: {% render 'loopi-price-faq', product: product, section: section %}
+  Mit schema: true wird statt HTML nur das FAQPage-Question-Objekt (JSON) ausgegeben (v1.60, FAQPage-Schema).
+{%- endcomment -%}
+{%- liquid
+  assign show_price_faq = false
+  assign has_condition = false
+  assign rent_min = 0
+  assign rent_min_term = 0
+  assign rent_min_used = false
+  assign rent_new_min = 0
+  assign rent_short_term = 0
+  assign buy_new_min = 0
+  assign buy_used_min = 0
+  assign has_cashback = false
+  assign has_used = false
+
+  for variant in product.variants
+    unless variant.available
+      continue
+    endunless
+
+    assign is_used = false
+    if variant.options contains 'Pre-loved'
+      assign is_used = true
+      assign has_used = true
+      assign has_condition = true
+    elsif variant.options contains 'Neu' or variant.options contains 'New' or variant.options contains 'Neuf'
+      assign has_condition = true
+    endif
+
+    assign is_rent = true
+    if variant.metafields.custom.subscription.value == false
+      assign is_rent = false
+    endif
+
+    if is_rent
+      assign term = variant.metafields.custom.subscription_length.value | plus: 0
+      if term == 0
+        for opt in variant.options
+          assign opt_num = opt | split: ' ' | first | remove: '+' | plus: 0
+          if opt_num > 0
+            assign term = opt_num
+            break
+          endif
+        endfor
+      endif
+      if rent_min == 0 or variant.price < rent_min
+        assign rent_min = variant.price
+        assign rent_min_term = term
+        assign rent_min_used = is_used
+      endif
+      if is_used == false
+        if rent_new_min == 0 or variant.price < rent_new_min
+          assign rent_new_min = variant.price
+        endif
+      endif
+      if rent_short_term == 0 or term < rent_short_term
+        assign rent_short_term = term
+      endif
+    else
+      if is_used
+        if buy_used_min == 0 or variant.price < buy_used_min
+          assign buy_used_min = variant.price
+        endif
+      else
+        if buy_new_min == 0 or variant.price < buy_new_min
+          assign buy_new_min = variant.price
+        endif
+        assign v_title = variant.title | downcase
+        if v_title contains 'cashback'
+          assign has_cashback = true
+        endif
+      endif
+    endif
+  endfor
+
+  if rent_min > 0 or buy_used_min > 0 or has_cashback
+    assign show_price_faq = true
+  endif
+
+  assign name = product.title | split: ':' | first | replace: ' - ', ' ' | strip
+
+  case request.locale.iso_code
+    when 'en'
+      assign t_q = 'How much does [name] cost at loopi?'
+      assign t_rent = 'Rent: from [price] per month'
+      assign t_used = 'pre-loved'
+      assign t_term = '[n]-month minimum term'
+      assign t_rent_new = 'new from [price] per month'
+      assign t_short = 'Shorter minimum terms from [n] are possible at a higher monthly rate.'
+      assign t_extend = 'After the minimum term, the rental extends month by month.'
+      assign t_buy_new = 'Buy new: from [price]'
+      assign t_cashback = 'with Circular Cashback (loopi buys it back from you later)'
+      assign t_buy_used = 'Buy pre-loved (inspected, used, with 1-year warranty): from [price]'
+      assign t_buy = 'Buy: from [price]'
+      assign t_m1 = '1 month'
+      assign t_mn = '[n] months'
+      assign t_used_note = 'Pre-loved means used, but cleaned, inspected and refurbished by loopi.'
+    when 'fr'
+      assign t_q = 'Combien coûte [name] chez loopi ?'
+      assign t_rent = 'Location : dès [price] par mois'
+      assign t_used = 'pre-loved'
+      assign t_term = 'durée minimale de [n] mois'
+      assign t_rent_new = 'neuf dès [price] par mois'
+      assign t_short = 'Des durées minimales plus courtes dès [n] sont possibles, avec un loyer mensuel plus élevé.'
+      assign t_extend = 'Après la durée minimale, la location se prolonge de mois en mois.'
+      assign t_buy_new = 'Achat neuf : dès [price]'
+      assign t_cashback = 'avec Circular Cashback (loopi te le rachète plus tard)'
+      assign t_buy_used = "Achat pre-loved (d'occasion, contrôlé, avec 1 an de garantie) : dès [price]"
+      assign t_buy = 'Achat : dès [price]'
+      assign t_m1 = '1 mois'
+      assign t_mn = '[n] mois'
+      assign t_used_note = "Pre-loved signifie d'occasion, mais nettoyé, contrôlé et remis en état par loopi."
+    else
+      assign t_q = 'Was kostet [name] bei loopi?'
+      assign t_rent = 'Mieten: ab [price] pro Monat'
+      assign t_used = 'pre-loved'
+      assign t_term = '[n] Monate Mindestlaufzeit'
+      assign t_rent_new = 'neu ab [price] pro Monat'
+      assign t_short = 'Kürzere Mindestlaufzeiten ab [n] sind möglich, dann ist die Monatsmiete höher.'
+      assign t_extend = 'Nach der Mindestlaufzeit verlängert sich die Miete monatlich.'
+      assign t_buy_new = 'Neu kaufen: ab [price]'
+      assign t_cashback = 'mit Circular Cashback (loopi kauft das Produkt später wieder zurück)'
+      assign t_buy_used = 'Pre-loved kaufen (geprüfte Occasion, mit 1 Jahr Garantie): ab [price]'
+      assign t_buy = 'Kaufen: ab [price]'
+      assign t_m1 = '1 Monat'
+      assign t_mn = '[n] Monaten'
+      assign t_used_note = 'Pre-loved heisst: gebraucht, aber von loopi gereinigt, geprüft und aufbereitet.'
+  endcase
+-%}
+
+{%- if show_price_faq -%}
+{%- capture price_rent_min -%}{% render 'loopi-chf', cents: rent_min %}{%- endcapture -%}
+{%- capture price_rent_new -%}{% render 'loopi-chf', cents: rent_new_min %}{%- endcapture -%}
+{%- capture price_buy_new -%}{% render 'loopi-chf', cents: buy_new_min %}{%- endcapture -%}
+{%- capture price_buy_used -%}{% render 'loopi-chf', cents: buy_used_min %}{%- endcapture -%}
+
+{%- capture price_answer_html -%}
+      <ul>
+        {%- if rent_min > 0 -%}
+          <li>
+            {{ t_rent | replace: '[price]', price_rent_min }}
+            ({% if rent_min_used %}{{ t_used }}, {% endif %}{{ t_term | replace: '[n]', rent_min_term }})
+            {%- if rent_min_used and rent_new_min > 0 %}; {{ t_rent_new | replace: '[price]', price_rent_new }}{% endif %}.
+            {% if rent_short_term < rent_min_term %}{% if rent_short_term == 1 %}{% assign short_s = t_m1 %}{% else %}{% assign short_s = t_mn | replace: '[n]', rent_short_term %}{% endif %}{{ t_short | replace: '[n]', short_s }} {% endif -%}
+            {{ t_extend }}
+          </li>
+        {%- endif -%}
+        {%- if has_condition -%}
+          {%- if buy_new_min > 0 -%}
+            <li>{{ t_buy_new | replace: '[price]', price_buy_new }}{% if has_cashback %}, {{ t_cashback }}{% endif %}.</li>
+          {%- endif -%}
+          {%- if buy_used_min > 0 -%}
+            <li>{{ t_buy_used | replace: '[price]', price_buy_used }}.</li>
+          {%- endif -%}
+        {%- elsif buy_new_min > 0 -%}
+          <li>{{ t_buy | replace: '[price]', price_buy_new }}{% if has_cashback %}, {{ t_cashback }}{% endif %}.</li>
+        {%- endif -%}
+      </ul>
+      {%- if has_used -%}
+        <p>{{ t_used_note }}</p>
+      {%- endif -%}
+{%- endcapture -%}
+{%- assign price_question = t_q | replace: '[name]', name -%}
+{%- if schema -%}
+  {%- assign price_answer_text = price_answer_html | strip_html | split: ' ' | join: ' ' -%}
+  {"@type":"Question","name":{{ price_question | json }},"acceptedAnswer":{"@type":"Answer","text":{{ price_answer_text | json }}}}
+{%- else -%}
+<div class="accordion{% if section.settings.layout == 'row' %} content-container color-{{ section.settings.container_color_scheme }} gradient{% endif %}">
+  <details id="Details-loopi-price-{{ section.id }}">
+    <summary id="Summary-loopi-price-{{ section.id }}">
+      {% render 'icon-accordion', icon: 'none' %}
+      <h3 class="accordion__title inline-richtext h4">{{ price_question }}</h3>
+      {{- 'icon-caret.svg' | inline_asset_content -}}
+    </summary>
+    <div
+      class="accordion__content rte"
+      id="CollapsibleAccordion-loopi-price-{{ section.id }}"
+      role="region"
+      aria-labelledby="Summary-loopi-price-{{ section.id }}"
+    >
+      {{ price_answer_html }}
+    </div>
+  </details>
+</div>
+{%- endif -%}
+{%- endif -%}

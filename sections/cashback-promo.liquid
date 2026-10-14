@@ -1,0 +1,121 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  #shopify-section-{{ section.id }} .cb-promo-wrap { display: flex; }
+  #shopify-section-{{ section.id }} .cb-promo-wrap--left { justify-content: flex-start; }
+  #shopify-section-{{ section.id }} .cb-promo-wrap--center { justify-content: center; }
+  #shopify-section-{{ section.id }} .cb-promo-wrap--right { justify-content: flex-end; }
+  #shopify-section-{{ section.id }} .cb-promo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    max-width: 80rem;
+    box-sizing: border-box;
+    padding: {{ section.settings.padding_v }}px {{ section.settings.padding_h }}px;
+    border-radius: {{ section.settings.radius }}px;
+    background: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    border: {{ section.settings.border_width }}px solid {{ section.settings.border_color }};
+  }
+  #shopify-section-{{ section.id }} .cb-promo--center-text { text-align: center; }
+  #shopify-section-{{ section.id }} .cb-promo__icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    width: {{ section.settings.icon_size }}px;
+    height: {{ section.settings.icon_size }}px;
+    margin: 0;
+    color: {{ section.settings.icon_color }};
+  }
+  #shopify-section-{{ section.id }} .cb-promo__icon svg,
+  #shopify-section-{{ section.id }} .cb-promo__icon img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  #shopify-section-{{ section.id }} .cb-promo__text { min-width: 0; }
+  #shopify-section-{{ section.id }} .cb-promo__title { display: block; font-size: {{ section.settings.title_size }}px; font-weight: 700; line-height: 1.3; }
+  #shopify-section-{{ section.id }} .cb-promo__body { display: block; font-size: {{ section.settings.body_size }}px; font-weight: 400; line-height: 1.4; }
+  #shopify-section-{{ section.id }} .cb-promo__title + .cb-promo__body { margin-top: 2px; }
+{%- endstyle -%}
+
+{%- capture cb_on -%}{%- render 'cashback-matrix', mode: 'active' -%}{%- endcapture -%}
+{%- capture cb_bis -%}{%- render 'cashback-matrix', mode: 'bis' -%}{%- endcapture -%}
+{%- assign cb_bis = cb_bis | strip -%}
+{%- assign cb_show = section.settings.show -%}
+{%- if cb_show and section.settings.hide_after_end and cb_on contains '0' -%}{%- assign cb_show = false -%}{%- endif -%}
+{%- if request.design_mode -%}{%- assign cb_show = true -%}{%- endif -%}
+{%- assign cb_body = section.settings.body | replace: '[date]', cb_bis -%}
+{%- assign cb_title = section.settings.title | replace: '[date]', cb_bis -%}
+
+{%- if cb_show -%}
+  <div class="color-{{ section.settings.color_scheme }} gradient">
+    <div class="page-width section-{{ section.id }}-padding">
+      <div class="cb-promo-wrap cb-promo-wrap--{{ section.settings.align }}">
+        <div class="cb-promo{% if section.settings.align == 'center' %} cb-promo--center-text{% endif %}">
+          {%- if section.settings.icon_image != blank -%}
+            <span class="cb-promo__icon">{%- render 'loopi-image', image: section.settings.icon_image, width: '100%', color: section.settings.icon_color -%}</span>
+          {%- elsif section.settings.icon != 'none' -%}
+            <span class="cb-promo__icon">{%- render 'cashback-icon', name: section.settings.icon, size: section.settings.icon_size -%}</span>
+          {%- endif -%}
+          <div class="cb-promo__text">
+            {%- if cb_title != blank -%}<span class="cb-promo__title">{{ cb_title | escape }}</span>{%- endif -%}
+            {%- if cb_body != blank -%}<span class="cb-promo__body">{{ cb_body }}</span>{%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Cashback promo",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "checkbox", "id": "show", "label": "Show", "default": true },
+    { "type": "checkbox", "id": "hide_after_end", "label": "Hide automatically after the promotion end date", "default": true, "info": "Enddatum aus der Cashback-Matrix. Im Customizer bleibt die Section immer sichtbar." },
+    { "type": "text", "id": "title", "label": "Title", "default": "Einführungsaktion" },
+    { "type": "inline_richtext", "id": "body", "label": "Text", "default": "Kaufst du bis zum [date], gelten erhöhte Prozentsätze – auch wenn du das Produkt später zurückgibst.", "info": "[date] wird durch das Enddatum ersetzt. Fett möglich." },
+    { "type": "header", "content": "Icon" },
+    { "type": "select", "id": "icon", "label": "Icon", "default": "recycle",
+      "options": [
+        { "value": "none", "label": "No icon" }, { "value": "space", "label": "Home / space" }, { "value": "time", "label": "Clock / time" }, { "value": "money", "label": "Coin / money" },
+        { "value": "leaf", "label": "Leaf" }, { "value": "recycle", "label": "Recycle" }, { "value": "truck", "label": "Truck" }, { "value": "shield", "label": "Shield / guarantee" },
+        { "value": "camera", "label": "Camera" }, { "value": "chat", "label": "Chat" }, { "value": "mail", "label": "Mail" }, { "value": "check", "label": "Check" },
+        { "value": "search", "label": "Search" }, { "value": "cart", "label": "Cart" }, { "value": "calendar", "label": "Calendar" }, { "value": "gift", "label": "Gift" }, { "value": "star", "label": "Star" }
+      ] },
+    { "type": "image_picker", "id": "icon_image", "label": "Custom icon (overrides icon)" },
+    { "type": "range", "id": "icon_size", "label": "Icon size", "min": 12, "max": 48, "step": 2, "unit": "px", "default": 18 },
+    { "type": "color", "id": "icon_color", "label": "Icon color", "default": "#121212" },
+    { "type": "header", "content": "Text sizes and colors" },
+    { "type": "range", "id": "title_size", "label": "Title size", "min": 12, "max": 36, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "body_size", "label": "Text size", "min": 11, "max": 28, "step": 1, "unit": "px", "default": 14 },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#F0F2E6" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#121212" },
+    { "type": "header", "content": "Box" },
+    { "type": "select", "id": "align", "label": "Alignment", "default": "center",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ] },
+    { "type": "range", "id": "radius", "label": "Corner radius", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 6 },
+    { "type": "range", "id": "border_width", "label": "Border width", "min": 0, "max": 6, "step": 1, "unit": "px", "default": 2 },
+    { "type": "color", "id": "border_color", "label": "Border color", "default": "#121212" },
+    { "type": "range", "id": "padding_h", "label": "Inner padding horizontal", "min": 4, "max": 40, "step": 2, "unit": "px", "default": 12 },
+    { "type": "range", "id": "padding_v", "label": "Inner padding vertical", "min": 4, "max": 32, "step": 2, "unit": "px", "default": 8 },
+    { "type": "header", "content": "Layout" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 12 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 12 }
+  ],
+  "presets": [ { "name": "Cashback promo" } ]
+}
+{% endschema %}

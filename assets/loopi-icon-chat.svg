@@ -1,0 +1,8 @@
+<svg aria-hidden="true" focusable="false" class="loopi-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 70 70" height="70" width="70">
+<g transform="translate(35 35) scale(1.1) translate(-35 -35)">
+<defs><mask id="loopi-chat-cut" maskUnits="userSpaceOnUse" x="-20" y="-20" width="110" height="110"><rect x="-20" y="-20" width="110" height="110" fill="#fff"/><circle fill="#000" cx="23" cy="29" r="3.2"/><circle fill="#000" cx="35" cy="29" r="3.2"/><circle fill="#000" cx="47" cy="29" r="3.2"/></mask></defs>
+<g mask="url(#loopi-chat-cut)">
+<path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.36" stroke="currentColor" fill="currentColor" d="M9 17a7 7 0 0 1 7-7h38a7 7 0 0 1 7 7v24a7 7 0 0 1-7 7H34L19 60V48h-3a7 7 0 0 1-7-7Z"/>
+</g>
+</g>
+</svg>

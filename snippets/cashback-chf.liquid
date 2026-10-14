@@ -1,0 +1,3 @@
+{%- comment -%}Formatiert eine ganze Zahl im Schweizer Stil (1'000). Aufruf: render 'cashback-chf', n: 1000{%- endcomment -%}
+{%- assign cb_n = n | plus: 0 -%}
+{%- if cb_n >= 1000 -%}{{ cb_n | divided_by: 1000 }}'{{ cb_n | modulo: 1000 | plus: 1000 | append: '' | slice: 1, 3 }}{%- else -%}{{ cb_n }}{%- endif -%}

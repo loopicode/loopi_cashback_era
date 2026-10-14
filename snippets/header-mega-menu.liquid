@@ -1,0 +1,326 @@
+{% comment %}
+  Renders a megamenu for the header.
+
+  Usage:
+  {% render 'header-mega-menu' %}
+{% endcomment %}
+
+
+<style>
+  .mega-menu__list ul {
+    display: none;
+  }
+
+  .mega-menu__list {
+    display: flex !important;
+    justify-content: center;
+  }
+  
+  #Details-HeaderMenu-2 .mega-menu__list {
+    gap: 10px;
+  }
+
+  #Details-HeaderMenu-1 .mega-menu__content {
+    {% comment %} max-width: 1150px; {% endcomment %}
+    margin: 0 auto;
+    min-height: 420px;
+    padding-left: 30px;
+    padding-right: 30px;
+    max-width: 92%;
+  }
+
+  #Details-HeaderMenu-2 .mega-menu__content {
+    max-width: 1350px;
+    margin: 0 auto;
+    min-height: 200px;
+  }
+
+  .header .header__inline-menu .list-unstyled {
+    position: absolute;
+    left: 45px;
+    top: 85px;
+    column-count: 2; /* Number of columns */
+    column-gap: 40px; /* Adjust space between columns */
+  }
+  
+  .header .header__inline-menu .list-unstyled li {
+    break-inside: avoid; /* Prevents breaking an item between columns */
+    margin-bottom: 10px; /* Optional: Adjusts the space between list items */
+    margin-right: 10px;
+    width: max-content;
+  }
+
+  .mega-menu__content .image-block {
+    width: 640px;
+    float: right;
+    margin-right: 40px;
+    margin-top: 20px;
+    position: absolute;
+    right: 0;
+  }
+
+  .mega-menu__content .image-block img {
+    width: 100%;
+    height: 295px;
+    object-fit: cover;
+  }
+
+  .mega-menu__content .image-block .button {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 30px;
+  }
+
+  .mega-menu__content .image-block {
+    display: none;
+  }  
+
+  .mega-menu__link { 
+    position: relative; 
+    text-decoration: none !important;
+  }
+
+  .mega-menu__content .icon-caret {
+    position: absolute;
+    height: 0.6rem;
+    right: -18px;
+    top: calc(50% - 0.2rem);
+  }
+
+  .mega-active {
+    font-weight: bold;
+    color: black !important;
+    opacity: 1 !important;
+    text-decoration: none !important;
+  }
+
+  .header__menu-item {
+    text-decoration: none !important;
+  }
+
+  .header__menu-item:hover {
+    font-weight: bold;
+    color: black !important;
+  }
+
+  .header__menu-item:hover span {
+    text-decoration: none !important;
+  }
+  
+  #Details-HeaderMenu-2 .mega-menu__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+@media (max-width: 1512px) {
+  .mega-menu__content .image-block {
+    width: 550px;
+  }
+} 
+@media (max-width: 1400px) {
+  .mega-menu__content .image-block {
+    width: 300px;
+  }
+}
+@media (max-width: 1100px) {
+  .mega-menu__content .image-block {
+    width: 260px;
+  }
+}
+</style>
+
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in section.settings.menu.links -%}
+      <style>
+        #Details-HeaderMenu-1 .list-2.active  .image-block-1 { display: block; }
+        #Details-HeaderMenu-1 .list-3.active  .image-block-2 { display: block; }
+        #Details-HeaderMenu-1 .list-4.active  .image-block-3 { display: block; }
+        #Details-HeaderMenu-1 .list-5.active  .image-block-4 { display: block; }
+        #Details-HeaderMenu-1 .list-6.active  .image-block-5 { display: block; }
+        #Details-HeaderMenu-1 .list-7.active  .image-block-6 { display: block; }
+        #Details-HeaderMenu-1 .list-8.active  .image-block-7 { display: block; }
+        #Details-HeaderMenu-1 .list-9.active  .image-block-8 { display: block; }
+        #Details-HeaderMenu-1 .list-10.active  .image-block-9 { display: block; }
+        #Details-HeaderMenu-1 .list-11.active  .image-block-10 { display: block; }
+
+      </style>
+      <li>
+        {%- if link.links != blank -%}
+          <header-menu>
+            <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
+              <summary
+                id="HeaderMenu-{{ link.handle }}"
+                class="header__menu-item list-menu__item link focus-inset"
+              >
+                <span
+                  {%- if link.child_active %}
+                    class="header__active-menu-item"
+                  {% endif %}
+                >
+                  {{- link.title | escape -}}
+                </span>
+                {{- 'icon-caret.svg' | inline_asset_content -}}
+              </summary>
+              <div
+                id="MegaMenu-Content-{{ forloop.index }}"
+                class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+                tabindex="-1"
+              >
+                <ul
+                  class="mega-menu__list page-width{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}"
+                  role="list"
+                >
+                  {%- for childlink in link.links -%}
+                    <li class="list-{{ forloop.index }}">
+                      <a
+                        id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                        href="{{ childlink.url }}"
+                        class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
+                        {% if childlink.current %}
+                          aria-current="page"
+                        {% endif %}
+                      >
+
+                        {% comment %} MEGAMENU IMAGE USING METAFIELD - COLLECTIONS {% endcomment %}
+                        {%- for collection in collections -%}
+
+                          {% if collection.url == childlink.url %}
+
+                            {% if collection.metafields.custom.mega_menu_image != black %}
+
+                              <div class="megamenu-image">
+
+                                <img src="{{ collection.metafields.custom.mega_menu_image | img_url: 'master' }}" style="width: 180px"> 
+
+                              </div>
+
+                            {% endif %}
+
+                          {% endif %}
+
+                        {% endfor %}
+
+                        {% comment %} MEGAMENU IMAGE USING METAFIELD - PRODUCTS {% endcomment %}
+                        {%- assign displayed_products = "" -%}
+
+                        {%- for collection in collections -%}
+                          {%- for product in collection.products -%}
+                            {% if product.url == childlink.url %}
+                              {% unless displayed_products contains product.id %}
+                                {% if product.metafields.custom.mega_menu_image != blank %}
+                                  <div class="megamenu-image">
+                                    <img src="{{ product.metafields.custom.mega_menu_image | img_url: 'master' }}" style="width: 180px"> 
+                                  </div>
+                                  {%- assign displayed_products = displayed_products | append: product.id | append: ',' -%}
+                                {% endif %}
+                              {% endunless %}
+                            {% endif %}
+                          {%- endfor -%}
+                        {%- endfor -%}
+
+                        {{ childlink.title | escape }}
+                        {%- if childlink.links != blank -%}
+                        {{- 'icon-caret.svg' | inline_asset_content -}}
+                      {% endif %}
+                      </a>
+                      {%- if childlink.links != blank -%}
+                        <ul class="list-unstyled" role="list">
+                          {%- for grandchildlink in childlink.links -%}
+                            <li>
+                              <a
+                                id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                                href="{{ grandchildlink.url }}"
+                                class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
+                                {% if grandchildlink.current %}
+                                  aria-current="page"
+                                {% endif %}
+                              >
+                                {{ grandchildlink.title | escape }}
+                              </a>
+                            </li>
+                          {%- endfor -%}                          
+                        </ul>
+                      {%- endif -%}
+
+               
+
+                      {% for block in section.blocks %}
+                        {% if block.type == 'image_product' %}
+                          <!-- Image with Button block -->
+                          <a href="{{ block.settings.button_link }}" class="image-block image-block-{{ block.settings.mega_order }}">
+                            <img src="{{ block.settings.image | img_url: 'master' }}" alt="Featured Image">
+                            <div style="background-color: {{ block.settings.btn_bg_color }}; color: {{ block.settings.btn_text_color }}; padding: 0 22px !important; height: 0 !important; min-height: 40px;" class="button">
+                              {{ block.settings.button_label }}
+                            </div>
+                          </a>
+                          {% assign image_block_counter = image_block_counter | plus: 1 %} <!-- Increment counter -->
+                        {% endif %}
+                      {% endfor %}
+                      
+                      
+                      
+                    </li>
+                  {%- endfor -%}
+                </ul>
+
+                <style>
+                  .featured-products-menu {
+                    display: none;
+                  }                  
+                  
+                  #Details-HeaderMenu-1 .featured-products-menu {
+                    display: block;
+                  }
+
+                  #Details-HeaderMenu-1 .megamenu-image { display: none; }
+                </style>
+
+                <div class="featured-products-menu">
+                    <div class="row">
+                      {% for block in section.blocks %}
+                        {% if block.type == 'product_product' %}
+                          {% assign product = all_products[block.settings.product] %}
+                          {% if product %}
+                            <div class="col-md-auto">
+                              <a href="{{ product.url }}" class="product-link">
+                                <img src="{{ product.featured_image | img_url: '800x800' }}" alt="{{ product.title }}" style="width: 100%">
+                                <h3>{{ product.title }}</h3>
+                                <p>{{ product.price | money }}</p>
+                              </a>
+                            </div>
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                </div>
+
+              </div>
+
+            </details>
+          </header-menu>
+        {%- else -%}
+          <a
+            id="HeaderMenu-{{ link.handle }}"
+            href="{{ link.url }}"
+            class="header__menu-item list-menu__item link link--text focus-inset"
+            {% if link.current %}
+              aria-current="page"
+            {% endif %}
+          >
+            <span
+              {%- if link.current %}
+                class="header__active-menu-item"
+              {% endif %}
+            >
+              {{- link.title | escape -}}
+            </span>
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>

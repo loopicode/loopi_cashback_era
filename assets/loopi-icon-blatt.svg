@@ -1,0 +1,8 @@
+<svg aria-hidden="true" focusable="false" class="loopi-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 70 70" height="70" width="70">
+<g transform="translate(35 35) scale(1.15) translate(-35 -34.5)">
+<defs><mask id="loopi-blatt-cut" maskUnits="userSpaceOnUse" x="-20" y="-20" width="110" height="110"><rect x="-20" y="-20" width="110" height="110" fill="#fff"/><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.26" d="M14 56L50 20"/><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.74" d="M23 47l1.2-9.9M23 47l9.9-1.2M32 38l1.2-9.9M32 38l9.9-1.2M41 29l1-7.9M41 29l7.9-1"/></mask></defs>
+<g mask="url(#loopi-blatt-cut)">
+<path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.26" stroke="currentColor" fill="currentColor" d="M11 59C9 32 26 12 59 10c1 33-18 50-48 49Z"/>
+</g>
+</g>
+</svg>

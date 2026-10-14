@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 70 70" height="70" width="70">
+<g transform="translate(35 35) scale(0.917) translate(-35.25 -34.5)">
+<defs><mask id="loopi-kalender-cut" maskUnits="userSpaceOnUse" x="-20" y="-20" width="110" height="110"><rect x="-20" y="-20" width="110" height="110" fill="#fff"/><circle fill="#000" r="3.25" cx="17.05" cy="36.45"/><circle fill="#000" r="3.25" cx="28.75" cy="36.45"/><circle fill="#000" r="3.25" cx="40.45" cy="36.45"/><circle fill="#000" r="3.25" cx="52.15" cy="36.45"/><circle fill="#000" r="3.25" cx="17.05" cy="46.85"/><circle fill="#000" r="3.25" cx="28.75" cy="46.85"/><circle fill="#000" r="3.25" cx="40.45" cy="46.85"/><circle fill="#000" r="3.25" cx="52.15" cy="46.85"/><circle fill="#000" r="3.25" cx="17.05" cy="57.25"/><circle fill="#000" r="3.25" cx="28.75" cy="57.25"/><circle fill="#000" r="3.25" cx="40.45" cy="57.25"/><circle fill="#000" r="3.25" cx="52.15" cy="57.25"/></mask></defs>
+<g mask="url(#loopi-kalender-cut)">
+<path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.6" stroke="#97A74D" d="M58 8.5H12.5C8.91 8.5 6 11.41 6 15V60.5C6 64.09 8.91 67 12.5 67H58C61.59 67 64.5 64.09 64.5 60.5V15C64.5 11.41 61.59 8.5 58 8.5Z"/>
+<path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.6" stroke="#97A74D" fill="#97A74D" d="M64.5 28H6V60.5L7.95 65.05L12.5 66.35L59.95 65.7L63.2 63.1L64.5 55.95V28Z"/>
+<path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.6" stroke="#97A74D" d="M47.6 2V15M21.6 2V15"/>
+</g>
+</g>
+</svg>

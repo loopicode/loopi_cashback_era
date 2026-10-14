@@ -1,0 +1,18 @@
+{% comment %}
+  Redirect-Seite: Ticket erstellen (DE)
+  Öffnet automatisch ein vorausgefülltes Mail-Fenster an abo@loopi.ch.
+  Fallback-Button für Browser, die den Auto-Redirect blockieren.
+{% endcomment %}
+
+<div class="ticket-redirect" style="text-align:center; padding: 80px 20px; max-width:480px; margin:0 auto;">
+  <p>Dein E-Mail-Programm sollte sich gleich automatisch öffnen.</p>
+  <p>Falls nicht:</p>
+  <a href="mailto:abo@loopi.ch?subject=Whatsapp%20Anfrage&body=Liebes%20loopi%20Team%2C%0A%0AIch%20habe%20eine%20Frage%20zu%20meiner%20Bestellung%2FAbo.%0A%0A"
+     style="display:inline-block; padding:12px 24px; background:#000; color:#fff; text-decoration:none; border-radius:4px;">
+    E-Mail an loopi schreiben
+  </a>
+</div>
+
+<script>
+  window.location.href = "mailto:abo@loopi.ch?subject=Whatsapp%20Anfrage&body=Liebes%20loopi%20Team%2C%0A%0AIch%20habe%20eine%20Frage%20zu%20meiner%20Bestellung%2FAbo.%0A%0A";
+</script>

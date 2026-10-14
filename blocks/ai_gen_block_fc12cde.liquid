@@ -1,0 +1,664 @@
+{% doc %}
+  @prompt
+    generate a custom Liquid section that displays a row of links to your collections or pages. This would be a clean, always-visible navigation strip.
+    
+    make it such that it has a variable number of entries 2 to 5 max, and that there is an option (checkmark) to highlight chosen entires
+    
+    entries need to be able to link to pages or collections , This is very good. Keep it as it is, make it more clickable. At the moment, nothing indicates that these things can be clicked 
+    For instance, add the option for an emoji before each and every entry, so it can signal that it's clickable. , This is perfect, but I want the option that the buttons are already visible without hovering over them. At the moment, they are invisible, only when you hover they become visible. So make a definition for the button color as well. 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-nav-strip-{{ ai_gen_id }} {
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    padding: {{ block.settings.vertical_padding }}px 0;
+    border-top: {{ block.settings.border_thickness }}px solid {{ block.settings.border_color }};
+    border-bottom: {{ block.settings.border_thickness }}px solid {{ block.settings.border_color }};
+  }
+
+  .ai-nav-strip-container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-nav-strip-list-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: {{ block.settings.alignment }};
+    align-items: center;
+    gap: {{ block.settings.item_spacing }}px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+
+  .ai-nav-strip-item-{{ ai_gen_id }} {
+    margin: 0;
+  }
+
+  .ai-nav-strip-link-{{ ai_gen_id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: {{ block.settings.link_padding_vertical }}px {{ block.settings.link_padding_horizontal }}px;
+    color: {{ block.settings.text_color }};
+    background-color: {{ block.settings.link_background_color }};
+    text-decoration: none;
+    font-size: {{ block.settings.font_size }}px;
+    font-weight: {{ block.settings.font_weight }};
+    border-radius: {{ block.settings.link_border_radius }}px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .ai-nav-strip-link-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.text_hover_color }};
+    background-color: {{ block.settings.hover_background_color }};
+    transform: translateY(-2px);
+  }
+
+  .ai-nav-strip-link-{{ ai_gen_id }}.ai-nav-strip-link--highlighted-{{ ai_gen_id }} {
+    background-color: {{ block.settings.highlight_background_color }};
+    color: {{ block.settings.highlight_text_color }};
+  }
+
+  .ai-nav-strip-link-{{ ai_gen_id }}.ai-nav-strip-link--highlighted-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.highlight_hover_background_color }};
+    color: {{ block.settings.highlight_hover_text_color }};
+  }
+
+  .ai-nav-strip-emoji-{{ ai_gen_id }} {
+    font-size: {{ block.settings.emoji_size }}px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-nav-strip-list-{{ ai_gen_id }} {
+      gap: {{ block.settings.item_spacing | times: 0.7 }}px;
+    }
+
+    .ai-nav-strip-link-{{ ai_gen_id }} {
+      font-size: {{ block.settings.font_size | times: 0.9 }}px;
+      padding: {{ block.settings.link_padding_vertical | times: 0.8 }}px {{ block.settings.link_padding_horizontal | times: 0.8 }}px;
+    }
+
+    .ai-nav-strip-emoji-{{ ai_gen_id }} {
+      font-size: {{ block.settings.emoji_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<nav class="ai-nav-strip-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-nav-strip-container-{{ ai_gen_id }}">
+    <ul class="ai-nav-strip-list-{{ ai_gen_id }}">
+      {% for i in (1..5) %}
+        {% liquid
+          assign entry_enabled_key = 'entry_' | append: i | append: '_enabled'
+          assign entry_type_key = 'entry_' | append: i | append: '_type'
+          assign entry_collection_key = 'entry_' | append: i | append: '_collection'
+          assign entry_page_key = 'entry_' | append: i | append: '_page'
+          assign entry_label_key = 'entry_' | append: i | append: '_label'
+          assign entry_highlight_key = 'entry_' | append: i | append: '_highlight'
+          assign entry_emoji_key = 'entry_' | append: i | append: '_emoji'
+
+          assign entry_enabled = block.settings[entry_enabled_key]
+          assign entry_type = block.settings[entry_type_key]
+          assign entry_collection = block.settings[entry_collection_key]
+          assign entry_page = block.settings[entry_page_key]
+          assign entry_label = block.settings[entry_label_key]
+          assign entry_highlight = block.settings[entry_highlight_key]
+          assign entry_emoji = block.settings[entry_emoji_key]
+        %}
+
+        {% if entry_enabled %}
+          <li class="ai-nav-strip-item-{{ ai_gen_id }}">
+            {% if entry_type == 'collection' and entry_collection != blank %}
+              <a
+                href="{{ entry_collection.url }}"
+                class="ai-nav-strip-link-{{ ai_gen_id }} {% if entry_highlight %}ai-nav-strip-link--highlighted-{{ ai_gen_id }}{% endif %}"
+              >
+                {% if entry_emoji != blank %}
+                  <span class="ai-nav-strip-emoji-{{ ai_gen_id }}">{{ entry_emoji }}</span>
+                {% endif %}
+                <span>
+                  {% if entry_label != blank %}
+                    {{ entry_label }}
+                  {% else %}
+                    {{ entry_collection.title }}
+                  {% endif %}
+                </span>
+              </a>
+            {% elsif entry_type == 'page' and entry_page != blank %}
+              <a
+                href="{{ entry_page.url }}"
+                class="ai-nav-strip-link-{{ ai_gen_id }} {% if entry_highlight %}ai-nav-strip-link--highlighted-{{ ai_gen_id }}{% endif %}"
+              >
+                {% if entry_emoji != blank %}
+                  <span class="ai-nav-strip-emoji-{{ ai_gen_id }}">{{ entry_emoji }}</span>
+                {% endif %}
+                <span>
+                  {% if entry_label != blank %}
+                    {{ entry_label }}
+                  {% else %}
+                    {{ entry_page.title }}
+                  {% endif %}
+                </span>
+              </a>
+            {% elsif entry_label != blank %}
+              <span class="ai-nav-strip-link-{{ ai_gen_id }} {% if entry_highlight %}ai-nav-strip-link--highlighted-{{ ai_gen_id }}{% endif %}">
+                {% if entry_emoji != blank %}
+                  <span class="ai-nav-strip-emoji-{{ ai_gen_id }}">{{ entry_emoji }}</span>
+                {% endif %}
+                <span>{{ entry_label }}</span>
+              </span>
+            {% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>
+
+{% schema %}
+{
+  "name": "Navigation strip",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "min": 600,
+      "max": 1600,
+      "step": 100,
+      "unit": "px",
+      "label": "Container width",
+      "default": 1200
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        },
+        {
+          "value": "space-between",
+          "label": "Space between"
+        },
+        {
+          "value": "space-around",
+          "label": "Space around"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_spacing",
+      "min": 4,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Item spacing",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#f3f3f3"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "link_background_color",
+      "label": "Link background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_hover_color",
+      "label": "Text hover",
+      "default": "#F47045"
+    },
+    {
+      "type": "color",
+      "id": "hover_background_color",
+      "label": "Hover background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Highlight colors"
+    },
+    {
+      "type": "color",
+      "id": "highlight_background_color",
+      "label": "Background",
+      "default": "#F47045"
+    },
+    {
+      "type": "color",
+      "id": "highlight_text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "highlight_hover_background_color",
+      "label": "Hover background",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "highlight_hover_text_color",
+      "label": "Hover text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "emoji_size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Emoji size",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Link style"
+    },
+    {
+      "type": "range",
+      "id": "link_padding_vertical",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "link_padding_horizontal",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "link_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Border"
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border thickness",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "header",
+      "content": "Entry 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "entry_1_enabled",
+      "label": "Enable entry 1",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "entry_1_type",
+      "label": "Link type",
+      "options": [
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        }
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "collection",
+      "id": "entry_1_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "page",
+      "id": "entry_1_page",
+      "label": "Page"
+    },
+    {
+      "type": "text",
+      "id": "entry_1_label",
+      "label": "Custom label"
+    },
+    {
+      "type": "text",
+      "id": "entry_1_emoji",
+      "label": "Emoji"
+    },
+    {
+      "type": "checkbox",
+      "id": "entry_1_highlight",
+      "label": "Highlight this entry",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Entry 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "entry_2_enabled",
+      "label": "Enable entry 2",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "entry_2_type",
+      "label": "Link type",
+      "options": [
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        }
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "collection",
+      "id": "entry_2_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "page",
+      "id": "entry_2_page",
+      "label": "Page"
+    },
+    {
+      "type": "text",
+      "id": "entry_2_label",
+      "label": "Custom label"
+    },
+    {
+      "type": "text",
+      "id": "entry_2_emoji",
+      "label": "Emoji"
+    },
+    {
+      "type": "checkbox",
+      "id": "entry_2_highlight",
+      "label": "Highlight this entry",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Entry 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "entry_3_enabled",
+      "label": "Enable entry 3",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "entry_3_type",
+      "label": "Link type",
+      "options": [
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        }
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "collection",
+      "id": "entry_3_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "page",
+      "id": "entry_3_page",
+      "label": "Page"
+    },
+    {
+      "type": "text",
+      "id": "entry_3_label",
+      "label": "Custom label"
+    },
+    {
+      "type": "text",
+      "id": "entry_3_emoji",
+      "label": "Emoji"
+    },
+    {
+      "type": "checkbox",
+      "id": "entry_3_highlight",
+      "label": "Highlight this entry",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Entry 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "entry_4_enabled",
+      "label": "Enable entry 4",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "entry_4_type",
+      "label": "Link type",
+      "options": [
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        }
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "collection",
+      "id": "entry_4_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "page",
+      "id": "entry_4_page",
+      "label": "Page"
+    },
+    {
+      "type": "text",
+      "id": "entry_4_label",
+      "label": "Custom label"
+    },
+    {
+      "type": "text",
+      "id": "entry_4_emoji",
+      "label": "Emoji"
+    },
+    {
+      "type": "checkbox",
+      "id": "entry_4_highlight",
+      "label": "Highlight this entry",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Entry 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "entry_5_enabled",
+      "label": "Enable entry 5",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "entry_5_type",
+      "label": "Link type",
+      "options": [
+        {
+          "value": "collection",
+          "label": "Collection"
+        },
+        {
+          "value": "page",
+          "label": "Page"
+        }
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "collection",
+      "id": "entry_5_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "page",
+      "id": "entry_5_page",
+      "label": "Page"
+    },
+    {
+      "type": "text",
+      "id": "entry_5_label",
+      "label": "Custom label"
+    },
+    {
+      "type": "text",
+      "id": "entry_5_emoji",
+      "label": "Emoji"
+    },
+    {
+      "type": "checkbox",
+      "id": "entry_5_highlight",
+      "label": "Highlight this entry",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Navigation strip"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,143 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+{{ 'loopi-type.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+
+{%- stylesheet -%}
+  .cb-insp__card { display: block; height: 100%; background: #fff; color: inherit; text-decoration: none; border-radius: var(--text-boxes-radius); overflow: hidden; }
+  .cb-insp__media { aspect-ratio: 1 / 1; background: #fff; display: flex; align-items: center; justify-content: center; }
+  .cb-insp__media img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .cb-insp__body { padding: 1.6rem 1.8rem 2rem; }
+  .cb-insp__title { margin: 0; }
+  .cb-insp__price { margin: 0.6rem 0 0; font-size: 16px; font-weight: 700; }
+  .cb-insp__tag { display: inline-flex; align-items: center; gap: 6px; margin-top: 1rem; padding: 6px 10px; border-radius: 6px; background: var(--lp-green-tint, #F0F2E6); font-size: 13px; line-height: 1.3; }
+  .cb-insp__tag svg { width: 14px; height: 14px; flex: 0 0 auto; color: var(--lp-green-dark, #5C6B4D); }
+  .cb-insp__actions { display: flex; justify-content: center; margin-top: 3.2rem; }
+  .cb-insp .slider-buttons { margin-top: 1.6rem; }
+{%- endstylesheet -%}
+
+{%- assign cb_s = section.settings.title_size | plus: 0 -%}
+{%- capture cb_p0 -%}{%- render 'cashback-matrix', mode: 'value', row: 0, col: 0 -%}{%- endcapture -%}
+{%- capture cb_p1 -%}{%- render 'cashback-matrix', mode: 'value', row: 0, col: 1 -%}{%- endcapture -%}
+{%- assign cb_pct = cb_p0 | strip | plus: 0 -%}
+{%- assign cb_pct1 = cb_p1 | strip | plus: 0 -%}
+{%- if cb_pct1 > cb_pct -%}{%- assign cb_pct = cb_pct1 -%}{%- endif -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient cb-insp">
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- if section.settings.heading != blank -%}
+      <div class="lp-head lp-head--{{ section.settings.text_align }}">
+        <h2 class="lp-h2" style="{% if cb_s > 0 %}--lp-size: {{ cb_s }}px; --lp-size-t: {{ cb_s | times: 0.9 | round }}px; --lp-size-m: {{ cb_s | times: 0.8 | round }}px;{% endif %}">{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.text != blank -%}<div class="lp-body rte">{{ section.settings.text }}</div>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <slider-component class="slider-mobile-gutter">
+      <ul class="grid grid--{{ section.settings.columns }}-col-desktop grid--2-col-tablet-down slider slider--everywhere" id="Slider-{{ section.id }}" role="list">
+        {%- for block in section.blocks -%}
+          {%- assign cb_product = block.settings.product -%}
+          {%- if cb_product != blank -%}
+            {%- assign cb_variant = cb_product.selected_or_first_available_variant -%}
+            {%- for v in cb_product.variants -%}
+              {%- if v.title contains 'CASHBACK' -%}
+                {%- assign cb_variant = v -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- assign cb_title_parts = cb_product.title | split: ':' -%}
+            {%- assign cb_rrp = cb_product.metafields.custom.rrp_price.value | plus: 0 -%}
+            {%- assign cb_amount = cb_rrp | times: cb_pct | divided_by: 100 -%}
+            {%- capture cb_amount_fmt -%}{%- render 'cashback-chf', n: cb_amount -%}{%- endcapture -%}
+            {%- assign cb_img = block.settings.image | default: cb_product.featured_image -%}
+            <li class="grid__item slider__slide" id="Slide-{{ section.id }}-{{ forloop.index }}" {{ block.shopify_attributes }}>
+              <a class="cb-insp__card" href="{{ cb_variant.url }}">
+                <div class="cb-insp__media">
+                  {%- if cb_img != blank -%}{{ cb_img | image_url: width: 700 | image_tag: alt: cb_product.title, loading: 'lazy', widths: '250, 400, 700' }}{%- endif -%}
+                </div>
+                <div class="cb-insp__body">
+                  <h3 class="cb-insp__title lp-item-title">{{ cb_title_parts[0] | strip | escape }}</h3>
+                  <p class="cb-insp__price">{{ cb_variant.price | money_without_trailing_zeros }}</p>
+                  {%- if cb_rrp > 0 -%}
+                    <span class="cb-insp__tag">{%- render 'cashback-icon', name: 'recycle', size: 14 -%}{{ section.settings.tag_label | escape }} CHF {{ cb_amount_fmt | strip }} {{ section.settings.tag_suffix | escape }}</span>
+                  {%- endif -%}
+                </div>
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+      {%- if section.blocks.size > 1 -%}
+        <div class="slider-buttons no-js-hidden">
+          <button type="button" class="slider-button slider-button--prev" name="previous" aria-label="{{ 'general.slider.previous_slide' | t }}" aria-controls="Slider-{{ section.id }}">
+            <span class="svg-wrapper"><svg class="icon icon-caret" viewBox="0 0 10 6"><path fill="currentColor" fill-rule="evenodd" d="M9.354.646a.5.5 0 0 0-.708 0L5 4.293 1.354.646a.5.5 0 0 0-.708.708l4 4a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0 0-.708" clip-rule="evenodd"/></svg></span>
+          </button>
+          <div class="slider-counter caption">
+            <span class="slider-counter--current">1</span>
+            <span aria-hidden="true"> / </span>
+            <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+            <span class="slider-counter--total">{{ section.blocks.size }}</span>
+          </div>
+          <button type="button" class="slider-button slider-button--next" name="next" aria-label="{{ 'general.slider.next_slide' | t }}" aria-controls="Slider-{{ section.id }}">
+            <span class="svg-wrapper"><svg class="icon icon-caret" viewBox="0 0 10 6"><path fill="currentColor" fill-rule="evenodd" d="M9.354.646a.5.5 0 0 0-.708 0L5 4.293 1.354.646a.5.5 0 0 0-.708.708l4 4a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0 0-.708" clip-rule="evenodd"/></svg></span>
+          </button>
+        </div>
+      {%- endif -%}
+    </slider-component>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="cb-insp__actions">
+        <a class="button button--primary" {% if section.settings.button_link != blank %}href="{{ section.settings.button_link }}"{% else %}role="link" aria-disabled="true"{% endif %}>{{ section.settings.button_label | escape }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cashback inspiration",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "header", "content": "Title (H2)" },
+    { "type": "text", "id": "heading", "label": "Title", "default": "Unsere Favoriten mit Circular Cashback" },
+    { "type": "range", "id": "title_size", "label": "Title size (0 = standard)", "min": 0, "max": 60, "step": 1, "unit": "px", "default": 0, "info": "Standard H2: 28px Desktop, 26px Tablet, 22px Mobile." },
+    { "type": "richtext", "id": "text", "label": "Intro text (optional)" },
+    { "type": "select", "id": "text_align", "label": "Title alignment", "default": "center",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ] },
+    { "type": "header", "content": "Cards" },
+    { "type": "range", "id": "columns", "label": "Cards visible on desktop", "min": 2, "max": 4, "step": 1, "default": 4 },
+    { "type": "text", "id": "tag_label", "label": "Cashback line, start", "default": "Bis zu" },
+    { "type": "text", "id": "tag_suffix", "label": "Cashback line, end", "default": "zurück" },
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Alle Produkte mit Circular Cashback" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "header", "content": "Layout" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-2" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "limit": 12,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "image_picker", "id": "image", "label": "Image (optional, otherwise product image)" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Cashback inspiration", "blocks": [ { "type": "product" }, { "type": "product" }, { "type": "product" }, { "type": "product" } ] } ]
+}
+{% endschema %}

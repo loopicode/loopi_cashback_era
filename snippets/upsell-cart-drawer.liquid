@@ -1,0 +1,313 @@
+<div id="main-cart-page" class="carousel-container">
+    <h4 class="carousel-title">Empfohlen</h4>
+    <div class="carousel">
+        <div class="carousel-inner" id="carouselInner"></div>
+    </div>
+</div>
+
+<script>
+{% if request.page_type == 'cart' %}
+    isCartPage = true;
+{% else %}
+    isCartPage = false;
+{% endif %}
+
+async function onCartUpdate() {
+    const fetchSections = isCartPage ? ['cart-drawer', 'main-cart-items', 'cart-icon-bubble'] : ['cart-drawer', 'cart-icon-bubble'];
+    const promises = fetchSections.map(section => 
+        fetch(`${routes.cart_url}?section_id=${section}`)
+            .then(response => response.text())
+            .then(responseText => {
+                const html = new DOMParser().parseFromString(responseText, 'text/html');
+                const selectors = section === 'cart-drawer' ? ['cart-drawer-items', '.cart-drawer__footer', '.cart-count-bubble'] : ['cart-items', '.cart-count-bubble'];
+                selectors.forEach(selector => {
+                    const targetElement = document.querySelector(selector);
+                    const sourceElement = html.querySelector(selector);
+                    if (targetElement && sourceElement) {
+                        targetElement.replaceWith(sourceElement);
+                    }
+                });
+            })
+            .catch(e => {
+                console.error(e);
+                console.log('An error occurred while updating your cart. Please try again later.');
+            })
+    );
+
+    Promise.all(promises).then(async () => {
+        const mainCarousel = document.querySelector('#main-cart-page');
+        const clone = (typeof mainCarousel !== 'undefined' && mainCarousel) ? mainCarousel.cloneNode(true) : null; // Clones the main carousel container if it's defined
+        initializeCartUpsell(await fetchCart(), clone);
+    });
+}
+
+async function handleAddToCart(e) {
+    if (e.target.classList.contains('add-to-cart-btn')) {
+        const productId = e.target.getAttribute("data-id");
+        try {
+            const response = await fetch('/cart/add.js', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: productId,
+                    quantity: 1,
+                }),
+            });
+            if (!response.ok) throw new Error('Failed to add to cart');
+            onCartUpdate();
+        } catch (error) {
+            console.error('Error:', error);
+            console.log('An error occurred while updating your cart. Please try again later.');
+        }
+    }
+}
+
+function createProductCard(product) {
+    const availableVariant = product.variants.find(variant => variant.available);
+    if (!availableVariant) return '';
+    return `
+        <div class="product-card">
+            <a href="/products/${product.handle}" class="product-content" data-id="${availableVariant.id}">
+                <img src="${product.featured_image}" alt="${product.title}" class="product-image">
+                <div class="product-details">
+                    <h3 class="product-name">${product.title}</h3>
+                    <p class="product-price">$${(availableVariant.price / 100).toFixed(2)} pro Monat</p>
+                    {% comment %} <button class="add-to-cart-btn" data-id="${availableVariant.id}">Add to Cart</button> {% endcomment %}
+                </div>
+            </a>
+        </div>
+    `;
+}
+
+async function onCartUpdate() {
+    // Check if we're on the cart page to set appropriate fetch sections
+    const fetchSections = isCartPage ? ['cart-drawer', 'main-cart-items', 'cart-icon-bubble'] : ['cart-drawer', 'cart-icon-bubble'];
+    const promises = fetchSections.map(section => 
+        fetch(`${routes.cart_url}?section_id=${section}`)
+            .then(response => response.text())
+            .then(responseText => {
+                const html = new DOMParser().parseFromString(responseText, 'text/html');
+                const selectors = section === 'cart-drawer' ? ['cart-drawer-items', '.cart-drawer__footer', '.cart-count-bubble'] : ['cart-items', '.cart-count-bubble'];
+                selectors.forEach(selector => {
+                    const targetElement = document.querySelector(selector);
+                    const sourceElement = html.querySelector(selector);
+                    if (targetElement && sourceElement) {
+                        targetElement.replaceWith(sourceElement); // This line updates elements in the cart
+                    }
+                });
+            })
+            .catch(e => {
+                console.error(e);
+                console.log('An error occurred while updating your cart. Please try again later.');
+            })
+    );
+
+    Promise.all(promises).then(async () => {
+        const mainCarousel = document.querySelector('#main-cart-page'); // Selects the carousel container
+        const clone = (typeof mainCarousel !== 'undefined' && mainCarousel) ? mainCarousel.cloneNode(true) : null; // Clones the main carousel container if it's defined
+        initializeCartUpsell(await fetchCart(), clone); // Initializes upsell items in the carousel
+    });
+}
+
+async function handleAddToCart(e) {
+    // Handles adding a product to the cart and updates the cart display
+    if (e.target.classList.contains('add-to-cart-btn')) {
+        const productId = e.target.getAttribute("data-id");
+        try {
+            const response = await fetch('/cart/add.js', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: productId,
+                    quantity: 1,
+                }),
+            });
+            if (!response.ok) throw new Error('Failed to add to cart');
+            onCartUpdate(); // Updates cart display after adding
+        } catch (error) {
+            console.error('Error:', error);
+            console.log('An error occurred while updating your cart. Please try again later.');
+        }
+    }
+}
+
+async function fetchCart() {
+    // Fetches the current cart data
+    try {
+        const response = await fetch(window.Shopify.routes.root + 'cart.js');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching cart:', error);
+        console.log('An error occurred while updating your cart. Please try again later.');
+        return null;
+    }
+}
+
+function initializeCartUpsell(fetchedCart, container) {
+    const cart = fetchedCart ? fetchedCart : {{ cart | json }};
+    const productId = cart?.items[0]?.product_id; // Gets the first product's ID in the cart
+    if (!productId) return;
+    
+    let carouselContainer = container; // This is the new container for upsell items
+    if (!carouselContainer) return;
+
+    carouselContainer.style.display = 'grid'; // Positions the carousel container to use grid layout
+
+    fetch(`${window.Shopify.routes.root}recommendations/products.json?product_id=${productId}&limit=20&intent=related`)
+        .then(response => response.json())
+        .then(({ products }) => {
+            const carouselInner = document.createElement('div');
+            carouselInner.classList = 'carousel-inner';
+            carouselInner.id = 'carouselInner'; // IDs help with CSS targeting
+
+            // Filter out products already in the cart and create product cards
+            products.filter(product => !cart.items.some(item => item.product_id === product.id))
+                .forEach(product => {
+                    const productCard = createProductCard(product); // Generates product card
+                    if (productCard) {
+                        carouselInner.innerHTML += productCard; // Adds the product card to the carousel
+                    }
+                });
+
+            // Replace the old carousel inner with the new one
+            carouselContainer.querySelector('#carouselInner').replaceWith(carouselInner);
+
+            // Handle positioning for upsell items in the cart drawer
+            {% comment %} if (isCartPage) {
+                document.querySelector('#main-cart-items .js-contents').appendChild(container); // Positions upsell carousel in main cart
+            } {% endcomment %}
+
+            // Handle positioning for the drawer cart
+            const cartDrawer = document.querySelector('cart-drawer');
+            if (cartDrawer) {
+                const cartDrawerContent = cartDrawer.querySelector('table > tbody'); // Targets the cart drawer content
+                if (cartDrawerContent) {
+                    let carouselClone = carouselContainer.cloneNode(true); // Clone the upsell carousel
+                    carouselClone.id = 'drawer-cart'; // ID helps with CSS targeting
+                    carouselClone.querySelector('.carousel-inner').id = 'carouselInner-2'; // Change ID for the drawer
+                    cartDrawerContent.appendChild(carouselClone); // Positions the cloned carousel in the cart drawer
+                }
+            }
+
+            // Initialize the Slick slider after appending products
+            $(carouselInner).slick({
+                slidesToShow: 3, // Number of visible slides
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                dots: true,
+                arrows: true,
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2,
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 2,
+                        }
+                    }
+                ]
+            });
+
+            // Initialize the second carousel if it exists
+            const cloneCarouselInner = document.querySelector('#carouselInner-2'); // Targets the second carousel for the cart drawer
+            if (cloneCarouselInner) {
+                $(cloneCarouselInner).slick({
+                    slidesToShow: 2, // Adjust as needed
+                    slidesToScroll: 1,
+                    autoplay: true,
+                    autoplaySpeed: 2000,
+                    dots: false,
+                    arrows: false,
+                    responsive: [
+                        {
+                            breakpoint: 768,
+                            settings: {
+                                slidesToShow: 2,
+                            }
+                        },
+                        {
+                            breakpoint: 480,
+                            settings: {
+                                slidesToShow: 2,
+                            }
+                        }
+                    ]
+                });
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            console.log('An error occurred while updating your cart. Please try again later.');
+        });
+}
+
+
+function cartSubscription() {
+    subscribe(PUB_SUB_EVENTS.cartUpdate, async () => {
+        onCartUpdate();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    onCartUpdate();
+    cartSubscription();
+    
+    // Delegate click event for dynamically loaded `.add-to-cart-btn` elements
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('add-to-cart-btn')) {
+            e.preventDefault();
+            handleAddToCart(e);
+        }
+    });
+});
+</script>
+
+<style>
+.drawer__inner .product-content img {
+    width: 100%;
+}
+.drawer__inner .carousel-container .carousel {
+    overflow: hidden;
+}
+
+.section-main-cart-items-padding .carousel-container {
+    display: none !important;
+}  
+
+.drawer__inner .carousel-container .slick-slide {
+    margin: 0 9px;
+}
+
+.drawer__inner .carousel-container .slick-list {
+    margin: 0 -10px;
+    padding:0 80px 0 0;
+}
+
+.drawer__footer  h4 {
+    display: none;
+}
+
+.drawer__inner .product-name {
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.drawer__inner .product-price {
+    font-size: 13px;
+    margin: 0;
+    color: #121212BF;
+    letter-spacing: 0;
+}
+</style>

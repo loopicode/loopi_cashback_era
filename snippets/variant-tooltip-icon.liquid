@@ -1,0 +1,80 @@
+{% comment %}
+  Renders an info-icon + tooltip next to a variant option's legend when the
+  option matches a known "condition" or "duration" keyword and the product
+  has translated tooltip content in the matching metafield. If a deep-dive
+  page is configured in Theme Settings for that tooltip type, the modal
+  shows that page's content (title + body) below the short hover-bubble
+  text. On desktop the short text is already visible via hover, so the
+  modal shows page content only. On mobile there is no hover state, so the
+  modal is the only place the short text is ever seen — there it's shown
+  again at the top (wrapped in .variant-tooltip-modal-mobile-only, a CSS-
+  only block hidden above the 768px breakpoint) followed by a divider and
+  then the page content. If no page is configured, the modal falls back to
+  showing just the short metafield text on both desktop and mobile.
+
+  The page title renders as <h1> (Tier 0 in variant-tooltips.css) since
+  it's the top-level heading of the combined modal content — the page's
+  own internal headings (h2/h3/h4) sit below it in the type scale.
+
+  Accepts:
+  - option: {Object} product_option object
+  - product: {Object} product object
+
+  Usage:
+  {% render 'variant-tooltip-icon', option: option, product: product %}
+{% endcomment %}
+{%- liquid
+  assign option_name_lower = option.name | downcase
+  assign condition_keywords = 'zustand,condition,état,etat' | split: ','
+  assign duration_keywords = 'laufzeit,mietdauer,duration,rental,durée,duree,location' | split: ','
+  assign tooltip_html = blank
+  assign detail_page = blank
+
+  assign is_condition = false
+  for keyword in condition_keywords
+    if option_name_lower contains keyword
+      assign is_condition = true
+    endif
+  endfor
+
+  assign is_duration = false
+  for keyword in duration_keywords
+    if option_name_lower contains keyword
+      assign is_duration = true
+    endif
+  endfor
+
+  if is_condition and product.metafields.custom.zustand_tooltip != blank
+    assign tooltip_html = product.metafields.custom.zustand_tooltip.value.first
+    assign detail_page = settings.zustand_tooltip_page
+  elsif is_duration and product.metafields.custom.mindest_laufzeit_tooltip != blank
+    assign tooltip_html = product.metafields.custom.mindest_laufzeit_tooltip.value.first
+    assign detail_page = settings.mindest_laufzeit_tooltip_page
+  endif
+-%}
+{%- if tooltip_html != blank -%}
+  {%- capture modal_content -%}
+    {%- if detail_page != blank -%}
+      <div class="variant-tooltip-modal-mobile-only">
+        {{ tooltip_html }}
+        <hr class="variant-tooltip-divider">
+      </div>
+      <h1>{{ detail_page.title }}</h1>
+      {{ detail_page.content }}
+    {%- else -%}
+      {{ tooltip_html }}
+    {%- endif -%}
+  {%- endcapture -%}
+  <span
+    class="variant-tooltip-wrapper"
+    data-modal-aria-label="{{ 'general.variant_tooltip.modal_aria' | t }}"
+    data-close-aria-label="{{ 'general.variant_tooltip.close_aria' | t }}"
+  >
+    <span class="variant-tooltip-icon" tabindex="0" role="button" aria-label="{{ 'general.variant_tooltip.icon_aria' | t }}">i</span>
+    <span class="variant-tooltip-desktop">
+      {{ tooltip_html }}
+      <span class="variant-tooltip-cta" tabindex="0" role="button" aria-label="{{ 'general.variant_tooltip.cta_aria' | t }}">{{ 'general.variant_tooltip.cta' | t }} <span class="variant-tooltip-cta-arrow">→</span></span>
+    </span>
+    <span class="variant-tooltip-modal-source" hidden>{{ modal_content }}</span>
+  </span>
+{%- endif -%}

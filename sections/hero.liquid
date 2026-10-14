@@ -1,0 +1,155 @@
+<style>
+    .lp-hero .reviews-hero {
+        color: {{ section.settings.reviews_text_color }};
+    }
+
+    /* The global -105px top margin pulled the hero over the section above and covered its buttons */
+    .lp-hero {
+        margin-top: 0 !important;
+    }
+</style>
+<div class="lp-hero {% if section.blocks.size == 1 %}single-product{% endif %}">
+    <div class="page-width">
+        <div class="row">
+            <div class="col-md-5 col-sm-12 text-col">
+                <h1>{{ section.settings.hero_heading }}</h1>
+                {% if section.settings.hero_subheading %}
+                    <p>{{ section.settings.hero_subheading }}</p>
+                {% endif %}
+                <a href="{{ section.settings.button_link }}" class="button">{{ section.settings.button_text }}</a>
+
+                {% if section.settings.reviews_stars %}
+                    <a href="{{ section.settings.reviews_link }}" target="_blank" class="reviews-hero">
+                        <img src="{{ section.settings.reviews_stars | img_url: 'master' }}" alt="" style="width: 120px">
+                        {{ section.settings.reviews_text }}
+                    </a>
+                {% endif %}
+            </div>
+
+            <div class="col-md-7 col-sm-12 product-col">
+                <div class="slick-slider {% if section.blocks.size == 1 %}no-carousel{% endif %}">
+                    {% for block in section.blocks %}
+                        {% assign product = all_products[block.settings.product] %}
+                        <div class="slick-slide">
+                            <a href="{{ product.url }}">
+                                {% if block.settings.custom_image != blank %}
+                                    <img src="{{ block.settings.custom_image | img_url: '1000x1000' }}" alt="{{ product.title }}">
+                                {% else %}
+                                    <img src="{{ product.featured_image | img_url: '1000x1000' }}" alt="{{ product.title }}">
+                                {% endif %}
+                            </a>
+                            <a href="{{ product.url }}" class="wrapper">
+                                <div class="subscription">{{ section.settings.super_title }}</div>
+                                <div class="product-title">{{ product.title }}</div>
+                                {% if product.compare_at_price > product.price %}
+                                    <div style="text-decoration: line-through;">
+                                      {{ product.compare_at_price | money }} 
+                                    </div>
+                                {% endif %}
+                                <div>{{ product.price | money }} / {{ section.settings.period }}</div>
+
+                                <hr class="solid">
+                                  
+                                <div class="button btn-green">{{ section.settings.cta_button_text }}</div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Hero",
+    "settings": [
+        {
+            "type": "text",
+            "id": "hero_heading",
+            "label": "Hero Heading",
+            "default": "Your subscription service for strollers, bike trailers, baby wraps and more."
+        },
+        {
+            "type": "text",
+            "id": "hero_subheading",
+            "label": "Hero Subheading",
+            "default": "This is a subheading"
+        },
+        {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button Link"
+        },
+        {
+            "type": "text",
+            "id": "button_text",
+            "label": "Button Text",
+            "default": "Browse our products"
+        },
+        {
+            "type": "image_picker",
+            "id": "reviews_stars",
+            "label": "Reviews Stars"
+        },
+        {
+            "type": "text",
+            "id": "reviews_text",
+            "label": "Reviews Text"
+        },
+        {
+            "type": "url",
+            "id": "reviews_link",
+            "label": "Reviews Link"
+        },
+        {
+            "type": "color",
+            "id": "reviews_text_color",
+            "label": "Reviews Text Color",
+            "default": "#585858"
+        },
+        {
+            "type": "text",
+            "id": "super_title",
+            "label": "CTA Super Title",
+            "default": "Dein Abo"
+        },
+        {
+            "type": "text",
+            "id": "period",
+            "label": "CTA Payment Frequency",
+            "default": "pro Monat"
+        },
+        {
+            "type": "text",
+            "id": "cta_button_text",
+            "label": "CTA Button Text",
+            "default": "Jetzt bestellen"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "product",
+            "name": "Product",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Select Product"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "custom_image",
+                    "label": "Custom Image (optional)"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Hero",
+            "category": "Custom"
+        }
+    ]
+}
+{% endschema %}

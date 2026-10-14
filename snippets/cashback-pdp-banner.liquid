@@ -1,0 +1,45 @@
+{%- comment -%}
+  Banner ueber den Kauf-Buttons: "Bis zu CHF X zurueck" + Button, der den Rechner oeffnet.
+  Aufruf (Block cashback_rechner in sections/main-product.liquid): render 'cashback-pdp-banner', block: block
+  Das Pop-up selbst steht am Ende der Section (snippets/cashback-pdp-modal.liquid), damit position:fixed funktioniert.
+{%- endcomment -%}
+{%- capture cb_data -%}{%- render 'cashback-pdp-data', product: product -%}{%- endcapture -%}
+{%- assign cb = cb_data | strip | split: '|' -%}
+{%- assign cb_price = cb[0] | plus: 0 -%}
+{%- if cb_price > 0 -%}
+  {{ 'cashback-pdp.css' | asset_url | stylesheet_tag }}
+  {%- assign pct_arr = cb[1] | split: ',' -%}
+  {%- assign max_pct = 0 -%}
+  {%- for p in pct_arr -%}
+    {%- assign pn = p | plus: 0 -%}
+    {%- if pn > max_pct -%}{%- assign max_pct = pn -%}{%- endif -%}
+  {%- endfor -%}
+  {%- assign max_amount = cb_price | times: max_pct | divided_by: 100.0 | round -%}
+  {%- capture max_fmt -%}{%- render 'cashback-chf', n: max_amount -%}{%- endcapture -%}
+  {%- assign banner_text = block.settings.banner_text | replace: '[amount]', max_fmt -%}
+  <div class="cb-pdp quick-add-hidden" {{ block.shopify_attributes }}>
+    <modal-opener data-modal="#CashbackCalc-{{ block.id }}">
+      <button
+        id="CashbackCalcOpen-{{ block.id }}"
+        type="button"
+        class="cb-pdp__banner"
+        aria-haspopup="dialog"
+        data-cb-open
+      >
+        <span class="cb-pdp__banner-text">
+          {%- if block.settings.banner_label != blank -%}
+            <span class="cb-pdp__label">{{ block.settings.banner_label | escape }}</span>
+          {%- endif -%}
+          <span class="cb-pdp__amount">{{ banner_text | escape }}</span>
+        </span>
+        <span class="cb-pdp__cta">
+          {{ block.settings.button_label | escape }}
+          <svg class="cb-pdp__arrow" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </span>
+      </button>
+    </modal-opener>
+    {%- if block.settings.banner_note != blank -%}
+      <p class="cb-pdp__note">{{ block.settings.banner_note | escape }}</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}

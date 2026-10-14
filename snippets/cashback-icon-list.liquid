@@ -1,0 +1,36 @@
+{%- comment -%}
+  Icon-Liste im Look der Startseiten-Section "So funktioniert das loopi Abo": keine Boxen, Icon gruen, Titel fett, Text normal.
+  Aufruf: render 'cashback-icon-list', blocks: section.blocks, columns: 4, icon_size: 100, icon_position: 'top'|'left', align: 'left'|'center'|'right'
+{%- endcomment -%}
+{%- stylesheet -%}
+  .cb-il { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 3.2rem 2.4rem; }
+  @media screen and (min-width: 750px) { .cb-il { grid-template-columns: repeat(2, 1fr); } }
+  @media screen and (min-width: 990px) { .cb-il { grid-template-columns: repeat(var(--cb-il-cols, 4), 1fr); } }
+  .cb-il__item { display: flex; flex-direction: column; gap: 1.6rem; min-width: 0; }
+  .cb-il--align-left .cb-il__item { align-items: flex-start; text-align: left; }
+  .cb-il--align-center .cb-il__item { align-items: center; text-align: center; }
+  .cb-il--align-right .cb-il__item { align-items: flex-end; text-align: right; }
+  .cb-il--left .cb-il__item { flex-direction: row; align-items: flex-start; text-align: left; gap: 2rem; }
+  .cb-il__icon { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; width: var(--cb-il-icon, 100px); height: var(--cb-il-icon, 100px); color: var(--cb-il-color, #97A74D); }
+  .cb-il__icon img, .cb-il__icon svg { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .cb-il__text { min-width: 0; }
+  .cb-il__title { margin: 0; }
+  .cb-il__body { margin: 0.8rem 0 0; }
+{%- endstylesheet -%}
+<ul class="cb-il cb-il--{{ icon_position | default: 'top' }} cb-il--align-{{ align | default: 'center' }}" style="--cb-il-cols: {{ columns | default: 4 }}; --cb-il-icon: {{ icon_size | default: 100 }}px; --cb-il-color: {{ icon_color | default: '#97A74D' }};" role="list">
+  {%- for block in blocks -%}
+    <li class="cb-il__item" {{ block.shopify_attributes }}>
+      <div class="cb-il__icon">
+        {%- if block.settings.custom_icon != blank -%}
+          {{ block.settings.custom_icon | image_url: width: 300 | image_tag: alt: '', loading: 'lazy' }}
+        {%- else -%}
+          {%- render 'cashback-icon', name: block.settings.icon, size: icon_size -%}
+        {%- endif -%}
+      </div>
+      <div class="cb-il__text">
+        {%- if block.settings.title != blank -%}<h3 class="cb-il__title lp-item-title">{{ block.settings.title | escape }}</h3>{%- endif -%}
+        {%- if block.settings.text != blank -%}<p class="cb-il__body lp-body">{{ block.settings.text | escape }}</p>{%- endif -%}
+      </div>
+    </li>
+  {%- endfor -%}
+</ul>

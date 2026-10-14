@@ -1,0 +1,793 @@
+{% doc %}
+  @prompt
+    I want a super simple product configurator that guides the user
+    
+    centered for good mobile experience 
+    
+    emojis as symbols to illustrate 
+    
+    on the result at the end there shall be up to 5 configurable CTA Buttons 
+    
+    
+    💡 Variante D: Ultra-Simpel – nur 2 Fragen (für Mobile)
+    Perfekt für schnelle Entscheidungen und Minimallast.
+    
+    1. Frage: Wie möchtet ihr starten?
+    --> Flexibel bleiben (Mieten)
+    --> Besitzen (Kaufen)
+    
+    2. Frage: Was ist euch wichtiger?
+    --> Günstiger Preis
+    --> Neu & unbenutzt
+    --> Nachhaltigkeit & geprüfte Occasion
+    
+    ➡️ Ergebnis zeigt: Gewählte Kombination mit Emojis , Erkentnisstext in Disclaimer form und die genannten CTA buttons
+    
+     
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-configurator-{{ ai_gen_id }} {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .ai-configurator-question-{{ ai_gen_id }} {
+    margin-bottom: 40px;
+  }
+
+  .ai-configurator-question-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.question_font_size }}px;
+    color: {{ block.settings.text_color }};
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+
+  .ai-configurator-options-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .ai-configurator-option-{{ ai_gen_id }} {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: {{ block.settings.option_bg_color }};
+    border: 2px solid {{ block.settings.option_border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .ai-configurator-option-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.option_hover_bg_color }};
+    border-color: {{ block.settings.option_hover_border_color }};
+  }
+
+  .ai-configurator-option-emoji-{{ ai_gen_id }} {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .ai-configurator-option-text-{{ ai_gen_id }} {
+    font-size: 18px;
+    color: {{ block.settings.text_color }};
+    font-weight: 500;
+  }
+
+  .ai-configurator-result-{{ ai_gen_id }} {
+    display: none;
+    padding: 30px;
+    background-color: {{ block.settings.result_bg_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  .ai-configurator-result-{{ ai_gen_id }}.active {
+    display: block;
+  }
+
+  .ai-configurator-result-emoji-{{ ai_gen_id }} {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .ai-configurator-result-title-{{ ai_gen_id }} {
+    font-size: 24px;
+    color: {{ block.settings.text_color }};
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .ai-configurator-result-text-{{ ai_gen_id }} {
+    font-size: 14px;
+    color: {{ block.settings.disclaimer_color }};
+    margin-bottom: 24px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .ai-configurator-cta-buttons-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .ai-configurator-cta-button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 14px 28px;
+    background-color: {{ block.settings.cta_bg_color }};
+    color: {{ block.settings.cta_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.cta_border_radius }}px;
+    font-weight: 600;
+    font-size: 16px;
+    min-width: unset;
+    width: 300px;
+  }
+
+  .ai-configurator-cta-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.cta_hover_bg_color }};
+    color: {{ block.settings.cta_hover_text_color }};
+  }
+
+  .ai-configurator-back-button-{{ ai_gen_id }} {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: none;
+    border: 1px solid {{ block.settings.text_color }};
+    color: {{ block.settings.text_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .ai-configurator-back-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.option_hover_bg_color }};
+  }
+
+  .ai-configurator-hidden-{{ ai_gen_id }} {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-configurator-{{ ai_gen_id }} {
+      padding: 16px;
+    }
+
+    .ai-configurator-question-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.question_font_size | times: 0.85 }}px;
+    }
+
+    .ai-configurator-option-{{ ai_gen_id }} {
+      padding: 16px;
+    }
+
+    .ai-configurator-option-emoji-{{ ai_gen_id }} {
+      font-size: 28px;
+    }
+
+    .ai-configurator-option-text-{{ ai_gen_id }} {
+      font-size: 16px;
+    }
+
+    .ai-configurator-result-title-{{ ai_gen_id }} {
+      font-size: 20px;
+    }
+
+    .ai-configurator-result-emoji-{{ ai_gen_id }} {
+      font-size: 40px;
+    }
+  }
+{% endstyle %}
+
+<product-configurator-{{ ai_gen_id }} class="ai-configurator-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-configurator-question-{{ ai_gen_id }}" data-question="1">
+    <h2 class="ai-configurator-question-title-{{ ai_gen_id }}">{{ block.settings.question_1_text }}</h2>
+    <div class="ai-configurator-options-{{ ai_gen_id }}">
+      <button class="ai-configurator-option-{{ ai_gen_id }}" data-choice="rent">
+        <span class="ai-configurator-option-emoji-{{ ai_gen_id }}">{{ block.settings.q1_option1_emoji }}</span>
+        <span class="ai-configurator-option-text-{{ ai_gen_id }}">{{ block.settings.q1_option1_text }}</span>
+      </button>
+      <button class="ai-configurator-option-{{ ai_gen_id }}" data-choice="buy">
+        <span class="ai-configurator-option-emoji-{{ ai_gen_id }}">{{ block.settings.q1_option2_emoji }}</span>
+        <span class="ai-configurator-option-text-{{ ai_gen_id }}">{{ block.settings.q1_option2_text }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="ai-configurator-question-{{ ai_gen_id }} ai-configurator-hidden-{{ ai_gen_id }}" data-question="2">
+    <h2 class="ai-configurator-question-title-{{ ai_gen_id }}">{{ block.settings.question_2_text }}</h2>
+    <div class="ai-configurator-options-{{ ai_gen_id }}">
+      <button class="ai-configurator-option-{{ ai_gen_id }}" data-choice="price">
+        <span class="ai-configurator-option-emoji-{{ ai_gen_id }}">{{ block.settings.q2_option1_emoji }}</span>
+        <span class="ai-configurator-option-text-{{ ai_gen_id }}">{{ block.settings.q2_option1_text }}</span>
+      </button>
+      <button class="ai-configurator-option-{{ ai_gen_id }}" data-choice="new">
+        <span class="ai-configurator-option-emoji-{{ ai_gen_id }}">{{ block.settings.q2_option2_emoji }}</span>
+        <span class="ai-configurator-option-text-{{ ai_gen_id }}">{{ block.settings.q2_option2_text }}</span>
+      </button>
+      <button class="ai-configurator-option-{{ ai_gen_id }}" data-choice="sustainable">
+        <span class="ai-configurator-option-emoji-{{ ai_gen_id }}">{{ block.settings.q2_option3_emoji }}</span>
+        <span class="ai-configurator-option-text-{{ ai_gen_id }}">{{ block.settings.q2_option3_text }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="ai-configurator-result-{{ ai_gen_id }}" data-result="rent-price">
+    <div class="ai-configurator-result-emoji-{{ ai_gen_id }}">{{ block.settings.q1_option1_emoji }}{{ block.settings.q2_option1_emoji }}</div>
+    <h3 class="ai-configurator-result-title-{{ ai_gen_id }}">{{ block.settings.result_rent_price_title }}</h3>
+    <p class="ai-configurator-result-text-{{ ai_gen_id }}">{{ block.settings.result_rent_price_text }}</p>
+    <div class="ai-configurator-cta-buttons-{{ ai_gen_id }}">
+      {% if block.settings.cta_button_1_text != blank and block.settings.cta_button_1_url != blank %}
+        <a href="{{ block.settings.cta_button_1_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_1_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_2_text != blank and block.settings.cta_button_2_url != blank %}
+        <a href="{{ block.settings.cta_button_2_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_2_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_3_text != blank and block.settings.cta_button_3_url != blank %}
+        <a href="{{ block.settings.cta_button_3_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_3_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_4_text != blank and block.settings.cta_button_4_url != blank %}
+        <a href="{{ block.settings.cta_button_4_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_4_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_5_text != blank and block.settings.cta_button_5_url != blank %}
+        <a href="{{ block.settings.cta_button_5_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_5_text }}</a>
+      {% endif %}
+    </div>
+    <button class="ai-configurator-back-button-{{ ai_gen_id }}">← Restart</button>
+  </div>
+
+  <div class="ai-configurator-result-{{ ai_gen_id }}" data-result="rent-new">
+    <div class="ai-configurator-result-emoji-{{ ai_gen_id }}">{{ block.settings.q1_option1_emoji }}{{ block.settings.q2_option2_emoji }}</div>
+    <h3 class="ai-configurator-result-title-{{ ai_gen_id }}">{{ block.settings.result_rent_new_title }}</h3>
+    <p class="ai-configurator-result-text-{{ ai_gen_id }}">{{ block.settings.result_rent_new_text }}</p>
+    <div class="ai-configurator-cta-buttons-{{ ai_gen_id }}">
+      {% if block.settings.cta_button_1_text != blank and block.settings.cta_button_1_url != blank %}
+        <a href="{{ block.settings.cta_button_1_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_1_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_2_text != blank and block.settings.cta_button_2_url != blank %}
+        <a href="{{ block.settings.cta_button_2_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_2_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_3_text != blank and block.settings.cta_button_3_url != blank %}
+        <a href="{{ block.settings.cta_button_3_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_3_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_4_text != blank and block.settings.cta_button_4_url != blank %}
+        <a href="{{ block.settings.cta_button_4_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_4_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_5_text != blank and block.settings.cta_button_5_url != blank %}
+        <a href="{{ block.settings.cta_button_5_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_5_text }}</a>
+      {% endif %}
+    </div>
+    <button class="ai-configurator-back-button-{{ ai_gen_id }}">← Zurück zum Start</button>
+  </div>
+
+  <div class="ai-configurator-result-{{ ai_gen_id }}" data-result="rent-sustainable">
+    <div class="ai-configurator-result-emoji-{{ ai_gen_id }}">{{ block.settings.q1_option1_emoji }}{{ block.settings.q2_option3_emoji }}</div>
+    <h3 class="ai-configurator-result-title-{{ ai_gen_id }}">{{ block.settings.result_rent_sustainable_title }}</h3>
+    <p class="ai-configurator-result-text-{{ ai_gen_id }}">{{ block.settings.result_rent_sustainable_text }}</p>
+    <div class="ai-configurator-cta-buttons-{{ ai_gen_id }}">
+      {% if block.settings.cta_button_1_text != blank and block.settings.cta_button_1_url != blank %}
+        <a href="{{ block.settings.cta_button_1_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_1_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_2_text != blank and block.settings.cta_button_2_url != blank %}
+        <a href="{{ block.settings.cta_button_2_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_2_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_3_text != blank and block.settings.cta_button_3_url != blank %}
+        <a href="{{ block.settings.cta_button_3_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_3_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_4_text != blank and block.settings.cta_button_4_url != blank %}
+        <a href="{{ block.settings.cta_button_4_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_4_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_5_text != blank and block.settings.cta_button_5_url != blank %}
+        <a href="{{ block.settings.cta_button_5_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_5_text }}</a>
+      {% endif %}
+    </div>
+    <button class="ai-configurator-back-button-{{ ai_gen_id }}">← Zurück zum Start</button>
+  </div>
+
+  <div class="ai-configurator-result-{{ ai_gen_id }}" data-result="buy-price">
+    <div class="ai-configurator-result-emoji-{{ ai_gen_id }}">{{ block.settings.q1_option2_emoji }}{{ block.settings.q2_option1_emoji }}</div>
+    <h3 class="ai-configurator-result-title-{{ ai_gen_id }}">{{ block.settings.result_buy_price_title }}</h3>
+    <p class="ai-configurator-result-text-{{ ai_gen_id }}">{{ block.settings.result_buy_price_text }}</p>
+    <div class="ai-configurator-cta-buttons-{{ ai_gen_id }}">
+      {% if block.settings.cta_button_1_text != blank and block.settings.cta_button_1_url != blank %}
+        <a href="{{ block.settings.cta_button_1_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_1_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_2_text != blank and block.settings.cta_button_2_url != blank %}
+        <a href="{{ block.settings.cta_button_2_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_2_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_3_text != blank and block.settings.cta_button_3_url != blank %}
+        <a href="{{ block.settings.cta_button_3_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_3_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_4_text != blank and block.settings.cta_button_4_url != blank %}
+        <a href="{{ block.settings.cta_button_4_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_4_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_5_text != blank and block.settings.cta_button_5_url != blank %}
+        <a href="{{ block.settings.cta_button_5_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_5_text }}</a>
+      {% endif %}
+    </div>
+    <button class="ai-configurator-back-button-{{ ai_gen_id }}">← Zurück zum Start</button>
+  </div>
+
+  <div class="ai-configurator-result-{{ ai_gen_id }}" data-result="buy-new">
+    <div class="ai-configurator-result-emoji-{{ ai_gen_id }}">{{ block.settings.q1_option2_emoji }}{{ block.settings.q2_option2_emoji }}</div>
+    <h3 class="ai-configurator-result-title-{{ ai_gen_id }}">{{ block.settings.result_buy_new_title }}</h3>
+    <p class="ai-configurator-result-text-{{ ai_gen_id }}">{{ block.settings.result_buy_new_text }}</p>
+    <div class="ai-configurator-cta-buttons-{{ ai_gen_id }}">
+      {% if block.settings.cta_button_1_text != blank and block.settings.cta_button_1_url != blank %}
+        <a href="{{ block.settings.cta_button_1_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_1_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_2_text != blank and block.settings.cta_button_2_url != blank %}
+        <a href="{{ block.settings.cta_button_2_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_2_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_3_text != blank and block.settings.cta_button_3_url != blank %}
+        <a href="{{ block.settings.cta_button_3_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_3_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_4_text != blank and block.settings.cta_button_4_url != blank %}
+        <a href="{{ block.settings.cta_button_4_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_4_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_5_text != blank and block.settings.cta_button_5_url != blank %}
+        <a href="{{ block.settings.cta_button_5_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_5_text }}</a>
+      {% endif %}
+    </div>
+    <button class="ai-configurator-back-button-{{ ai_gen_id }}">← Zurück zum Start</button>
+  </div>
+
+  <div class="ai-configurator-result-{{ ai_gen_id }}" data-result="buy-sustainable">
+    <div class="ai-configurator-result-emoji-{{ ai_gen_id }}">{{ block.settings.q1_option2_emoji }}{{ block.settings.q2_option3_emoji }}</div>
+    <h3 class="ai-configurator-result-title-{{ ai_gen_id }}">{{ block.settings.result_buy_sustainable_title }}</h3>
+    <p class="ai-configurator-result-text-{{ ai_gen_id }}">{{ block.settings.result_buy_sustainable_text }}</p>
+    <div class="ai-configurator-cta-buttons-{{ ai_gen_id }}">
+      {% if block.settings.cta_button_1_text != blank and block.settings.cta_button_1_url != blank %}
+        <a href="{{ block.settings.cta_button_1_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_1_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_2_text != blank and block.settings.cta_button_2_url != blank %}
+        <a href="{{ block.settings.cta_button_2_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_2_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_3_text != blank and block.settings.cta_button_3_url != blank %}
+        <a href="{{ block.settings.cta_button_3_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_3_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_4_text != blank and block.settings.cta_button_4_url != blank %}
+        <a href="{{ block.settings.cta_button_4_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_4_text }}</a>
+      {% endif %}
+      {% if block.settings.cta_button_5_text != blank and block.settings.cta_button_5_url != blank %}
+        <a href="{{ block.settings.cta_button_5_url }}" class="ai-configurator-cta-button-{{ ai_gen_id }}">{{ block.settings.cta_button_5_text }}</a>
+      {% endif %}
+    </div>
+    <button class="ai-configurator-back-button-{{ ai_gen_id }}">← Zurück zum Start</button>
+  </div>
+</product-configurator-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductConfigurator{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentQuestion = 1;
+        this.answers = {};
+      }
+
+      connectedCallback() {
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        const questions = this.querySelectorAll('[data-question]');
+        questions.forEach(question => {
+          const options = question.querySelectorAll('[data-choice]');
+          options.forEach(option => {
+            option.addEventListener('click', () => {
+              const questionNum = parseInt(question.dataset.question);
+              const choice = option.dataset.choice;
+              this.handleAnswer(questionNum, choice);
+            });
+          });
+        });
+
+        const backButtons = this.querySelectorAll('.ai-configurator-back-button-{{ ai_gen_id }}');
+        backButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            this.reset();
+          });
+        });
+      }
+
+      handleAnswer(questionNum, choice) {
+        this.answers[questionNum] = choice;
+
+        if (questionNum === 1) {
+          this.showQuestion(2);
+        } else if (questionNum === 2) {
+          this.showResult();
+        }
+      }
+
+      showQuestion(questionNum) {
+        const questions = this.querySelectorAll('[data-question]');
+        questions.forEach(q => {
+          q.classList.add('ai-configurator-hidden-{{ ai_gen_id }}');
+        });
+
+        const targetQuestion = this.querySelector('[data-question="' + questionNum + '"]');
+        if (targetQuestion) {
+          targetQuestion.classList.remove('ai-configurator-hidden-{{ ai_gen_id }}');
+        }
+
+        this.currentQuestion = questionNum;
+      }
+
+      showResult() {
+        const questions = this.querySelectorAll('[data-question]');
+        questions.forEach(q => {
+          q.classList.add('ai-configurator-hidden-{{ ai_gen_id }}');
+        });
+
+        const resultKey = this.answers[1] + '-' + this.answers[2];
+        const results = this.querySelectorAll('[data-result]');
+        results.forEach(result => {
+          result.classList.remove('active');
+        });
+
+        const targetResult = this.querySelector('[data-result="' + resultKey + '"]');
+        if (targetResult) {
+          targetResult.classList.add('active');
+        }
+      }
+
+      reset() {
+        this.answers = {};
+        this.currentQuestion = 1;
+
+        const results = this.querySelectorAll('[data-result]');
+        results.forEach(result => {
+          result.classList.remove('active');
+        });
+
+        const questions = this.querySelectorAll('[data-question]');
+        questions.forEach(q => {
+          q.classList.add('ai-configurator-hidden-{{ ai_gen_id }}');
+        });
+
+        const firstQuestion = this.querySelector('[data-question="1"]');
+        if (firstQuestion) {
+          firstQuestion.classList.remove('ai-configurator-hidden-{{ ai_gen_id }}');
+        }
+      }
+    }
+
+    customElements.define('product-configurator-{{ ai_gen_id }}', ProductConfigurator{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product configurator",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Question 1"
+    },
+    {
+      "type": "text",
+      "id": "question_1_text",
+      "label": "Question text",
+      "default": "Wie möchtet ihr starten?"
+    },
+    {
+      "type": "text",
+      "id": "q1_option1_emoji",
+      "label": "Option 1 emoji",
+      "default": "🔄"
+    },
+    {
+      "type": "text",
+      "id": "q1_option1_text",
+      "label": "Option 1 text",
+      "default": "Flexibel bleiben (Mieten)"
+    },
+    {
+      "type": "text",
+      "id": "q1_option2_emoji",
+      "label": "Option 2 emoji",
+      "default": "🏠"
+    },
+    {
+      "type": "text",
+      "id": "q1_option2_text",
+      "label": "Option 2 text",
+      "default": "Besitzen (Kaufen)"
+    },
+    {
+      "type": "header",
+      "content": "Question 2"
+    },
+    {
+      "type": "text",
+      "id": "question_2_text",
+      "label": "Question text",
+      "default": "Was ist euch wichtiger?"
+    },
+    {
+      "type": "text",
+      "id": "q2_option1_emoji",
+      "label": "Option 1 emoji",
+      "default": "💰"
+    },
+    {
+      "type": "text",
+      "id": "q2_option1_text",
+      "label": "Option 1 text",
+      "default": "Günstiger Preis"
+    },
+    {
+      "type": "text",
+      "id": "q2_option2_emoji",
+      "label": "Option 2 emoji",
+      "default": "✨"
+    },
+    {
+      "type": "text",
+      "id": "q2_option2_text",
+      "label": "Option 2 text",
+      "default": "Neu & unbenutzt"
+    },
+    {
+      "type": "text",
+      "id": "q2_option3_emoji",
+      "label": "Option 3 emoji",
+      "default": "♻️"
+    },
+    {
+      "type": "text",
+      "id": "q2_option3_text",
+      "label": "Option 3 text",
+      "default": "Nachhaltigkeit & geprüfte Occasion"
+    },
+    {
+      "type": "header",
+      "content": "Results"
+    },
+    {
+      "type": "text",
+      "id": "result_rent_price_title",
+      "label": "Rent + Price title",
+      "default": "Flexibel & Günstig"
+    },
+    {
+      "type": "textarea",
+      "id": "result_rent_price_text",
+      "label": "Rent + Price text",
+      "default": "Perfekt! Mieten ist ideal für euch – flexibel und kostengünstig."
+    },
+    {
+      "type": "text",
+      "id": "result_rent_new_title",
+      "label": "Rent + New title",
+      "default": "Flexibel & Neu"
+    },
+    {
+      "type": "textarea",
+      "id": "result_rent_new_text",
+      "label": "Rent + New text",
+      "default": "Mieten mit neuen Produkten – ihr bleibt flexibel und habt immer das Neueste."
+    },
+    {
+      "type": "text",
+      "id": "result_rent_sustainable_title",
+      "label": "Rent + Sustainable title",
+      "default": "Flexibel & Nachhaltig"
+    },
+    {
+      "type": "textarea",
+      "id": "result_rent_sustainable_text",
+      "label": "Rent + Sustainable text",
+      "default": "Mieten ist nachhaltig – ihr schont Ressourcen und bleibt flexibel."
+    },
+    {
+      "type": "text",
+      "id": "result_buy_price_title",
+      "label": "Buy + Price title",
+      "default": "Besitzen & Sparen"
+    },
+    {
+      "type": "textarea",
+      "id": "result_buy_price_text",
+      "label": "Buy + Price text",
+      "default": "Kaufen zum besten Preis – ihr besitzt es und spart langfristig."
+    },
+    {
+      "type": "text",
+      "id": "result_buy_new_title",
+      "label": "Buy + New title",
+      "default": "Besitzen & Neu"
+    },
+    {
+      "type": "textarea",
+      "id": "result_buy_new_text",
+      "label": "Buy + New text",
+      "default": "Neu kaufen – ihr besitzt brandneue Produkte für die Zukunft."
+    },
+    {
+      "type": "text",
+      "id": "result_buy_sustainable_title",
+      "label": "Buy + Sustainable title",
+      "default": "Besitzen & Nachhaltig"
+    },
+    {
+      "type": "textarea",
+      "id": "result_buy_sustainable_text",
+      "label": "Buy + Sustainable text",
+      "default": "Geprüfte Occasion kaufen – nachhaltig und langlebig."
+    },
+    {
+      "type": "header",
+      "content": "CTA buttons"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_1_text",
+      "label": "Button 1 text"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_1_url",
+      "label": "Button 1 link"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_2_text",
+      "label": "Button 2 text"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_2_url",
+      "label": "Button 2 link"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_3_text",
+      "label": "Button 3 text"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_3_url",
+      "label": "Button 3 link"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_4_text",
+      "label": "Button 4 text"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_4_url",
+      "label": "Button 4 link"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_5_text",
+      "label": "Button 5 text"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_5_url",
+      "label": "Button 5 link"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "question_font_size",
+      "min": 18,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "label": "Question font size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "cta_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "CTA border radius",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "option_bg_color",
+      "label": "Option background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "option_border_color",
+      "label": "Option border",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "option_hover_bg_color",
+      "label": "Option hover background",
+      "default": "#f3f3f3"
+    },
+    {
+      "type": "color",
+      "id": "option_hover_border_color",
+      "label": "Option hover border",
+      "default": "#F47045"
+    },
+    {
+      "type": "color",
+      "id": "result_bg_color",
+      "label": "Result background",
+      "default": "#f3f3f3"
+    },
+    {
+      "type": "color",
+      "id": "disclaimer_color",
+      "label": "Disclaimer text color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg_color",
+      "label": "CTA background",
+      "default": "#F47045"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "CTA text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_bg_color",
+      "label": "CTA hover background",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_text_color",
+      "label": "CTA hover text color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product configurator"
+    }
+  ]
+}
+{% endschema %}

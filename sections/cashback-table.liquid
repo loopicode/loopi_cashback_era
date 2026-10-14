@@ -1,0 +1,117 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+{{ 'loopi-type.css' | asset_url | stylesheet_tag }}
+
+{%- stylesheet -%}
+  .cb-table__wrap { max-width: 72rem; margin: 0 auto; overflow-x: auto; }
+  .cb-table { width: 100%; border-collapse: collapse; }
+  .cb-table th, .cb-table td { padding: 1.4rem 1.2rem; text-align: center; border-bottom: 1px solid rgba(var(--color-foreground), 0.12); }
+  .cb-table thead th { font-weight: 700; border-bottom: 2px solid rgba(var(--color-foreground), 0.3); }
+  .cb-table tbody th { text-align: left; font-weight: 600; }
+  .cb-table td { font-size: 1.8rem; }
+  .cb-table td.is-boosted { font-weight: 700; background: rgba(var(--color-button), 0.14); color: rgb(var(--color-button)); }
+  .cb-table__example { max-width: 72rem; margin: 2.4rem auto 0; padding: 1.2rem 1.6rem; border-radius: 6px; background: var(--cb-ex-bg, #F0F2E6); font-size: var(--cb-ex-size, 16px); line-height: 1.5; }
+  .cb-table__example p { margin: 0; }
+  .cb-table__notes { max-width: 72rem; margin: 2rem auto 0; font-size: 1.4rem; }
+{%- endstylesheet -%}
+
+{%- assign cb_s = section.settings.title_size | plus: 0 -%}
+{%- assign cb_col_labels = section.settings.col_1 | append: '||' | append: section.settings.col_2 | append: '||' | append: section.settings.col_3 | split: '||' -%}
+{%- assign cb_row_labels = section.settings.row_1 | append: '||' | append: section.settings.row_2 | append: '||' | append: section.settings.row_3 | append: '||' | append: section.settings.row_4 | split: '||' -%}
+{%- capture cb_ex_pct -%}{%- render 'cashback-matrix', mode: 'value', row: 0, col: 1 -%}{%- endcapture -%}
+{%- assign cb_ex_pct = cb_ex_pct | strip | plus: 0 -%}
+{%- assign cb_ex_price = section.settings.example_price | plus: 0 -%}
+{%- assign cb_ex_amount = cb_ex_price | times: cb_ex_pct | divided_by: 100 -%}
+{%- capture cb_ex_price_fmt -%}{%- render 'cashback-chf', n: cb_ex_price -%}{%- endcapture -%}
+{%- capture cb_ex_amount_fmt -%}{%- render 'cashback-chf', n: cb_ex_amount -%}{%- endcapture -%}
+{%- assign cb_example = section.settings.example_text | replace: '[price]', cb_ex_price_fmt | replace: '[amount]', cb_ex_amount_fmt | replace: '[percent]', cb_ex_pct -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- if section.settings.heading != blank -%}
+      <div class="lp-head lp-head--{{ section.settings.text_align }}">
+        <h2 class="lp-h2" style="{% if cb_s > 0 %}--lp-size: {{ cb_s }}px; --lp-size-t: {{ cb_s | times: 0.9 | round }}px; --lp-size-m: {{ cb_s | times: 0.8 | round }}px;{% endif %}">{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.text != blank -%}<div class="lp-body rte">{{ section.settings.text }}</div>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="cb-table__wrap">
+      <table class="cb-table">
+        <caption class="visually-hidden">{{ section.settings.heading | strip_html }}</caption>
+        <thead>
+          <tr>
+            <th scope="col">{{ section.settings.corner_label | escape }}</th>
+            {%- for label in cb_col_labels -%}<th scope="col">{{ label | escape }}</th>{%- endfor -%}
+          </tr>
+        </thead>
+        <tbody>
+          {%- for r in (0..3) -%}
+            <tr>
+              <th scope="row">{{ cb_row_labels[r] | escape }}</th>
+              {%- for c in (0..2) -%}
+                {%- capture cb_val -%}{%- render 'cashback-matrix', mode: 'value', row: r, col: c -%}{%- endcapture -%}
+                {%- capture cb_boost -%}{%- render 'cashback-matrix', mode: 'boost', row: r, col: c -%}{%- endcapture -%}
+                <td{% if cb_boost contains '1' %} class="is-boosted"{% endif %}>{{ cb_val | strip }} %</td>
+              {%- endfor -%}
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+
+    {%- if section.settings.example_text != blank -%}
+      <div class="cb-table__example" style="--cb-ex-bg: {{ section.settings.example_bg }}; --cb-ex-size: {{ section.settings.example_size }}px;">{{ cb_example }}</div>
+    {%- endif -%}
+    {%- if section.settings.notes != blank -%}
+      <div class="cb-table__notes rte">{{ section.settings.notes }}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cashback table",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "header", "content": "Title (H2)" },
+    { "type": "text", "id": "heading", "label": "Title", "default": "So wird dein Rückkaufwert berechnet" },
+    { "type": "range", "id": "title_size", "label": "Title size (0 = standard)", "min": 0, "max": 60, "step": 1, "unit": "px", "default": 0, "info": "Standard H2: 28px Desktop, 26px Tablet, 22px Mobile." },
+    { "type": "richtext", "id": "text", "label": "Intro text", "default": "<p>Der Rückkaufwert hängt von drei Dingen ab: dem Neupreis (UVP), wie lange du das Produkt hattest und in welchem Zustand es ist.</p>" },
+    { "type": "select", "id": "text_align", "label": "Title alignment", "default": "center",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ] },
+    { "type": "header", "content": "Table labels" },
+    { "type": "text", "id": "corner_label", "label": "Top-left cell", "default": "Zustand / Besitzdauer" },
+    { "type": "text", "id": "col_1", "label": "Column 1", "default": "6 Monate" },
+    { "type": "text", "id": "col_2", "label": "Column 2", "default": "12 Monate" },
+    { "type": "text", "id": "col_3", "label": "Column 3", "default": "24 Monate" },
+    { "type": "text", "id": "row_1", "label": "Row 1", "default": "So gut wie neu" },
+    { "type": "text", "id": "row_2", "label": "Row 2", "default": "Leichte Gebrauchsspuren" },
+    { "type": "text", "id": "row_3", "label": "Row 3", "default": "Deutliche Gebrauchsspuren" },
+    { "type": "text", "id": "row_4", "label": "Row 4", "default": "Nicht akzeptabel" },
+    { "type": "header", "content": "Example box" },
+    { "type": "select", "id": "example_price", "label": "Example price (UVP, CHF)", "default": "1000",
+      "options": [ { "value": "500", "label": "500" }, { "value": "1000", "label": "1000" }, { "value": "1500", "label": "1500" }, { "value": "2000", "label": "2000" } ] },
+    { "type": "richtext", "id": "example_text", "label": "Example text", "default": "<p>Beispiel: Bei einem Produkt mit UVP CHF <strong>[price]</strong> bekommst du nach 12 Monaten im Zustand „So gut wie neu“ bis zu CHF <strong>[amount]</strong> zurück ([percent] %).</p>", "info": "[price], [amount], [percent] werden automatisch ersetzt. Fett und weitere Formatierung möglich." },
+    { "type": "color", "id": "example_bg", "label": "Example background", "default": "#F0F2E6" },
+    { "type": "range", "id": "example_size", "label": "Example text size", "min": 12, "max": 28, "step": 1, "unit": "px", "default": 16 },
+    { "type": "richtext", "id": "notes", "label": "Notes", "default": "<ul><li>Es zählt die zuletzt erreichte Stufe (6, 12 oder 24 Monate).</li><li>Die Beträge sind Richtwerte. Der endgültige Betrag steht nach der Prüfung fest und hängt vom Zustand, der Nutzungsdauer, der Marktnachfrage und dem erwarteten Restwert ab.</li><li>Circular Cashback gilt nur für neu bei loopi gekaufte Produkte, nicht für Pre-loved oder gemietete.</li></ul>" },
+    { "type": "header", "content": "Layout" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 }
+  ],
+  "presets": [ { "name": "Cashback table" } ]
+}
+{% endschema %}

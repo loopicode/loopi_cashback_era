@@ -1,0 +1,133 @@
+{%- comment -%}
+  loopi Produkt-JSON-LD (v1.59, AEO/GEO) – ersetzt {{ product | structured_data }} in main-product.liquid.
+  Gleiche Felder wie Shopifys Standardausgabe (ProductGroup/Product, brand, category, gtin, sku, image,
+  offers mit price/availability/url), zusätzlich:
+  - Miete (custom.subscription != false): Preis ist als Monatsmiete ausgezeichnet
+    (businessFunction LeaseOut + UnitPriceSpecification pro Monat + Mindestlaufzeit in description)
+  - Kauf: businessFunction Sell, bei "Kaufen mit CASHBACK" Hinweis auf Circular Cashback
+  - itemCondition aus dem Zustand-Wert (Pre-loved → UsedCondition, Neu/New/Neuf → NewCondition), sprachunabhängig
+  Kauf-Angebote behalten Preis/URL/Verfügbarkeit unverändert (Merchant Center gleicht diese ab).
+{%- endcomment -%}
+{%- liquid
+  case request.locale.iso_code
+    when 'en'
+      assign t_rent = 'Rental: [price] CHF per month, minimum term [n] months, then extends month by month.'
+      assign t_buy = 'Purchase: one-time price.'
+      assign t_cashback = 'Purchase: one-time price, with Circular Cashback (loopi buys the product back later).'
+    when 'fr'
+      assign t_rent = 'Location : [price] CHF par mois, durée minimale [n] mois, puis prolongation mensuelle.'
+      assign t_buy = 'Achat : prix unique.'
+      assign t_cashback = 'Achat : prix unique, avec Circular Cashback (loopi rachète le produit plus tard).'
+    else
+      assign t_rent = 'Miete: [price] CHF pro Monat, Mindestlaufzeit [n] Monate, danach monatlich verlängerbar.'
+      assign t_buy = 'Kauf: einmaliger Preis.'
+      assign t_cashback = 'Kauf: einmaliger Preis, mit Circular Cashback (loopi kauft das Produkt später zurück).'
+  endcase
+
+  assign currency = cart.currency.iso_code
+-%}
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": {% if product.has_only_default_variant %}"Product"{% else %}"ProductGroup"{% endif %},
+  "@id": {{ product.url | append: '#product' | json }},
+  "name": {{ product.title | json }},
+  "url": {{ request.origin | append: product.url | json }},
+  "description": {{ product.description | strip_html | json }},
+  "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
+  "category": {{ product.type | json }},
+  {%- unless product.has_only_default_variant %}
+  "productGroupID": {{ product.id | append: '' | json }},
+  "hasVariant": [
+  {%- endunless %}
+  {%- for variant in product.variants %}
+    {%- liquid
+      assign is_rent = true
+      if variant.metafields.custom.subscription.value == false
+        assign is_rent = false
+      endif
+      assign term = variant.metafields.custom.subscription_length.value | plus: 0
+      if term == 0
+        for opt in variant.options
+          assign opt_num = opt | split: ' ' | first | remove: '+' | plus: 0
+          if opt_num > 0
+            assign term = opt_num
+            break
+          endif
+        endfor
+      endif
+      assign cond_schema = ''
+      if variant.options contains 'Pre-loved'
+        assign cond_schema = 'https://schema.org/UsedCondition'
+      elsif variant.options contains 'Neu' or variant.options contains 'New' or variant.options contains 'Neuf'
+        assign cond_schema = 'https://schema.org/NewCondition'
+      endif
+      assign rp = variant.price | modulo: 100 | prepend: '0' | slice: -2, 2
+      assign price_s = variant.price | divided_by: 100 | append: '.' | append: rp
+      assign is_cashback = false
+      assign v_title = variant.title | downcase
+      if v_title contains 'cashback'
+        assign is_cashback = true
+      endif
+      assign v_image = variant.image | default: product.featured_image
+    -%}
+    {%- unless product.has_only_default_variant %}
+    {
+      "@type": "Product",
+      "@id": {{ variant.url | append: '#variant' | json }},
+      "name": {{ product.title | append: ' - ' | append: variant.title | json }},
+      {%- if variant.sku != blank %}
+      "sku": {{ variant.sku | json }},
+      {%- endif %}
+      {%- if variant.barcode != blank %}
+      "gtin": {{ variant.barcode | json }},
+      {%- endif %}
+      {%- if v_image %}
+      "image": {{ v_image | image_url: width: 1920 | prepend: 'https:' | json }},
+      {%- endif %}
+    {%- else %}
+      {%- if variant.sku != blank %}
+      "sku": {{ variant.sku | json }},
+      {%- endif %}
+      {%- if variant.barcode != blank %}
+      "gtin": {{ variant.barcode | json }},
+      {%- endif %}
+      {%- if v_image %}
+      "image": {{ v_image | image_url: width: 1920 | prepend: 'https:' | json }},
+      {%- endif %}
+    {%- endunless %}
+      "offers": {
+        "@type": "Offer",
+        "@id": {{ variant.url | append: '#offer' | json }},
+        "url": {{ request.origin | append: variant.url | json }},
+        "availability": {% if variant.available %}"http://schema.org/InStock"{% else %}"http://schema.org/OutOfStock"{% endif %},
+        {%- if cond_schema != '' %}
+        "itemCondition": {{ cond_schema | json }},
+        {%- endif %}
+        "price": {{ price_s | json }},
+        "priceCurrency": {{ currency | json }},
+        {%- if is_rent %}
+        "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": {{ price_s | json }},
+          "priceCurrency": {{ currency | json }},
+          "unitCode": "MON",
+          "referenceQuantity": { "@type": "QuantitativeValue", "value": 1, "unitCode": "MON" }
+        },
+        "eligibleDuration": { "@type": "QuantitativeValue", "minValue": {{ term }}, "unitCode": "MON" },
+        "description": {{ t_rent | replace: '[price]', price_s | replace: '[n]', term | json }}
+        {%- else %}
+        "businessFunction": "http://purl.org/goodrelations/v1#Sell",
+        "description": {% if is_cashback %}{{ t_cashback | json }}{% else %}{{ t_buy | json }}{% endif %}
+        {%- endif %}
+      }
+    {%- unless product.has_only_default_variant %}
+    }{% unless forloop.last %},{% endunless %}
+    {%- endunless %}
+  {%- endfor %}
+  {%- unless product.has_only_default_variant %}
+  ]
+  {%- endunless %}
+}
+</script>

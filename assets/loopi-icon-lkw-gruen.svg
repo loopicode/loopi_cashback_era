@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 70 70" height="70" width="70">
+<defs><mask id="loopi-lkw-cut" maskUnits="userSpaceOnUse" x="-20" y="-20" width="110" height="110"><rect x="-20" y="-20" width="110" height="110" fill="#fff"/><circle fill="#000" cx="17" cy="53" r="9.4"/><circle fill="#000" cx="52" cy="53" r="9.4"/></mask><mask id="loopi-lkw-hub" maskUnits="userSpaceOnUse" x="-20" y="-20" width="110" height="110"><rect x="-20" y="-20" width="110" height="110" fill="#fff"/><circle fill="#000" cx="17" cy="53" r="2.6"/><circle fill="#000" cx="52" cy="53" r="2.6"/></mask></defs>
+<g mask="url(#loopi-lkw-cut)">
+<rect stroke-linejoin="round" stroke-linecap="round" stroke-width="2.6" stroke="#97A74D" fill="#97A74D" x="5" y="14" width="36" height="34" rx="2"/>
+<path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.6" stroke="#97A74D" d="M41 25h13l10 12v11H41Z"/>
+<path fill="#97A74D" d="M46 30h7l5 6H46Z"/>
+</g>
+<g mask="url(#loopi-lkw-hub)"><circle fill="#97A74D" cx="17" cy="53" r="6.5"/><circle fill="#97A74D" cx="52" cy="53" r="6.5"/></g>
+</svg>

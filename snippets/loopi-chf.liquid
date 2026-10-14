@@ -1,0 +1,20 @@
+{%- comment -%}
+  loopi: Rappen-Betrag im Schweizer Stil ausgeben, z. B. 129900 → "CHF 1'299.–", 4450 → "CHF 44.50"
+  Aufruf: {% render 'loopi-chf', cents: variant.price %}
+{%- endcomment -%}
+{%- liquid
+  assign chf = cents | divided_by: 100
+  assign rp = cents | modulo: 100
+  if chf >= 1000
+    assign th = chf | divided_by: 1000
+    assign rest = chf | modulo: 1000 | prepend: '00' | slice: -3, 3
+    assign chf_s = th | append: "'" | append: rest
+  else
+    assign chf_s = chf
+  endif
+  if rp == 0
+    assign rp_s = '.–'
+  else
+    assign rp_s = rp | prepend: '0' | slice: -2, 2 | prepend: '.'
+  endif
+-%}CHF {{ chf_s }}{{ rp_s -}}

@@ -1,0 +1,130 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "176443149043f1ef16": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_3c6ab98_HpidgD": {
+          "type": "ai_gen_block_3c6ab98",
+          "settings": {
+            "question_1_text": "Wie möchtet ihr starten?",
+            "q1_option1_emoji": "🔄",
+            "q1_option1_text": "Flexibel bleiben (Mieten)",
+            "q1_option2_emoji": "🏠",
+            "q1_option2_text": "Besitzen (Kaufen)",
+            "question_2_text": "Was ist euch wichtiger?",
+            "q2_option1_emoji": "💰",
+            "q2_option1_text": "Günstiger Preis",
+            "q2_option2_emoji": "✨",
+            "q2_option2_text": "Neu & unbenutzt",
+            "q2_option3_emoji": "♻️",
+            "q2_option3_text": "Nachhaltigkeit & geprüfte Occasion",
+            "result_rent_price_title": "🎉BRAVO, Ihr wisst, was ihr wollt: Flexibel & Günstig",
+            "result_rent_price_text": "Loopi gibt euch die Superpower 💎 mit Top-Marken im Mietmodell Geld zu sparen und trotzdem flexibel zu bleiben. Alle Produkte sind professionell aufbereitet, geprüft und gereinigt. Wähle jetzt aus den Kategorien:",
+            "result_rent_new_title": "🎉BRAVO, Ihr wisst, was ihr wollt: Flexibel & Neu",
+            "result_rent_new_text": "Loopi gibt euch die Superpower 💎 mit fabrikneuen Top-Marken im Mietmodell Geld zu sparen und trotzdem flexibel zu bleiben. Neue Produkte sind unbenutzt und originalverpackt. Wähle jetzt aus den Kategorien:",
+            "result_rent_sustainable_title": "🎉BRAVO, Ihr wisst, was ihr wollt: Flexibel & Nachhaltig",
+            "result_rent_sustainable_text": "Loopi gibt euch die Superpower 💎 mit Top-Marken im Mietmodell Ressourcen und Geld zu sparen und trotzdem flexibel zu bleiben. Alle Produkte sind lokal aufbereitet, geprüft und gereinigt. Wähle jetzt aus den Kategorien:",
+            "result_buy_price_title": "🎉BRAVO, Ihr wisst, was ihr wollt: Besitzen & Sparen",
+            "result_buy_price_text": "Loopi gibt euch die Superpower 💎 mit Top-Marken als Pre-Loved (Premium Occasion) Geld zu sparen. Alle Produkte sind professionell aufbereitet, geprüft und gereinigt. Dazu gewähren wir 1 Jahr Garantie. Wähle jetzt aus den Kategorien:",
+            "result_buy_new_title": "🎉BRAVO, Ihr wisst, was ihr wollt: Besitzen & Neu",
+            "result_buy_new_text": "Loopi gibt euch auch für den Neukauf die flexible Superpower 💎 mit Top-Marken. Wie üblich gewähren wir 2 Jahre Garantie aber zusätzlich offerieren wir eine CIRCULAR CASHBACK Variante. Kontaktiere uns bei Interesse per E-Mail an abo@loopi.ch. Kaufen kannst du bereits jetzt!",
+            "result_buy_sustainable_title": "🎉BRAVO, Ihr wisst, was ihr wollt: Besitzen & Nachhaltig",
+            "result_buy_sustainable_text": "Loopi gibt euch die Superpower 💎 mit Top-Marken als Pre-Loved (Premium Occasion) Ressourcen und Geld zu sparen. Alle Produkte sind lokal aufbereitet, geprüft und gereinigt. Dazu gewähren wir 1 Jahr Garantie. Wähle jetzt aus den Kategorien:",
+            "cta_button_1_text": "Geschwisterkinderwagen",
+            "cta_button_1_url": "shopify:\/\/collections\/geschwisterwagen",
+            "cta_button_2_text": "Federwiegen und Wohnen",
+            "cta_button_2_url": "shopify:\/\/collections\/wohnen",
+            "cta_button_3_text": "Alle Kinderwagen",
+            "cta_button_3_url": "shopify:\/\/collections\/alle-kinderwagen",
+            "cta_button_4_text": "Veloanhänger",
+            "cta_button_4_url": "shopify:\/\/collections\/velo-anhanger",
+            "cta_button_5_text": "",
+            "cta_button_5_url": "",
+            "question_font_size": 24,
+            "border_radius": 12,
+            "cta_border_radius": 40,
+            "text_color": "#121212",
+            "option_bg_color": "#ffffff",
+            "option_border_color": "#e0e0e0",
+            "option_hover_bg_color": "#f3f3f3",
+            "option_hover_border_color": "#F47045",
+            "result_bg_color": "#f3f3f3",
+            "disclaimer_color": "#666666",
+            "cta_bg_color": "#F47045",
+            "cta_text_color": "#ffffff",
+            "cta_hover_bg_color": "#121212",
+            "cta_hover_text_color": "#ffffff"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_3c6ab98_HpidgD"
+      ],
+      "settings": {}
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "collection_list_r8weDL": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_FkyENK": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "wohnen"
+          }
+        },
+        "featured_collection_BK3RcN": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "thule"
+          }
+        },
+        "featured_collection_Vi4hAW": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bugaboo"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_FkyENK",
+        "featured_collection_BK3RcN",
+        "featured_collection_Vi4hAW"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Kollektionen",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "176443149043f1ef16",
+    "main",
+    "collection_list_r8weDL"
+  ]
+}

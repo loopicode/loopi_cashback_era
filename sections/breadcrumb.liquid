@@ -1,0 +1,377 @@
+{%- style -%}
+  .breadcrumbs a:last-child {
+    background-color: #E7D1C6;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 10px;
+  }
+   {% if template == 'product' and section.settings.enable_product_page  %}
+     .breadcrumbs{
+       display: block;
+     }
+     {% else %}
+     .breadcrumbs{
+       display: none;
+     }
+   {% endif %}
+
+  {% if section.settings.enable_complete_site %}
+    .breadcrumbs{
+      display: block;
+    }
+    {% endif %}
+
+  {% if template == 'collection' and section.settings.enable_collection_page  %}
+     .breadcrumbs{
+       display: block;
+     }
+   {% endif %}
+
+
+       :root  {
+         --svg_fill: {{ section.settings.breadcrumb_text_color}}
+         ;
+       }
+
+       .home-icon-container {
+         display: inline-block;
+         margin-right: 4px;
+         vertical-align: sub;
+       }
+
+       .breadcrumbs {
+         padding: 0.5rem 2rem;
+         color: {{ section.settings.breadcrumb_text_color }}
+         ;
+         background-color: {{ section.settings.breadcrumb_bg_color }}
+       }
+
+       .breadcrumbs li {
+         display: inline-block;
+       }
+
+       .breadcrumbs a {
+         text-decoration: none;
+         font-size: 10px;
+         color: inherit;
+       }
+
+       .breadcrumbs span.breadcrumb-crumb {
+         font-size: 10px;
+         color: inherit;
+       }
+
+
+     {%- if section.settings.breadcrumb_accent_color_bool -%}
+         .breadcrumbs a:last-of-type {
+           color: {{ section.settings.breadcrumb_accent_color }}
+            !important;
+         }
+       {%- endif -%}
+
+
+       .breadcrumb-delimeter:not(:last-child):after {
+         {%- case section.settings.breadcrumb_delimeter -%}
+           {%- when "angle_right" -%}
+           content: "›";
+           font-size: 10px;
+           {%- when "slash" -%}
+           content: "/";
+           font-size: 10px;
+           {%- when "arrow_right" -%}
+           content: "➤";
+           font-size: 10px;
+           {%- when "squiggle_arrow" -%}
+           content: "\27FF";
+           font-size: 10px;
+           {%- when "right_long" -%}
+           content: "\279E";
+           font-size: 10px;
+           transform: translateY(5%);
+           {%- when "double_right" -%}
+           content: "\00BB";
+           font-size: 10px;
+           {%- when "diamond_arrow_head" -%}
+           content: "⤶";
+           font-size: 10px;
+           transform: translateY(5%);
+           {%- when "heavy_angle_right" -%}
+           content: "\276F";
+           font-size: 10px;
+           transform: translateY(5%);
+         {%- else -%}
+
+         {%- endcase -%}
+         display: inline-block;
+         margin-left: 0.75rem;
+         margin-right: 0.50rem;
+         speak: none;
+       }
+
+       .breadcrumbs [aria-current="page"] {
+         color: inherit;
+         font-weight: normal;
+         text-decoration: none;
+       }
+{%- endstyle -%}
+
+{%- comment -%}
+  Category path from the header nav menu (section.settings.nav_menu_handle).
+  Builds bc_chain = the 2nd-level-and-below ancestors of the relevant collection
+  (the top-level "Unterwegs / Zuhause / …" aufklapper is deliberately omitted).
+  - collection page  -> path to the current collection, last crumb = current
+  - product via a collection URL -> that collection + its ancestors, then the product
+  - product with no collection context -> first specific menu collection (menu order,
+    umbrella "Alle …" collections skipped unless nothing else matches)
+{%- endcomment -%}
+{%- assign bc_chain = '' -%}
+{%- if template == 'product' or template == 'collection' -%}
+  {%- assign bc_nav_handle = section.settings.nav_menu_handle -%}
+  {%- assign bc_target_url = '' -%}
+
+  {%- if template == 'collection' and collection.url != blank -%}
+    {%- assign bc_target_url = collection.url -%}
+  {%- elsif template == 'product' and collection != blank and collection.url != blank -%}
+    {%- assign bc_target_url = collection.url -%}
+  {%- endif -%}
+
+  {%- assign bc_prod_colls = ' ' -%}
+  {%- if template == 'product' -%}
+    {%- for c in product.collections -%}
+      {%- assign bc_prod_colls = bc_prod_colls | append: c.url | append: ' ' -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- comment -%} Flatten the nav menu: parallel arrays of title / url / level / parent-row-index {%- endcomment -%}
+  {%- assign bc_f_titles = '' -%}
+  {%- assign bc_f_urls = '' -%}
+  {%- assign bc_f_levels = '' -%}
+  {%- assign bc_f_parents = '' -%}
+  {%- assign bc_row = 0 -%}
+  {%- for l1 in linklists[bc_nav_handle].links -%}
+    {%- assign bc_l1row = bc_row -%}
+    {%- assign bc_f_titles = bc_f_titles | append: l1.title | append: '~~|~~' -%}
+    {%- assign bc_f_urls = bc_f_urls | append: l1.url | append: '~~|~~' -%}
+    {%- assign bc_f_levels = bc_f_levels | append: '1~~|~~' -%}
+    {%- assign bc_f_parents = bc_f_parents | append: '-1~~|~~' -%}
+    {%- assign bc_row = bc_row | plus: 1 -%}
+    {%- for l2 in l1.links -%}
+      {%- assign bc_l2row = bc_row -%}
+      {%- assign bc_f_titles = bc_f_titles | append: l2.title | append: '~~|~~' -%}
+      {%- assign bc_f_urls = bc_f_urls | append: l2.url | append: '~~|~~' -%}
+      {%- assign bc_f_levels = bc_f_levels | append: '2~~|~~' -%}
+      {%- assign bc_f_parents = bc_f_parents | append: bc_l1row | append: '~~|~~' -%}
+      {%- assign bc_row = bc_row | plus: 1 -%}
+      {%- for l3 in l2.links -%}
+        {%- assign bc_f_titles = bc_f_titles | append: l3.title | append: '~~|~~' -%}
+        {%- assign bc_f_urls = bc_f_urls | append: l3.url | append: '~~|~~' -%}
+        {%- assign bc_f_levels = bc_f_levels | append: '3~~|~~' -%}
+        {%- assign bc_f_parents = bc_f_parents | append: bc_l2row | append: '~~|~~' -%}
+        {%- assign bc_row = bc_row | plus: 1 -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  {%- endfor -%}
+  {%- assign bc_titles = bc_f_titles | split: '~~|~~' -%}
+  {%- assign bc_urls = bc_f_urls | split: '~~|~~' -%}
+  {%- assign bc_levels = bc_f_levels | split: '~~|~~' -%}
+  {%- assign bc_parents = bc_f_parents | split: '~~|~~' -%}
+
+  {%- comment -%} product with no collection context: first menu collection (menu order) the product is in {%- endcomment -%}
+  {%- if bc_target_url == '' and template == 'product' -%}
+    {%- comment -%} pass 1: first specific menu collection, skipping umbrella "Alle …" collections {%- endcomment -%}
+    {%- for u in bc_urls -%}
+      {%- if bc_target_url == '' and u != '' and u != '#' -%}
+        {%- assign bc_t4 = bc_titles[forloop.index0] | slice: 0, 4 -%}
+        {%- unless bc_t4 == 'Alle' -%}
+          {%- assign bc_needle = ' ' | append: u | append: ' ' -%}
+          {%- if bc_prod_colls contains bc_needle -%}
+            {%- assign bc_target_url = u -%}
+          {%- endif -%}
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- comment -%} pass 2: fall back to an "Alle …" collection only if nothing specific matched {%- endcomment -%}
+    {%- if bc_target_url == '' -%}
+      {%- for u in bc_urls -%}
+        {%- if bc_target_url == '' and u != '' and u != '#' -%}
+          {%- assign bc_needle = ' ' | append: u | append: ' ' -%}
+          {%- if bc_prod_colls contains bc_needle -%}
+            {%- assign bc_target_url = u -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- comment -%} locate the target row {%- endcomment -%}
+  {%- assign bc_match = -1 -%}
+  {%- if bc_target_url != '' -%}
+    {%- for u in bc_urls -%}
+      {%- if bc_match == -1 and u == bc_target_url -%}
+        {%- assign bc_match = forloop.index0 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- comment -%} walk up, collecting level >= 2 rows (nearest first) {%- endcomment -%}
+  {%- if bc_match > -1 -%}
+    {%- assign bc_cur = bc_match -%}
+    {%- assign bc_rev = '' -%}
+    {%- for bc_i in (1..5) -%}
+      {%- if bc_cur > -1 -%}
+        {%- assign bc_lvl = bc_levels[bc_cur] | plus: 0 -%}
+        {%- if bc_lvl >= 2 -%}
+          {%- assign bc_rev = bc_rev | append: bc_titles[bc_cur] | append: '~~f~~' | append: bc_urls[bc_cur] | append: '~~r~~' -%}
+        {%- endif -%}
+        {%- assign bc_cur = bc_parents[bc_cur] | plus: 0 -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- assign bc_rev_parts = bc_rev | split: '~~r~~' | reverse -%}
+    {%- for p in bc_rev_parts -%}
+      {%- if p contains '~~f~~' -%}
+        {%- if bc_chain != '' -%}
+          {%- assign bc_chain = bc_chain | append: '~~r~~' -%}
+        {%- endif -%}
+        {%- assign bc_chain = bc_chain | append: p -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}
+
+<div class="page-width breadcrumbs" aria-label="breadcrumbs">
+  {%- unless template == 'index' or template == 'cart' -%}
+    {%- if section.settings.breadcrumbs_home_icon_bool -%}
+      <div class="home-icon-container">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="bi bi-house-door-fill"
+          viewBox="0 0 16 16"
+        >
+          <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z" />
+        </svg>
+      </div>
+    {%- endif -%}
+
+    <a href="/" title="Home">Home</a>
+        {%- case template.name -%}
+      {%- when 'article' -%}
+        {%- for link in linklists[section.settings.nav_menu_handle].links -%}
+          {%- if link.url == blog.url -%}
+            <span class="breadcrumb-delimeter" aria-hidden="true"></span>
+            {{ link.title | link_to: link.url }}
+            {% break %}
+          {%- endif -%}
+        {%- endfor -%}
+        <span class="breadcrumb-delimeter" aria-hidden="true"></span>
+        <a href="{{ article.url }}" aria-current="page">{{ article.title }}</a>
+      {%- when 'product' -%}
+        {%- assign bc_chain_parts = bc_chain | split: '~~r~~' -%}
+        {%- if bc_chain != '' -%}
+          {%- for p in bc_chain_parts -%}
+            {%- assign kv = p | split: '~~f~~' -%}
+            <span class="breadcrumb-delimeter" aria-hidden="true"></span>
+            {%- if kv[1] contains '/collections/' or kv[1] contains '/pages/' -%}
+              <a href="{{ kv[1] }}">{{ kv[0] }}</a>
+            {%- else -%}
+              <span class="breadcrumb-crumb">{{ kv[0] }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- elsif collection != blank and collection.url != blank -%}
+          <span class="breadcrumb-delimeter" aria-hidden="true"></span>
+          <a href="{{ collection.url }}">{{ collection.title }}</a>
+        {%- endif -%}
+
+        <span class="breadcrumb-delimeter" aria-hidden="true"></span>
+        <a href="{{ product.url }}" aria-current="page">{{ product.title | split: ':' | first }}</a>
+
+      {%- when 'collection' -%}
+        {%- assign bc_chain_parts = bc_chain | split: '~~r~~' -%}
+        {%- if bc_chain != '' -%}
+          {%- for p in bc_chain_parts -%}
+            {%- assign kv = p | split: '~~f~~' -%}
+            <span class="breadcrumb-delimeter" aria-hidden="true"></span>
+            {%- if forloop.last -%}
+              <a href="{{ collection.url }}" aria-current="page">{{ collection.title }}</a>
+            {%- elsif kv[1] contains '/collections/' or kv[1] contains '/pages/' -%}
+              <a href="{{ kv[1] }}">{{ kv[0] }}</a>
+            {%- else -%}
+              <span class="breadcrumb-crumb">{{ kv[0] }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          <span class="breadcrumb-delimeter" aria-hidden="true"></span>
+          <a href="{{ collection.url }}" aria-current="page">{{ collection.title }}</a>
+        {%- endif -%}
+
+      {%- when 'page' -%}
+        <span class="breadcrumb-delimeter" aria-hidden="true"></span>
+        <a href="{{ page.url }}" aria-current="page">{{ page.title }}</a>
+      {%- when 'search' -%}
+        <span class="breadcrumb-delimeter" aria-hidden="true"></span>
+        Search results for "{{ search.terms }}"
+      {%- when 'list-collections' -%}
+        <span class="breadcrumb-delimeter" aria-hidden="true"></span>
+        All collections
+      {%- when '404' -%}
+        <span class="breadcrumb-delimeter" aria-hidden="true"></span>
+        404 Page not found
+      {%- endcase -%}
+  {%- endunless -%}
+</div>
+
+
+<script defer>
+  const breadCrumbLinks = document.querySelectorAll(".breadcrumbs a")
+  const lastLink = breadCrumbLinks[breadCrumbLinks.length - 1]
+                if (typeof lastLink !== "undefined") {
+                  lastLink.href = "javascript:void(0)";
+                }
+</script>
+
+{% schema %}
+{
+  "name": "Breadcrumb Navigation",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Subscribe to our [channel](https://www.youtube.com/@websensepro?sub_confirmation=1)"
+    },
+    {
+      "type": "checkbox",
+      "id": "breadcrumbs_home_icon_bool",
+      "label": "Use the home icon next to the Home link in the breadcrumb",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "breadcrumb_delimeter",
+      "label": "Breadcrumb Delimeter Icon",
+      "options": [
+        { "value": "angle_right", "label": "Angle Right" },
+        { "value": "slash", "label": "Slash" },
+        { "value": "arrow_right", "label": "Arrow Right" },
+        { "value": "squiggle_arrow", "label": "Squiggle Arrow" },
+        { "value": "right_long", "label": "Right Long" },
+        { "value": "double_right", "label": "Double Right" },
+        { "value": "diamond_arrow_head", "label": "Diamond Arrow Head" },
+        { "value": "heavy_angle_right", "label": "Heavy Angle Right" }
+      ],
+      "default": "angle_right"
+    },
+    { "type": "color", "id": "breadcrumb_bg_color", "label": "Background Color", "default": "#fff" },
+    { "type": "color", "id": "breadcrumb_text_color", "label": "Breadcrumb Color", "default": "#465076" },
+    { "type": "checkbox", "id": "breadcrumb_accent_color_bool", "label": "Enable visited page color link in breadcrumb", "default": false },
+    { "type": "color", "id": "breadcrumb_accent_color", "label": "Visited Page Link Color", "default": "#4770db" },
+    { "type":"checkbox", "id":"enable_product_page", "label":"Enable in Product Page" },
+    { "type":"checkbox", "id":"enable_collection_page", "label":"Enable in Collection Page" },
+    { "type":"checkbox", "id":"enable_complete_site", "label":"Enable on Complete Website", "default": true },
+    { "type": "text", "id": "nav_menu_handle", "label": "Navigation menu handle used for category breadcrumbs", "info": "Must match the handle of the menu actually used by your header (check Header section settings). Currently main-menu-v2.", "default": "main-menu" }
+  ],
+  "presets": [
+    { "name": "Breadcrumb Navigation" }
+  ]
+}
+{% endschema %}

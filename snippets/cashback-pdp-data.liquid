@@ -1,0 +1,49 @@
+{%- comment -%}
+  cashback-pdp-data: Rechengrundlage fuer Banner, Rechner und Tabelle auf der Produktseite.
+  Aufruf: render 'cashback-pdp-data', product: product
+  Ausgabe (eine Zeile): preis|pct|boost|aktion|enddatum
+    preis    = Preis der Variante mit "cashback" im Titel, ganze CHF (Neupreis bei loopi); 0 = kein Cashback-Produkt
+    pct      = 9 Prozentwerte, Zeilen so gut wie neu / leicht / deutlich, je 6, 12, 24 Monate
+    boost    = 9 x 0/1, 1 = Aktionswert hoeher als Standardwert
+    aktion   = 1/0, ob die Einfuehrungsaktion laeuft
+    enddatum = dd.mm.yyyy
+  Die Matrix kommt aus EINER Quelle (snippets/cashback-matrix.liquid), identisch mit der Cashback-Seite.
+{%- endcomment -%}
+{%- liquid
+  assign cb_price = 0
+  for v in product.variants
+    assign vt = v.title | downcase
+    if vt contains 'cashback'
+      assign cb_price = v.price | divided_by: 100.0 | round
+      break
+    endif
+  endfor
+  assign pcts = ''
+  assign boosts = ''
+  for r in (0..2)
+    for c in (0..2)
+      capture pv
+        render 'cashback-matrix', mode: 'value', row: r, col: c
+      endcapture
+      capture bv
+        render 'cashback-matrix', mode: 'boost', row: r, col: c
+      endcapture
+      assign pv = pv | strip
+      assign bv = bv | strip
+      if pcts == ''
+        assign pcts = pv
+        assign boosts = bv
+      else
+        assign pcts = pcts | append: ',' | append: pv
+        assign boosts = boosts | append: ',' | append: bv
+      endif
+    endfor
+  endfor
+  capture act
+    render 'cashback-matrix', mode: 'active'
+  endcapture
+  capture bis
+    render 'cashback-matrix', mode: 'bis'
+  endcapture
+-%}
+{{- cb_price }}|{{ pcts }}|{{ boosts }}|{{ act | strip }}|{{ bis | strip -}}

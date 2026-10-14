@@ -1,0 +1,6 @@
+<svg aria-hidden="true" focusable="false" class="loopi-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 70 70" height="70" width="70">
+<defs><mask id="loopi-muenze-cut" maskUnits="userSpaceOnUse" x="-20" y="-20" width="110" height="110"><rect x="-20" y="-20" width="110" height="110" fill="#fff"/><circle stroke="#000" stroke-width="2.6" cx="35" cy="35" r="22"/><path stroke="#000" stroke-width="2.9" stroke-linecap="round" stroke-linejoin="round" d="M28.46 31.40A4.7 4.7 0 1 0 28.46 38.60M33.46 30.0V40.0M39.46 30.0V40.0M33.46 35H39.46M44.46 40.0V30.0H49.26M44.46 35H48.46"/></mask></defs>
+<g mask="url(#loopi-muenze-cut)">
+<circle fill="currentColor" cx="35" cy="35" r="31"/>
+</g>
+</svg>

@@ -1,0 +1,18 @@
+{% comment %}
+  Page de redirection : Créer un ticket (FR)
+  Ouvre automatiquement un e-mail pré-rempli à abo@loopi.ch.
+  Bouton de secours pour les navigateurs qui bloquent la redirection auto.
+{% endcomment %}
+
+<div class="ticket-redirect" style="text-align:center; padding: 80px 20px; max-width:480px; margin:0 auto;">
+  <p>Ton programme de messagerie devrait s'ouvrir automatiquement dans un instant.</p>
+  <p>Si ce n'est pas le cas :</p>
+  <a href="mailto:abo@loopi.ch?subject=Demande%20WhatsApp&body=Bonjour%20l%27%C3%A9quipe%20loopi%2C%0A%0AJ%27ai%20une%20question%20concernant%20ma%20commande%2Fmon%20abonnement.%0A%0A"
+     style="display:inline-block; padding:12px 24px; background:#000; color:#fff; text-decoration:none; border-radius:4px;">
+    Écrire un e-mail à loopi
+  </a>
+</div>
+
+<script>
+  window.location.href = "mailto:abo@loopi.ch?subject=Demande%20WhatsApp&body=Bonjour%20l%27%C3%A9quipe%20loopi%2C%0A%0AJ%27ai%20une%20question%20concernant%20ma%20commande%2Fmon%20abonnement.%0A%0A";
+</script>

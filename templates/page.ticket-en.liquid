@@ -1,0 +1,18 @@
+{% comment %}
+  Redirect page: Create ticket (EN)
+  Automatically opens a pre-filled email to abo@loopi.ch.
+  Fallback button for browsers that block the auto-redirect.
+{% endcomment %}
+
+<div class="ticket-redirect" style="text-align:center; padding: 80px 20px; max-width:480px; margin:0 auto;">
+  <p>Your email app should open automatically in a moment.</p>
+  <p>If not:</p>
+  <a href="mailto:abo@loopi.ch?subject=Whatsapp%20Inquiry&body=Dear%20loopi%20Team%2C%0A%0AI%20have%20a%20question%20about%20my%20order%2Fsubscription.%0A%0A"
+     style="display:inline-block; padding:12px 24px; background:#000; color:#fff; text-decoration:none; border-radius:4px;">
+    Email loopi
+  </a>
+</div>
+
+<script>
+  window.location.href = "mailto:abo@loopi.ch?subject=Whatsapp%20Inquiry&body=Dear%20loopi%20Team%2C%0A%0AI%20have%20a%20question%20about%20my%20order%2Fsubscription.%0A%0A";
+</script>

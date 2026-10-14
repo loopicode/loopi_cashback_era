@@ -1,0 +1,308 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "Swatch Colors",
+  "type": "aside",
+  "sections": {
+    "colors": {
+      "type": "colors",
+      "blocks": {
+        "color_swatches_m9EEAj": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Nutria Green",
+            "color": "",
+            "image": "shopify://shop_images/nutria-green.png"
+          }
+        },
+        "color_swatches_jchtNd": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Mineral washed black",
+            "color": "#4b4549",
+            "image": "shopify://shop_images/mineral-washed-black.png"
+          }
+        },
+        "color_swatches_bEyGkM": {
+          "type": "color_swatches",
+          "settings": {
+            "title": " Grey melange",
+            "color": "#808080",
+            "image": "shopify://shop_images/grey-melange.png"
+          }
+        },
+        "color_swatches_MtNdD6": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Midnight black",
+            "color": "#35302c",
+            "image": "shopify://shop_images/midnight-black.png"
+          }
+        },
+        "color_swatches_HCV6ND": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Black",
+            "color": "#060606"
+          }
+        },
+        "color_swatches_i7hMeb": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Grey",
+            "color": "#d9dddc"
+          }
+        },
+        "color_swatches_nngXBU": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Rose",
+            "color": "#d4bfbe"
+          }
+        },
+        "color_swatches_UqrThw": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Mint",
+            "color": "#d9e0de"
+          }
+        },
+        "color_swatches_UYTCfQ": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Beige",
+            "color": "#f2f0e7"
+          }
+        },
+        "color_swatches_dk6FeG": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Fern Green",
+            "color": "#4F6F52",
+            "image": ""
+          }
+        },
+        "color_swatches_hb2XpQ": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Heritage Black",
+            "color": "#1b1b1b",
+            "image": ""
+          }
+        },
+        "color_swatches_dt4MqR": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Desert Taupe",
+            "color": "#c0aca0",
+            "image": ""
+          }
+        },
+        "color_swatches_di8K3r": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Deep Indigo",
+            "color": "#23232b",
+            "image": ""
+          }
+        },
+        "color_swatches_cb5N2w": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Cocoa Brown",
+            "color": "#6F4E37",
+            "image": ""
+          }
+        },
+        "color_swatches_mg7Y4t": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Moon Grey",
+            "color": "#B8B8B8",
+            "image": ""
+          }
+        },
+        "color_swatches_bw9J6h": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Black Heritage / Misty White",
+            "color": "#f2f0eb",
+            "image": "shopify://shop_images/heritage-black-misty-white.png"
+          }
+        },
+        "color_swatches_RnoHwR": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Black Stars",
+            "color": "#2b2a2c",
+            "image": ""
+          }
+        },
+        "color_swatches_7qXife": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Blue Stars",
+            "color": "#006595",
+            "image": ""
+          }
+        },
+        "color_swatches_lYNvGj": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Grey Stars",
+            "color": "#4e4f55",
+            "image": ""
+          }
+        },
+        "color_swatches_Ysvapr": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Sage Green",
+            "color": "#a1aaa2",
+            "image": ""
+          }
+        },
+        "color_swatches_c13eAm": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Grau",
+            "color": "#8a8a8a",
+            "image": ""
+          }
+        },
+        "color_swatches_jdAS89": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Schwarz",
+            "color": "#35302c",
+            "image": ""
+          }
+        },
+        "color_swatches_iRZ7Q4": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Misty grey",
+            "color": "#bdb8c0",
+            "image": ""
+          }
+        },
+        "color_swatches_hLfNat1": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Natur",
+            "color": "#c39d72",
+            "image": ""
+          }
+        },
+        "color_swatches_hLfEuc1": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Eucalyptus",
+            "color": "#678d85",
+            "image": ""
+          }
+        },
+        "color_swatches_hLfWht1": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "White",
+            "color": "#f3f6f8",
+            "image": ""
+          }
+        },
+        "color_swatches_hLfOMi1": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Ocean Mint",
+            "color": "#c9ded9",
+            "image": ""
+          }
+        },
+        "color_swatches_pkyLav1": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Lavender black",
+            "color": "#A79FC5",
+            "image": ""
+          }
+        },
+        "color_swatches_pkySnd1": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Sand black",
+            "color": "#C7B089",
+            "image": ""
+          }
+        },
+        "color_swatches_pkyGrn1": {
+          "type": "color_swatches",
+          "settings": {
+            "title": "Green black",
+            "color": "#B4C1AC",
+            "image": ""
+          }
+        }
+      },
+      "block_order": [
+        "color_swatches_m9EEAj",
+        "color_swatches_jchtNd",
+        "color_swatches_bEyGkM",
+        "color_swatches_MtNdD6",
+        "color_swatches_HCV6ND",
+        "color_swatches_i7hMeb",
+        "color_swatches_nngXBU",
+        "color_swatches_UqrThw",
+        "color_swatches_UYTCfQ",
+        "color_swatches_dk6FeG",
+        "color_swatches_hb2XpQ",
+        "color_swatches_dt4MqR",
+        "color_swatches_di8K3r",
+        "color_swatches_cb5N2w",
+        "color_swatches_mg7Y4t",
+        "color_swatches_bw9J6h",
+        "color_swatches_RnoHwR",
+        "color_swatches_7qXife",
+        "color_swatches_lYNvGj",
+        "color_swatches_Ysvapr",
+        "color_swatches_c13eAm",
+        "color_swatches_jdAS89",
+        "color_swatches_iRZ7Q4",
+        "color_swatches_hLfNat1",
+        "color_swatches_hLfEuc1",
+        "color_swatches_hLfWht1",
+        "color_swatches_hLfOMi1",
+        "color_swatches_pkyLav1",
+        "color_swatches_pkySnd1",
+        "color_swatches_pkyGrn1"
+      ],
+      "settings": {}
+    },
+    "sticky_add_to_cart_zByKHT": {
+      "type": "sticky-add-to-cart",
+      "settings": {
+        "enable_section": false,
+        "color_scheme": "",
+        "title_size": "h4",
+        "show_img": true,
+        "img_width": "80",
+        "img_height": "80",
+        "show_quantity_input": false,
+        "btn_style": "primary",
+        "offset": 0,
+        "pt": 0.5,
+        "pb": 0.5
+      }
+    }
+  },
+  "order": [
+    "colors",
+    "sticky_add_to_cart_zByKHT"
+  ]
+}

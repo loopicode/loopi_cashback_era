@@ -1,0 +1,681 @@
+{% doc %}
+  @prompt
+    I want a utility bar that shows my store location that has a telephone link so it calls our telephone number, landline, that has a whatsapp link where we have our whatsapp business, and that has a link to our opening hours that pop up and are underlaid in a table. Make everything such that I can configure the fields here in theme editor. It shall be a bar just like the top announcement bar with a gray color and symbols before every section, for instance:
+    - a pin for the locator
+    - the whatsapp symbol
+    - a phone symbol
+    - an opening hour symbol with a clock, Make it such that I can embed the Google Maps link, the iFrame of the Google Maps, under the location. 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-utility-bar-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    background-color: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    padding: 10px 0;
+    font-size: {{ block.settings.font_size }}px;
+  }
+
+  .ai-utility-bar-container-{{ ai_gen_id }} {
+    max-width: {{ settings.page_width }}px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
+  .ai-utility-bar-item-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: {{ block.settings.text_color }};
+    transition: opacity 0.3s ease;
+  }
+
+
+
+/* Force underline for all utility-bar texts (phone, whatsapp, hours, location) */
+utility-bar-{{ ai_gen_id }} .ai-utility-bar-item-{{ ai_gen_id }} span,
+utility-bar-{{ ai_gen_id }} .ai-utility-bar-button-{{ ai_gen_id }} span {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+/* Keep wrappers clean (icons not underlined) */
+utility-bar-{{ ai_gen_id }} .ai-utility-bar-item-{{ ai_gen_id }},
+utility-bar-{{ ai_gen_id }} .ai-utility-bar-button-{{ ai_gen_id }} {
+  text-decoration: none !important;
+}
+
+
+
+
+
+
+
+
+
+
+  .ai-utility-bar-item-{{ ai_gen_id }}:hover {
+    opacity: 0.7;
+  }
+
+  .ai-utility-bar-item-{{ ai_gen_id }} svg {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    flex-shrink: 0;
+  }
+
+  .ai-utility-bar-button-{{ ai_gen_id }} {
+      background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: {{ block.settings.text_color }};
+  font-size: {{ block.settings.font_size }}px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: opacity 0.3s ease;
+  }
+
+  .ai-utility-bar-button-{{ ai_gen_id }}:hover {
+    opacity: 0.7;
+  }
+
+  .ai-utility-bar-button-{{ ai_gen_id }} svg {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    flex-shrink: 0;
+  }
+
+  .ai-utility-bar-modal-{{ ai_gen_id }} {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .ai-utility-bar-modal-{{ ai_gen_id }}.active {
+    display: flex;
+  }
+
+  .ai-utility-bar-modal-content-{{ ai_gen_id }} {
+    background-color: {{ block.settings.modal_background_color }};
+    color: {{ block.settings.modal_text_color }};
+    border-radius: 8px;
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .ai-utility-bar-modal-close-{{ ai_gen_id }} {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    color: {{ block.settings.modal_text_color }};
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-utility-bar-modal-close-{{ ai_gen_id }}:hover {
+    opacity: 1;
+  }
+
+  .ai-utility-bar-modal-title-{{ ai_gen_id }} {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-right: 30px;
+  }
+
+  .ai-utility-bar-hours-table-{{ ai_gen_id }} {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  .ai-utility-bar-hours-table-{{ ai_gen_id }} tr {
+    border-bottom: 1px solid {{ block.settings.modal_text_color | color_modify: 'alpha', 0.2 }};
+  }
+
+  .ai-utility-bar-hours-table-{{ ai_gen_id }} tr:last-child {
+    border-bottom: none;
+  }
+
+  .ai-utility-bar-hours-table-{{ ai_gen_id }} td {
+    padding: 12px 0;
+  }
+
+  .ai-utility-bar-hours-table-{{ ai_gen_id }} td:first-child {
+    font-weight: 600;
+    padding-right: 20px;
+  }
+
+  .ai-utility-bar-hours-table-{{ ai_gen_id }} td:last-child {
+    text-align: right;
+  }
+
+  .ai-utility-bar-map-container-{{ ai_gen_id }} {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .ai-utility-bar-map-container-{{ ai_gen_id }} iframe {
+    width: 100%;
+    height: {{ block.settings.map_height }}px;
+    border: none;
+    border-radius: 8px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-utility-bar-container-{{ ai_gen_id }} {
+      gap: 15px;
+      font-size: {{ block.settings.font_size | times: 0.9 }}px;
+    }
+
+    .ai-utility-bar-item-{{ ai_gen_id }} svg,
+    .ai-utility-bar-button-{{ ai_gen_id }} svg {
+      width: {{ block.settings.icon_size | times: 0.9 }}px;
+      height: {{ block.settings.icon_size | times: 0.9 }}px;
+    }
+
+    .ai-utility-bar-modal-content-{{ ai_gen_id }} {
+      padding: 20px;
+    }
+
+    .ai-utility-bar-modal-title-{{ ai_gen_id }} {
+      font-size: 20px;
+    }
+
+    .ai-utility-bar-map-container-{{ ai_gen_id }} iframe {
+      height: {{ block.settings.map_height | times: 0.75 }}px;
+    }
+  }
+{% endstyle %}
+
+<utility-bar-{{ ai_gen_id }} class="ai-utility-bar-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-utility-bar-container-{{ ai_gen_id }}">
+    {% if block.settings.show_location and block.settings.location_text != blank %}
+      {% if block.settings.show_location_modal %}
+        <button type="button" class="ai-utility-bar-button-{{ ai_gen_id }}" data-location-modal-trigger>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span>{{ block.settings.location_text }}</span>
+        </button>
+      {% else %}
+        <div class="ai-utility-bar-item-{{ ai_gen_id }}">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span>{{ block.settings.location_text }}</span>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    {% if block.settings.show_phone and block.settings.phone_number != blank %}
+      <a href="tel:{{ block.settings.phone_number }}" class="ai-utility-bar-item-{{ ai_gen_id }}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+        <span>{{ block.settings.phone_number }}</span>
+      </a>
+    {% endif %}
+
+    {% if block.settings.show_whatsapp and block.settings.whatsapp_number != blank %}
+      <a href="https://wa.me/{{ block.settings.whatsapp_number | replace: '+', '' | replace: ' ', '' }}" target="_blank" rel="noopener noreferrer" class="ai-utility-bar-item-{{ ai_gen_id }}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        <span>{{ block.settings.whatsapp_label }}</span>
+      </a>
+    {% endif %}
+
+    {% if block.settings.show_hours %}
+      <button type="button" class="ai-utility-bar-button-{{ ai_gen_id }}" data-hours-modal-trigger>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <span>{{ block.settings.hours_label }}</span>
+      </button>
+    {% endif %}
+  </div>
+
+  {% if block.settings.show_location_modal %}
+    <div class="ai-utility-bar-modal-{{ ai_gen_id }}" data-location-modal>
+      <div class="ai-utility-bar-modal-content-{{ ai_gen_id }}">
+        <button type="button" class="ai-utility-bar-modal-close-{{ ai_gen_id }}" data-location-modal-close aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <h2 class="ai-utility-bar-modal-title-{{ ai_gen_id }}">{{ block.settings.location_modal_title }}</h2>
+        {% if block.settings.google_maps_embed != blank %}
+          <div class="ai-utility-bar-map-container-{{ ai_gen_id }}">
+            {{ block.settings.google_maps_embed }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if block.settings.show_hours %}
+    <div class="ai-utility-bar-modal-{{ ai_gen_id }}" data-hours-modal>
+      <div class="ai-utility-bar-modal-content-{{ ai_gen_id }}">
+        <button type="button" class="ai-utility-bar-modal-close-{{ ai_gen_id }}" data-hours-modal-close aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <h2 class="ai-utility-bar-modal-title-{{ ai_gen_id }}">{{ block.settings.hours_modal_title }}</h2>
+        <table class="ai-utility-bar-hours-table-{{ ai_gen_id }}">
+          {% if block.settings.monday_hours != blank %}
+            <tr>
+              <td>{{ block.settings.monday_label }}</td>
+              <td>{{ block.settings.monday_hours }}</td>
+            </tr>
+          {% endif %}
+          {% if block.settings.tuesday_hours != blank %}
+            <tr>
+              <td>{{ block.settings.tuesday_label }}</td>
+              <td>{{ block.settings.tuesday_hours }}</td>
+            </tr>
+          {% endif %}
+          {% if block.settings.wednesday_hours != blank %}
+            <tr>
+              <td>{{ block.settings.wednesday_label }}</td>
+              <td>{{ block.settings.wednesday_hours }}</td>
+            </tr>
+          {% endif %}
+          {% if block.settings.thursday_hours != blank %}
+            <tr>
+              <td>{{ block.settings.thursday_label }}</td>
+              <td>{{ block.settings.thursday_hours }}</td>
+            </tr>
+          {% endif %}
+          {% if block.settings.friday_hours != blank %}
+            <tr>
+              <td>{{ block.settings.friday_label }}</td>
+              <td>{{ block.settings.friday_hours }}</td>
+            </tr>
+          {% endif %}
+          {% if block.settings.saturday_hours != blank %}
+            <tr>
+              <td>{{ block.settings.saturday_label }}</td>
+              <td>{{ block.settings.saturday_hours }}</td>
+            </tr>
+          {% endif %}
+          {% if block.settings.sunday_hours != blank %}
+            <tr>
+              <td>{{ block.settings.sunday_label }}</td>
+              <td>{{ block.settings.sunday_hours }}</td>
+            </tr>
+          {% endif %}
+        </table>
+      </div>
+    </div>
+  {% endif %}
+</utility-bar-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class UtilityBar{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.hoursModal = this.querySelector('[data-hours-modal]');
+        this.hoursModalTrigger = this.querySelector('[data-hours-modal-trigger]');
+        this.hoursModalClose = this.querySelector('[data-hours-modal-close]');
+
+        this.locationModal = this.querySelector('[data-location-modal]');
+        this.locationModalTrigger = this.querySelector('[data-location-modal-trigger]');
+        this.locationModalClose = this.querySelector('[data-location-modal-close]');
+
+        if (this.hoursModalTrigger && this.hoursModal) {
+          this.hoursModalTrigger.addEventListener('click', () => this.openModal(this.hoursModal));
+        }
+
+        if (this.hoursModalClose && this.hoursModal) {
+          this.hoursModalClose.addEventListener('click', () => this.closeModal(this.hoursModal));
+        }
+
+        if (this.locationModalTrigger && this.locationModal) {
+          this.locationModalTrigger.addEventListener('click', () => this.openModal(this.locationModal));
+        }
+
+        if (this.locationModalClose && this.locationModal) {
+          this.locationModalClose.addEventListener('click', () => this.closeModal(this.locationModal));
+        }
+
+        if (this.hoursModal) {
+          this.hoursModal.addEventListener('click', (e) => {
+            if (e.target === this.hoursModal) {
+              this.closeModal(this.hoursModal);
+            }
+          });
+        }
+
+        if (this.locationModal) {
+          this.locationModal.addEventListener('click', (e) => {
+            if (e.target === this.locationModal) {
+              this.closeModal(this.locationModal);
+            }
+          });
+        }
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            if (this.hoursModal && this.hoursModal.classList.contains('active')) {
+              this.closeModal(this.hoursModal);
+            }
+            if (this.locationModal && this.locationModal.classList.contains('active')) {
+              this.closeModal(this.locationModal);
+            }
+          }
+        });
+      }
+
+      openModal(modal) {
+        if (modal) {
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      closeModal(modal) {
+        if (modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+    }
+
+    customElements.define('utility-bar-{{ ai_gen_id }}', UtilityBar{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Utility bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Bar style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f3f3f3"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#121212"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 12,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Location"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_location",
+      "label": "Show location",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "location_text",
+      "label": "Location text",
+      "default": "Zurich, Switzerland"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_location_modal",
+      "label": "Enable location modal with map",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "location_modal_title",
+      "label": "Location modal title",
+      "default": "Our location"
+    },
+    {
+      "type": "html",
+      "id": "google_maps_embed",
+      "label": "Google Maps embed code",
+      "info": "Paste the full iframe embed code from Google Maps"
+    },
+    {
+      "type": "range",
+      "id": "map_height",
+      "label": "Map height",
+      "min": 200,
+      "max": 600,
+      "step": 50,
+      "unit": "px",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Phone"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "Show phone",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Phone number",
+      "default": "+41 44 123 45 67"
+    },
+    {
+      "type": "header",
+      "content": "WhatsApp"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp",
+      "label": "Show WhatsApp",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp number",
+      "info": "Include country code, e.g., +41791234567"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "WhatsApp label",
+      "default": "WhatsApp"
+    },
+    {
+      "type": "header",
+      "content": "Opening hours"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hours",
+      "label": "Show opening hours",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "hours_label",
+      "label": "Hours button label",
+      "default": "Opening hours"
+    },
+    {
+      "type": "text",
+      "id": "hours_modal_title",
+      "label": "Modal title",
+      "default": "Opening hours"
+    },
+    {
+      "type": "text",
+      "id": "monday_label",
+      "label": "Monday label",
+      "default": "Monday"
+    },
+    {
+      "type": "text",
+      "id": "monday_hours",
+      "label": "Monday hours",
+      "default": "9:00 - 18:00"
+    },
+    {
+      "type": "text",
+      "id": "tuesday_label",
+      "label": "Tuesday label",
+      "default": "Tuesday"
+    },
+    {
+      "type": "text",
+      "id": "tuesday_hours",
+      "label": "Tuesday hours",
+      "default": "9:00 - 18:00"
+    },
+    {
+      "type": "text",
+      "id": "wednesday_label",
+      "label": "Wednesday label",
+      "default": "Wednesday"
+    },
+    {
+      "type": "text",
+      "id": "wednesday_hours",
+      "label": "Wednesday hours",
+      "default": "9:00 - 18:00"
+    },
+    {
+      "type": "text",
+      "id": "thursday_label",
+      "label": "Thursday label",
+      "default": "Thursday"
+    },
+    {
+      "type": "text",
+      "id": "thursday_hours",
+      "label": "Thursday hours",
+      "default": "9:00 - 18:00"
+    },
+    {
+      "type": "text",
+      "id": "friday_label",
+      "label": "Friday label",
+      "default": "Friday"
+    },
+    {
+      "type": "text",
+      "id": "friday_hours",
+      "label": "Friday hours",
+      "default": "9:00 - 18:00"
+    },
+    {
+      "type": "text",
+      "id": "saturday_label",
+      "label": "Saturday label",
+      "default": "Saturday"
+    },
+    {
+      "type": "text",
+      "id": "saturday_hours",
+      "label": "Saturday hours",
+      "default": "10:00 - 16:00"
+    },
+    {
+      "type": "text",
+      "id": "sunday_label",
+      "label": "Sunday label",
+      "default": "Sunday"
+    },
+    {
+      "type": "text",
+      "id": "sunday_hours",
+      "label": "Sunday hours",
+      "default": "Closed"
+    },
+    {
+      "type": "header",
+      "content": "Modal style"
+    },
+    {
+      "type": "color",
+      "id": "modal_background_color",
+      "label": "Modal background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "modal_text_color",
+      "label": "Modal text color",
+      "default": "#121212"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Utility bar"
+    }
+  ]
+}
+{% endschema %}

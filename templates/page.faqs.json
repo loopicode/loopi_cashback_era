@@ -1,0 +1,365 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collapsible_content_QUYEay": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_nkTwge": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Gibt es eine Mindestvertragslaufzeit für das Abo und wie funktioniert die Kündigung?",
+            "icon": "none",
+            "row_content": "<p>Je nachdem, welches Produkt du ausgewählt hast, variiert die Mindestvertragslaufzeit zwischen 3 und 24 Monaten. Nach Ablauf dieser Frist kannst du das Abo jederzeit flexibel mit einer monatlichen Kündigungsfrist beenden. Falls keine Kündigung erfolgt, verlängert sich das Abo automatisch um jeweils einen weiteren Monat. Alle Produkte ohne wählbare Vertragslaufzeit haben eine Mindestvertragslaufzeit von 6 Monaten<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_Ka6mQM": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Wie kann ich mein Abo kündigen und welche Kündigungsfrist gilt?",
+            "icon": "none",
+            "row_content": "<p>Um dein Abo zu kündigen, melde dich einfach nach Ablauf deiner Mindestvertragslaufzeit in deinem <a href=\"https:\/\/account.loopi.ch\/de\/auth\/login\" title=\"https:\/\/account.loopi.ch\/de\/auth\/login\">loopi Konto<\/a> an. Wähle unter \"Abonnement\" die Option \"Abonnement kündigen\". Beachte dabei die 14-tägige Kündigungsfrist. Nach erfolgreicher Kündigung erhältst du eine Bestätigungs-E-Mail mit weiteren Informationen.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_KAdbeV": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Wie kann ich den Kinderwagen austauschen?",
+            "icon": "none",
+            "row_content": "<p>Falls sich deine Bedürfnisse geändert haben – beispielsweise wenn dein Kind gewachsen ist oder du nun einen Doppel-Kinderwagen oder Veloanhänger benötigst – kannst du dein gemietetes Produkt unkompliziert austauschen.<\/p><p>Nach deiner gewählten Mindestlaufzeit kannst du auf ein anderes Produkt wechseln.<\/p><p>So funktioniert der Produktwechsel:<\/p><p>1. Bestelle dein neues Wunschprodukt direkt im <a href=\"https:\/\/loopi.ch\/\" target=\"_blank\"><span style=\"text-decoration:underline\">loopi-Shop<\/span><\/a>.<\/p><p>2. Kündige dein bisheriges Abo in deinem <a href=\"https:\/\/account.loopi.ch\/de\/auth\/login\" target=\"_blank\" title=\"https:\/\/account.loopi.ch\/de\/auth\/login\"><span style=\"text-decoration:underline\">loopi Account<\/span><\/a>. <\/p><p>Sobald das neue Produkt geliefert wurde, gib das alte Produkt bequem zurück.Der Austausch ist einfach und flexibel, damit du immer das passende Produkt für deine Familie hast!<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_nH8mAQ": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Was passiert mit retournierten Artikeln und wie werden sie aufbereitet?",
+            "icon": "none",
+            "row_content": "<p>Retournierten Artikel werden bei uns einem gründlichen Prozess unterzogen: Sie werden professionell gereinigt, gewartet und, falls nötig, repariert. Auf diese Weise stellen wir sicher, dass jedes Produkt wieder wie neu ist und sicher genutzt werden kann. Eure Sicherheit hat für uns höchste Priorität.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_ExnFPX": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Warum sollte ich Kinderprodukte abonnieren (mieten) statt kaufen?",
+            "icon": "none",
+            "row_content": "<p>Kinderprodukte wie Kinderwagen und Spielzeug werden oft nur für kurze Zeit benötigt. Mit unserem Abo bleibst du flexibel und mietest Produkte nur so lange, wie du sie brauchst – ideal abgestimmt auf die Entwicklung deines Kindes. Du sparst Geld, vermeidest Reparaturkosten und musst dich nicht um die Wartung kümmern.<br\/><br\/>Wusstest du, dass 25 % der Schweizer Familien mehr als drei Kinderwagen kaufen? Das ist nicht nur teuer, sondern belastet auch die Umwelt. Mit loopi sparst du Geld, schonst die Nerven und trägst aktiv zu einer nachhaltigeren Zukunft bei – für deine Familie und die Schweiz.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_iGKpTD": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Muss ich für normale Gebrauchsspuren an gemieteten Produkten aufkommen?",
+            "icon": "none",
+            "row_content": "<p>Nein, normale Gebrauchsspuren wie Kratzer, Dellen und leichte Beulen sind bei uns kein Problem. Unsere Produkte sind dafür gemacht, genutzt zu werden! Wir kümmern uns um die Aufbereitung, damit der Kinderwagen und andere Artikel nach der Rückgabe wieder wie neu aussehen. Du musst keine zusätzlichen Kosten für Abnutzung tragen.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_6Umjrh": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Ist der Startzeitpunkt des Abos flexibel?",
+            "icon": "none",
+            "row_content": "<p>Klar! Du entscheidest, wann das Abenteuer los geht. Wir empfehlen jedochh einen frühzeitigen Abo-Abschluss, um die Produktverfügbarkeit zu sichern und Wartezeiten oder Enttäuschungen bei Ausverkauf zu vermeiden. Das Startdatum kann bis zu sechs Monate in die Zukunft gewählt werden.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_UMiDwt": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Was passiert nach Ablauf der Mindestlaufzeit meines Abos?",
+            "icon": "none",
+            "row_content": "<p>Nach Ablauf der Mindestlaufzeit verlängert sich dein Abo automatisch um jeweils einen Monat. Du hast jedoch die Möglichkeit, es ab diesem Zeitpunkt monatlich über das <a href=\"https:\/\/account.loopi.ch\/de\/auth\/login\" title=\"https:\/\/account.loopi.ch\/de\/auth\/login\">Self-Service-Center<\/a> zu kündigen. Beachte dabei die <strong>14-tägige<\/strong> Kündigungsfrist.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_hTTc76": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Wann sollte ich den Kinderwagen bestellen, um ihn rechtzeitig zur Geburt zu erhalten?",
+            "icon": "none",
+            "row_content": "<p>Wir empfehlen, den Liefertermin für den Kinderwagen etwa einen Monat vor dem Geburtstermin festzulegen. Sollte dein Baby früher zur Welt kommen, kontaktiere uns einfach per E-Mail an abo@loopi.ch, und wir kümmern uns sofort um die frühzeitige Lieferung.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_nkTwge",
+        "collapsible_row_Ka6mQM",
+        "collapsible_row_KAdbeV",
+        "collapsible_row_nH8mAQ",
+        "collapsible_row_ExnFPX",
+        "collapsible_row_iGKpTD",
+        "collapsible_row_6Umjrh",
+        "collapsible_row_UMiDwt",
+        "collapsible_row_hTTc76"
+      ],
+      "settings": {
+        "narrow_width": true,
+        "caption": "",
+        "heading": "Fragen zum Abonnement",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "btn_link": "",
+        "btn_text": "Mehr erfahren",
+        "button_alignment": "left",
+        "color_scheme": "",
+        "container_color_scheme": "scheme-2",
+        "open_first_collapsible_row": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 0,
+        "padding_bottom": 52
+      }
+    },
+    "collapsible_content_AmH6qx": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_pMkb4G": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Welche Zahlungsmöglichkeiten stehen zur Verfügung?",
+            "icon": "none",
+            "row_content": "<p>Derzeit kannst du bei uns mit Kreditkarte und TWINT bezahlen. Zusätzlich arbeiten wir an der Integration von PayPal, die bald verfügbar sein wird.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_fyc4c6": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Wann ist die Zahlung für das Abo fällig?",
+            "icon": "none",
+            "row_content": "<p>Die erste Zahlung wird bei Abschluss des Abos fällig, damit die gewünschten Artikel für dich reserviert werden. Ab dem von dir gewählten Startdatum erfolgen dann monatliche Zahlungen, die automatisch von deinem hinterlegten Zahlungsmittel abgebucht werden. Beispiel: Wenn du dein Abo am 15. Oktober 2024 mit Starttermin am 1. Dezember 2024 abschliesst, ist die erste Zahlung am 15. Oktober fällig. Die nächste Zahlung erfolgt dann nach der Lieferung am 1. Dezember und wiederholt sich monatlich, bis das Abo gekündigt wird.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_pMkb4G",
+        "collapsible_row_fyc4c6"
+      ],
+      "settings": {
+        "narrow_width": false,
+        "caption": "",
+        "heading": "Fragen zur Bezahlung",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "btn_link": "",
+        "btn_text": "Mehr erfahren",
+        "button_alignment": "left",
+        "color_scheme": "",
+        "container_color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collapsible_content_gCc3mL": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_mmEVJT": {
+          "type": "collapsible_row",
+          "disabled": true,
+          "settings": {
+            "heading": "Kann ich den Kinderwagen oder Veloanhänger Probe fahren?",
+            "icon": "none",
+            "row_content": "<p>Ja, du kannst den Kinderwagen oder Veloanhänger gerne Probe fahren! Vereinbare einfach einen Termin bei uns in Winterthur, indem du uns eine E-Mail an abo@loopi.ch schickst. Wir freuen uns darauf, dich vor Ort begrüssen zu dürfen und dir die Möglichkeit zu geben, unsere Produkte auszuprobieren.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_VtykHj": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Erhalte ich ein gebrauchtes Produkt oder ein neuwertiges Produkt?",
+            "icon": "none",
+            "row_content": "<p>Bei loopi erhältst du ein Produkt in neuwertigem Zustand! Alle Artikel, einschliesslich Kinderwagen, Veloanhänger und mehr, werden professionell gereinigt, repariert und gründlich getestet, sobald sie an uns zurückgeschickt werden. Dazu gehört auch der Austausch von Ersatzteilen oder Stoffen, wenn dies erforderlich ist. Daher gibt es keinen Unterschied in der Qualität – unsere Produkte sind immer neuwertig bis neu.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_8kYzyH": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Welcher Buggy ist am besten für Reisen geeignet?",
+            "icon": "none",
+            "row_content": "<p>Der <a href=\"\/products\/bugaboo-butterfly-buggy\" target=\"_blank\" title=\"Bugaboo Butterfly: Der superleichte und kompakte Buggy\"><span style=\"text-decoration:underline\">Bugaboo Butterfly<\/span><\/a> ist der ideale Buggy für Reisen, da er besonders kompakt und leicht ist und somit problemlos ins Handgepäck passt. Mit seinem praktischen Design und den hochwertigen Funktionen ist er perfekt für Familien, die viel unterwegs sind.<br\/>Aber hey, wenn du ganz unglücklich mit deiner Lösung bist, dann kannst du dich jederzeit bei uns melden. Schreibe uns einfach auf <a href=\"mailto:abo@loopi.ch\" title=\"mailto:abo@loopi.ch\">abo@loopi.ch<\/a>.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_mmEVJT",
+        "collapsible_row_VtykHj",
+        "collapsible_row_8kYzyH"
+      ],
+      "settings": {
+        "narrow_width": false,
+        "caption": "",
+        "heading": "Fragen zum Kinderwagen",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "btn_link": "",
+        "btn_text": "Mehr erfahren",
+        "button_alignment": "left",
+        "color_scheme": "",
+        "container_color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collapsible_content_8phNEy": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_EmPUAq": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Fallen für die Lieferung und den Rückversand zusätzliche Kosten an?",
+            "icon": "none",
+            "row_content": "<p>Für die Lieferung an deine Haustür sowie den Rückversand fallen keine zusätzlichen Gebühren an und ist somit kostenfrei.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_mVzRXf": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Wird meine Bestellung nach Hause geliefert?",
+            "icon": "none",
+            "row_content": "<p>Ja, deine Bestellung wird kostenlos direkt zu dir nach Hause oder an eine Wunschadresse geliefert.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_qXC3Rq": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Wie lange beträgt die Lieferfrist?",
+            "icon": "none",
+            "row_content": "<p>Die Lieferfrist beträgt in der Regel 3 bis 5 Werktage. Für Artikel mit einer längeren Lieferzeit findest du auf der jeweiligen Produktseite einen entsprechenden Hinweis.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_yUVDX7": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Was muss ich bei der Rückgabe von Produkten beachten?",
+            "icon": "none",
+            "row_content": "<p>Um dein gemietetes Produkt zurückzugeben, befolge bitte diese Schritte:<\/p><ol><li>Kündigung initiieren: Melde dich in deinem <a href=\"https:\/\/account.loopi.ch\/de\/auth\/login\" title=\"https:\/\/account.loopi.ch\/de\/auth\/login\">loopi Account<\/a> an und kündige dort das Abo des Produkts, das du zurückgeben möchtest.<\/li><li>Automatische Bestätigungs-E-Mail: Nach der Kündigungsinitiierung erhältst du eine automatische E-Mail mit allen wichtigen Informationen zur Rückgabe. In dieser E-Mail findest du auch einen pick@home-Link, über den du bequem eine Abholung durch die Post bei dir zu Hause vereinbaren kannst.<\/li><li>Produkte sicher verpacken: Bitte verpacke die Artikel im Originalkarton und folge den Anweisungen in unserem Verpackungsvideo. Der Postbote bringt das Rücksendeetikett direkt mit, sodass du dich um nichts Weiteres kümmern musst.<\/li><li>Bestätigung der Rückgabe: Sobald die Retoure bei uns eingegangen und bearbeitet wurde, erhältst du eine Bestätigung über die erfolgreiche Kündigung der betreffenden Produkte.<\/li><\/ol><p>Du kannst dein Abo jederzeit im Kundenportal kündigen und den Rückgabeprozess starten.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_EmPUAq",
+        "collapsible_row_mVzRXf",
+        "collapsible_row_qXC3Rq",
+        "collapsible_row_yUVDX7"
+      ],
+      "settings": {
+        "narrow_width": false,
+        "caption": "",
+        "heading": "Fragen zu Lieferung und Rückgabe",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "btn_link": "",
+        "btn_text": "Mehr erfahren",
+        "button_alignment": "left",
+        "color_scheme": "",
+        "container_color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collapsible_content_nhnpYg": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_LGDdmG": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Ich habe ein Problem. An wen kann ich mich wenden?",
+            "icon": "none",
+            "row_content": "<p>Wenn du ein Problem hast, stehen wir dir gerne zur Verfügung! Du kannst uns jederzeit per E-Mail an abo@loopi.ch kontaktieren. Unser freundliches Team hilft dir schnell und unkompliziert weiter!<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_AVBhta": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Was mache ich, wenn mein Produkt kaputtgeht?",
+            "icon": "none",
+            "row_content": "<p>Keine Sorge! Der Service und die Reparatur sind in deinem Abo enthalten. Wenn dein Produkt kaputtgeht, kontaktiere uns einfach per E-Mail unter abo@loopi.ch. Unser freundliches Team steht bereit, um dir schnell zu helfen und das Problem zu beheben.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_pe7aML": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Was passiert im Falle von Diebstahl?",
+            "icon": "none",
+            "row_content": "<p>Ob im Abo oder gekauft – Diebstähle können leider passieren. Sollte dir ein gemieteter Artikel gestohlen werden, ist es wichtig, den Diebstahl umgehend bei der Polizei anzuzeigen. Momentan bieten wir leider noch keinen zusätzlichen Diebstahlschutz an, arbeiten jedoch daran, dies in Zukunft zu ändern.Wir empfehlen dir, deinen Kinderwagen, Veloanhänger oder Laufrad in deine Hausratsversicherung einzuschliessen, um sie gegen Diebstahl und Einbruch zu sichern. Zudem kann es sinnvoll sein, eine Zusatzdeckung für Diebstähle ausserhalb des Hauses abzuschliessen, z.B. auf dem Spielplatz oder in der Badi. Weitere Informationen findest du in unseren <a href=\"\/pages\/agb\" target=\"_blank\" title=\"Allgemeine Geschäftsbedingungen\"><span style=\"text-decoration:underline\">AGB<\/span><\/a>.<\/p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_mKCHMb": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Wie kann ich euer Abo verschenken?",
+            "icon": "none",
+            "row_content": "<p>Das ist eine tolle Geschenksidee! Du kannst einen Gutschein für unser Abo im Wert von CHF 200 bis 1'200 auswählen. Wir senden dir den Gutschein als stilvolle Karte inklusive Couvert nach Hause, damit du ihn persönlich gestalten und an die glücklichen Eltern übergeben kannst.Muss es schnell gehen? Kein Problem! Kontaktiere uns nach der Bestellung per E-Mail an abo@loopi.ch, und wir senden dir den Gutschein digital zu. Weitere Informationen zu unserem Gutscheinangebot findest du <a href=\"\/products\/loopi-geschenkkarte\" target=\"_blank\" title=\"loopi Gutschein\"><span style=\"text-decoration:underline\">hier<\/span><\/a>.<\/p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_LGDdmG",
+        "collapsible_row_AVBhta",
+        "collapsible_row_pe7aML",
+        "collapsible_row_mKCHMb"
+      ],
+      "settings": {
+        "narrow_width": false,
+        "caption": "",
+        "heading": "Support & Allgemeine Fragen",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "none",
+        "btn_link": "",
+        "btn_text": "Mehr erfahren",
+        "button_alignment": "left",
+        "color_scheme": "",
+        "container_color_scheme": "",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main",
+    "collapsible_content_QUYEay",
+    "collapsible_content_AmH6qx",
+    "collapsible_content_gCc3mL",
+    "collapsible_content_8phNEy",
+    "collapsible_content_nhnpYg"
+  ]
+}

@@ -1,0 +1,150 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+{{ 'loopi-type.css' | asset_url | stylesheet_tag }}
+
+{%- stylesheet -%}
+  .cb-ben { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
+  @media screen and (min-width: 750px) {
+    .cb-ben--right { grid-template-columns: minmax(0, 1fr) minmax(0, var(--cb-img-w, 35%)); gap: 5rem; }
+    .cb-ben--left { grid-template-columns: minmax(0, var(--cb-img-w, 35%)) minmax(0, 1fr); gap: 5rem; }
+    .cb-ben--left .cb-ben__media { order: -1; }
+  }
+  @media screen and (max-width: 749px) { .cb-ben--img-first-mobile .cb-ben__media { order: -1; } }
+  .cb-ben__media { min-width: 0; align-self: var(--cb-img-valign, center); }
+  .cb-ben__frame { aspect-ratio: var(--cb-img-ratio, auto); overflow: hidden; border-radius: var(--media-radius); }
+  .cb-ben__frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .cb-photo-placeholder { display: flex; align-items: center; justify-content: center; min-height: 24rem; height: 100%; padding: 2rem; text-align: center; font-size: 1.3rem; border: 1px dashed rgba(var(--color-foreground), 0.4); border-radius: var(--media-radius); color: rgba(var(--color-foreground), 0.7); }
+{%- endstylesheet -%}
+
+{%- liquid
+  assign cb_s = section.settings.title_size | plus: 0
+  assign cb_has_image = false
+  if section.settings.image_position != 'none'
+    if section.settings.image != blank or request.design_mode
+      assign cb_has_image = true
+    endif
+  endif
+  assign cb_ratio = 'auto'
+  case section.settings.image_ratio
+    when 'square'
+      assign cb_ratio = '1 / 1'
+    when 'landscape'
+      assign cb_ratio = '4 / 3'
+    when 'portrait'
+      assign cb_ratio = '3 / 4'
+    when 'wide'
+      assign cb_ratio = '16 / 9'
+  endcase
+  assign cb_cols = section.settings.columns
+  if cb_has_image
+    assign cb_cols = 2
+  endif
+  assign cb_img_alt = section.settings.image.alt | default: section.settings.heading
+-%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- if section.settings.heading != blank -%}
+      <div class="lp-head lp-head--{{ section.settings.text_align }}">
+        <h2 class="lp-h2" style="{% if cb_s > 0 %}--lp-size: {{ cb_s }}px; --lp-size-t: {{ cb_s | times: 0.9 | round }}px; --lp-size-m: {{ cb_s | times: 0.8 | round }}px;{% endif %}">{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.text != blank -%}<div class="lp-body rte">{{ section.settings.text }}</div>{%- endif -%}
+      </div>
+    {%- endif -%}
+    <div class="cb-ben{% if cb_has_image %} cb-ben--{{ section.settings.image_position }}{% if section.settings.mobile_image_first %} cb-ben--img-first-mobile{% endif %}{% endif %}" style="--cb-img-w: {{ section.settings.image_width }}%; --cb-img-ratio: {{ cb_ratio }}; --cb-img-valign: {{ section.settings.image_valign }};">
+      <div class="cb-ben__list">
+        {%- render 'cashback-icon-list', blocks: section.blocks, columns: cb_cols, icon_size: section.settings.icon_size, icon_position: section.settings.icon_position, align: section.settings.item_align, icon_color: section.settings.icon_color -%}
+      </div>
+      {%- if cb_has_image -%}
+        <div class="cb-ben__media">
+          <div class="cb-ben__frame">
+            {%- if section.settings.image != blank -%}
+              {{ section.settings.image | image_url: width: 1200 | image_tag: alt: cb_img_alt, loading: 'lazy', widths: '400, 700, 1000, 1200' }}
+            {%- else -%}
+              <div class="cb-photo-placeholder">Foto-Platz: Bild im Customizer unter &laquo;Image&raquo; auswählen</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cashback benefits",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "header", "content": "Title (H2)" },
+    { "type": "text", "id": "heading", "label": "Title", "default": "Deine Vorteile mit Circular Cashback" },
+    { "type": "range", "id": "title_size", "label": "Title size (0 = standard)", "min": 0, "max": 60, "step": 1, "unit": "px", "default": 0, "info": "Standard H2: 28px Desktop, 26px Tablet, 22px Mobile." },
+    { "type": "richtext", "id": "text", "label": "Intro text (optional)" },
+    { "type": "select", "id": "text_align", "label": "Title alignment", "default": "center",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ] },
+    { "type": "header", "content": "Icons and items" },
+    { "type": "range", "id": "columns", "label": "Columns on desktop (without image)", "min": 2, "max": 4, "step": 1, "default": 4 },
+    { "type": "range", "id": "icon_size", "label": "Icon size", "min": 32, "max": 160, "step": 4, "unit": "px", "default": 100 },
+    { "type": "select", "id": "icon_position", "label": "Icon position", "default": "top",
+      "options": [ { "value": "top", "label": "Above text" }, { "value": "left", "label": "Left of text" } ] },
+    { "type": "select", "id": "item_align", "label": "Text alignment (items)", "default": "center",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ] },
+    { "type": "color", "id": "icon_color", "label": "Icon color", "default": "#97A74D" },
+    { "type": "header", "content": "Image (optional)" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "select", "id": "image_position", "label": "Image position", "default": "none",
+      "options": [ { "value": "none", "label": "No image" }, { "value": "right", "label": "Right of items" }, { "value": "left", "label": "Left of items" } ] },
+    { "type": "range", "id": "image_width", "label": "Image width", "min": 20, "max": 60, "step": 5, "unit": "%", "default": 35 },
+    { "type": "select", "id": "image_ratio", "label": "Image shape", "default": "original",
+      "options": [ { "value": "original", "label": "Original" }, { "value": "square", "label": "Square 1:1" }, { "value": "landscape", "label": "Landscape 4:3" }, { "value": "portrait", "label": "Portrait 3:4" }, { "value": "wide", "label": "Wide 16:9" } ] },
+    { "type": "select", "id": "image_valign", "label": "Image vertical position", "default": "center",
+      "options": [ { "value": "start", "label": "Top" }, { "value": "center", "label": "Middle" }, { "value": "end", "label": "Bottom" } ] },
+    { "type": "checkbox", "id": "mobile_image_first", "label": "Image above items on mobile", "default": false },
+    { "type": "header", "content": "Layout" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "limit": 8,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "check",
+          "options": [
+            { "value": "space", "label": "Home / space" }, { "value": "time", "label": "Clock / time" }, { "value": "money", "label": "Coin / money" },
+            { "value": "leaf", "label": "Leaf" }, { "value": "recycle", "label": "Recycle" }, { "value": "truck", "label": "Truck" },
+            { "value": "shield", "label": "Shield / guarantee" }, { "value": "camera", "label": "Camera" }, { "value": "chat", "label": "Chat" },
+            { "value": "mail", "label": "Mail" }, { "value": "check", "label": "Check" }, { "value": "search", "label": "Search" },
+            { "value": "cart", "label": "Cart" }, { "value": "calendar", "label": "Calendar" }, { "value": "gift", "label": "Gift" }, { "value": "star", "label": "Star" }
+          ] },
+        { "type": "image_picker", "id": "custom_icon", "label": "Custom icon (overrides icon)", "info": "Optional: eigenes SVG/PNG" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Vorteil" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cashback benefits",
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "space", "title": "Platz", "text": "Wächst dein Kind heraus, holen wir das Produkt bei dir ab." } },
+        { "type": "benefit", "settings": { "icon": "time", "title": "Zeit", "text": "Kein Inserat, keine Interessenten, kein Verhandeln." } },
+        { "type": "benefit", "settings": { "icon": "money", "title": "Geld", "text": "Bis zu 50 % vom Neupreis kommen zurück." } },
+        { "type": "benefit", "settings": { "icon": "leaf", "title": "Umwelt", "text": "Dein Produkt wird geprüft und von der nächsten Familie genutzt." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

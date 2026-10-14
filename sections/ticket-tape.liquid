@@ -1,0 +1,62 @@
+<style>
+    .ticket-wrapper {
+        background-color: {{ section.settings.background_color }};
+        color: {{ section.settings.normal_text_color }};
+    }
+</style>
+{% if section.settings.ticket_tape_text != blank %}
+  {% if section.settings.ticket_tape_link != blank %}
+      <a href="{{ section.settings.ticket_tape_link }}" id="ticket_tape" class="ticket-wrapper">
+  {% else %}
+      <div id="ticket_tape" class="ticket-wrapper">
+  {% endif %}
+      <span class="ticker-text">
+          <!-- TICKET TAPE TEXT -->
+          {% assign ticket_text = section.settings.ticket_tape_text | split: '|' %}
+          {% for text in ticket_text %}
+              {{ text }}{% if forloop.last == false %}<span class="bullet">•</span>{% endif %}
+          {% endfor %}
+      </span>
+  {% if section.settings.ticket_tape_link != blank %}
+      </a>
+  {% else %}
+      </div>
+  {% endif %}
+{% endif %}
+
+
+{% schema %}
+{
+    "name": "Ticket Tape",
+    "settings": [
+        {
+            "type": "url",
+            "id": "ticket_tape_link",
+            "label": "Ticket Tape Link"
+        },
+        {
+            "type": "html",
+            "id": "ticket_tape_text",
+            "label": "First Text"
+        },
+        {
+            "type": "color",
+            "id": "background_color",
+            "label": "Background Color",
+            "default": "#ffb71a"
+        },
+        {
+            "type": "color",
+            "id": "normal_text_color",
+            "label": "Normal Text Color",
+            "default": "#ffffff"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Ticket Tape",
+            "category": "Expand"
+        }
+    ]
+}
+{% endschema %}

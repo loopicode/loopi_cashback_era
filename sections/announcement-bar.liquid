@@ -1,0 +1,428 @@
+{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  @media screen and (max-width: 989px) {
+    .utility-bar.header-localization .utility-bar__grid {
+      grid-template-columns: 1fr auto;
+      grid-template-areas: 'announcements language-currency';
+      column-gap: 1.2rem;
+      align-items: center;
+    }
+
+    .utility-bar.header-localization .localization-wrapper {
+      justify-content: flex-end;
+      align-items: center;
+      /* .page-width adds 3rem/3.2rem side padding to the whole grid; pull the
+         switcher a bit closer to the true screen edge, past that padding. */
+      margin-right: -1.2rem;
+    }
+
+    .announcement-bar__language-form,
+    .announcement-bar__language-form form,
+    .announcement-bar__language-form form > div {
+      display: contents;
+    }
+
+    /* Let the announcement text shrink and wrap inside its 1fr column instead of
+       overflowing over the language switcher. Grid items default to min-width:auto,
+       which lets long text overrun the neighboring column instead of wrapping. */
+    .utility-bar.header-localization .utility-bar__grid .announcement-bar {
+      min-width: 0;
+    }
+
+    /* #announcement-text (assets/styles.css) is position:absolute + width:100% with
+       no positioned ancestor, so it escapes the grid and overlays the full bar width
+       — including the switcher — regardless of the min-width fix above. That rule
+       predates the switcher (it's a pre-JS FOUC trick); put the text back in normal
+       flow now that it shares the row with the language switcher. */
+    .utility-bar.header-localization #announcement-text {
+      position: static;
+      left: auto;
+      transform: none;
+      width: auto;
+    }
+
+    /* Higher specificity than .header-localization .disclosure .localization-form__select
+       (0,3,0) from component-localization-form.css, which otherwise wins and sets
+       height:auto / font-size:1.4rem meant for the desktop header switcher. */
+    .utility-bar.header-localization .localization-wrapper .announcement-bar__language-trigger {
+      height: auto;
+      min-height: 4.4rem; /* matches Dawn's own 44px touch-target convention */
+      padding: 1rem 1.2rem; /* same 1rem top/bottom as .announcement-bar__message, for text alignment */
+      /* !important: something in component-localization-form.css keeps winning this
+         specific property with an asymmetric 8px-top/0-bottom margin, which shifts
+         the centered content downward. Plain override kept losing, so force it. */
+      margin: 0 !important;
+      /* Match .h5's exact typography formula (font-family/size/line-height) so the
+         glyph baseline lines up with the announcement text — .caption-large/.link
+         otherwise render in the body font, which has different vertical metrics. */
+      font-family: var(--font-heading-family);
+      font-size: calc(var(--font-heading-scale) * 1.2rem);
+      line-height: calc(1 + 0.3 / max(1, var(--font-heading-scale)));
+      width: auto;
+      gap: 0.3rem; /* tight, controlled space between "DE" and the caret */
+      /* Without this, iOS/WebKit's native double-tap-to-zoom gesture recognizer
+         can intercept a quick second tap on this button instead of letting it
+         reach JS as a normal click — no click event fires at all in that case,
+         on any listener, in any phase. This tells the browser the element only
+         supports single taps, so the second tap is delivered immediately. */
+      touch-action: manipulation;
+    }
+
+    /* .localization-form__select .icon-caret positions the caret with
+       position:absolute + a fixed right-offset, calibrated for the original
+       wide button. That leaves a large, inconsistent gap here — put it back
+       in normal flex flow so `gap` above controls the spacing instead. */
+    .utility-bar.header-localization .localization-wrapper .announcement-bar__language-trigger .icon-caret {
+      position: static;
+      top: auto;
+      right: auto;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    /* Desktop already has a language switcher in the main header (top right).
+       Keep the announcement bar single-column and hide this compact copy
+       here so it isn't shown twice. */
+    .utility-bar.header-localization .utility-bar__grid {
+      grid-template-columns: 1fr;
+      grid-template-areas: 'announcements';
+    }
+
+    .announcement-bar__language-form {
+      display: none;
+    }
+  }
+{% endstyle %}
+
+{%- liquid
+  assign social_icons = true
+  if settings.social_facebook_link == blank and settings.social_instagram_link == blank and settings.social_youtube_link == blank and settings.social_tiktok_link == blank and settings.social_twitter_link == blank and settings.social_pinterest_link == blank and settings.social_snapchat_link == blank and settings.social_tumblr_link == blank and settings.social_vimeo_link == blank
+    assign social_icons = false
+  endif
+  if section.settings.enable_country_selector or section.settings.enable_language_selector
+    assign language_country_selector = true
+  endif
+  if section.blocks.size > 0
+    assign announcement_bar = true
+  endif
+-%}
+
+{% if social_icons %}
+  {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+{% endif %}
+
+<div
+  class="utility-bar color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator and section.blocks.size > 0 %} utility-bar--bottom-border{% elsif section.settings.show_line_separator and section.settings.show_social and social_icons%} utility-bar--bottom-border-social-only{% endif %}{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header-localization{% endif %}"
+  {{ block.shopify_attributes }}
+>
+  <div class="page-width utility-bar__grid{% if announcement_bar and language_country_selector or section.settings.show_social and social_icons %} utility-bar__grid--3-col{% elsif language_country_selector or section.settings.show_social and social_icons %} utility-bar__grid--2-col{% endif %}">
+    {%- if section.settings.show_social and social_icons -%}
+      {%- render 'social-icons' -%}
+    {%- endif -%}
+    {%- if section.blocks.size == 1 -%}
+      <div
+        class="announcement-bar{% if section.settings.show_social %} announcement-bar--one-announcement{% endif %}"
+        role="region"
+        aria-label="{{ 'sections.header.announcement' | t }}"
+        {{ block.shopify_attributes }}
+      >
+        {%- if section.blocks.first.settings.text != blank -%}
+          {%- if section.blocks.first.settings.link != blank -%}
+            <a
+              href="{{ section.blocks.first.settings.link }}"
+              class="announcement-bar__link link link--text focus-inset animate-arrow"
+            >
+          {%- endif -%}
+          <p class="announcement-bar__message h5">
+            <span id="announcement-text" class="fade-text">{{ section.blocks.first.settings.text | escape }}</span>
+            {%- if section.blocks.first.settings.link != blank -%}
+              {{- 'icon-arrow.svg' | inline_asset_content -}}
+            {%- endif -%}
+          </p>
+          {%- if section.blocks.first.settings.link != blank -%}
+            </a>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    {%- elsif section.blocks.size > 1 -%}
+      <slideshow-component
+        class="announcement-bar"
+        role="region"
+        aria-roledescription="{{ 'sections.announcements.carousel' | t }}"
+        aria-label="{{ 'sections.announcements.announcement_bar' | t }}"
+      >
+        <div class="announcement-bar-slider slider-buttons">
+          <button
+            type="button"
+            class="slider-button slider-button--prev"
+            name="previous"
+            aria-label="{{ 'sections.announcements.previous_announcement' | t }}"
+            aria-controls="Slider-{{ section.id }}"
+          >
+            <span class="svg-wrapper">
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            </span>
+          </button>
+          <div
+            class="grid grid--1-col slider slider--everywhere"
+            id="Slider-{{ section.id }}"
+            aria-live="polite"
+            aria-atomic="true"
+            data-autoplay="{{ section.settings.auto_rotate }}"
+            data-speed="{{ section.settings.change_slides_speed }}"
+          >
+            {%- for block in section.blocks -%}
+              <div
+                class="slideshow__slide slider__slide grid__item grid--1-col"
+                id="Slide-{{ section.id }}-{{ forloop.index }}"
+                {{ block.shopify_attributes }}
+                role="group"
+                aria-roledescription="{{ 'sections.announcements.announcement' | t }}"
+                aria-label="{{ forloop.index }} {{ 'general.slider.of' | t }} {{ forloop.length }}"
+                tabindex="-1"
+              >
+                <div
+                  class="announcement-bar__announcement"
+                  role="region"
+                  aria-label="{{ 'sections.header.announcement' | t }}"
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if block.settings.text != blank -%}
+                    {%- if block.settings.link != blank -%}
+                      <a
+                        href="{{ block.settings.link }}"
+                        class="announcement-bar__link link link--text focus-inset animate-arrow"
+                      >
+                    {%- endif -%}
+                    <p class="announcement-bar__message h5">
+                      <span id="announcement-text" class="fade-text">{{ block.settings.text | escape }}</span>
+                      {%- if block.settings.link != blank -%}
+                        {{- 'icon-arrow.svg' | inline_asset_content -}}
+                      {%- endif -%}
+                    </p>
+                    {%- if block.settings.link != blank -%}
+                      </a>
+                    {%- endif -%}
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+          <button
+            type="button"
+            class="slider-button slider-button--next"
+            name="next"
+            aria-label="{{ 'sections.announcements.next_announcement' | t }}"
+            aria-controls="Slider-{{ section.id }}"
+          >
+            <span class="svg-wrapper">
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            </span>
+          </button>
+        </div>
+      </slideshow-component>
+      {%- if request.design_mode -%}
+        <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
+        <style>
+          /* theme editor power preview fix */
+          .announcement-bar-slider .slider__slide[aria-hidden='true'] {
+            visibility: hidden;
+          }
+        </style>
+      {%- endif -%}
+    {%- endif -%}
+    <div class="localization-wrapper">
+      {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+        <localization-form class="small-hide medium-hide">
+          {%- form 'localization', id: 'AnnouncementCountryForm', class: 'localization-form' -%}
+            <div>
+              <h2 class="visually-hidden" id="AnnouncementCountryLabel">{{ 'localization.country_label' | t }}</h2>
+              {%- render 'country-localization', localPosition: 'AnnouncementCountry' -%}
+            </div>
+          {%- endform -%}
+        </localization-form>
+      {% endif %}
+
+      {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+        <localization-form class="announcement-bar__language-form">
+          {%- form 'localization', id: 'AnnouncementLanguageForm', class: 'localization-form' -%}
+            <div>
+              <h2 class="visually-hidden" id="AnnouncementLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+              {%- render 'language-localization-compact', localPosition: 'AnnouncementLanguage' -%}
+            </div>
+          {%- endform -%}
+        </localization-form>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+<script>
+  // Deliberately NOT wrapped in a DOMContentLoaded listener: this script tag
+  // sits right after the announcement text in the HTML, so #announcement-text
+  // already exists by the time the parser reaches it. Waiting for
+  // DOMContentLoaded means waiting for the whole document — including several
+  // synchronous, non-deferred third-party scripts elsewhere on the page
+  // (jQuery, GTM, Clarity, Circuly) — which was causing a visible flash of the
+  // raw, un-split "|" text before this ran.
+  (function () {
+    const announcementBar = document.getElementById('announcement-text');
+    const messages = announcementBar.textContent.split('|').map(msg => msg.trim());
+    let currentMessageIndex = 0;
+    let rotationInterval = null;
+
+    // Function to handle message rotation with fade
+    function rotateMessages() {
+        announcementBar.classList.add('fade-out');
+
+        setTimeout(() => {
+            currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+            announcementBar.textContent = messages[currentMessageIndex];
+            announcementBar.classList.remove('fade-out');
+        }, 500); // Matches the CSS transition duration
+    }
+
+    // Always show a single, clean message and reveal it — on every screen size.
+    announcementBar.textContent = messages[0];
+    document.querySelector('.announcement-bar__message').style.visibility = 'visible';
+
+    // Check if we are on mobile
+    function isMobile() {
+        return window.innerWidth <= 989;
+    }
+
+    function startRotation() {
+        if (rotationInterval) return;
+        rotationInterval = setInterval(rotateMessages, 5000);
+    }
+
+    function stopRotation() {
+        if (rotationInterval) {
+            clearInterval(rotationInterval);
+            rotationInterval = null;
+        }
+    }
+
+    // Rotate the message every 5 seconds, but only on mobile.
+    if (isMobile()) {
+        startRotation();
+    }
+
+    // Start/stop rotation as the viewport crosses the mobile breakpoint in
+    // either direction (resizing a real window, or rotating a device).
+    window.addEventListener('resize', function () {
+        if (isMobile()) {
+            startRotation();
+        } else {
+            stopRotation();
+        }
+    });
+  })();
+</script>
+{% schema %}
+{
+  "name": "t:sections.announcement-bar.name",
+  "max_blocks": 12,
+  "class": "announcement-bar-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line_separator",
+      "default": true,
+      "label": "t:sections.header.settings.show_line_separator.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.announcement-bar.settings.header__1.content",
+      "info": "t:sections.announcement-bar.settings.header__1.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "default": false,
+      "label": "t:sections.announcement-bar.settings.show_social.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.announcement-bar.settings.header__2.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "t:sections.announcement-bar.settings.auto_rotate.label",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "change_slides_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "t:sections.announcement-bar.settings.change_slides_speed.label",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "t:sections.announcement-bar.settings.header__3.content",
+      "info": "t:sections.announcement-bar.settings.header__3.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": false,
+      "label": "t:sections.announcement-bar.settings.enable_country_selector.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.announcement-bar.settings.header__4.content",
+      "info": "t:sections.announcement-bar.settings.header__4.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "default": false,
+      "label": "t:sections.announcement-bar.settings.enable_language_selector.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "t:sections.announcement-bar.blocks.announcement.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "t:sections.announcement-bar.blocks.announcement.settings.text.default",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.text.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.link.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.announcement-bar.presets.name",
+      "blocks": [
+        {
+          "type": "announcement"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

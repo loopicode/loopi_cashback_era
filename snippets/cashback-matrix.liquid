@@ -1,0 +1,49 @@
+{%- comment -%}
+  Circular-Cashback-Matrix: EINE Quelle.
+  Quelle: Shop-Metafeld custom.cashback_matrix (JSON), falls vorhanden. Sonst gelten die Standardwerte unten (Stand 2026-10-09).
+  JSON-Aufbau: { "aktion_bis": "2026-12-31", "standard": [[50,40,35],[40,35,25],[35,30,20],[0,0,0]], "aktion": [[50,50,35],[45,45,25],[35,30,20],[0,0,0]] }
+  Zeilen: so gut wie neu, leichte Gebrauchsspuren, deutliche Gebrauchsspuren, nicht akzeptabel. Spalten: 6, 12, 24 Monate.
+  Aufruf: render 'cashback-matrix', mode: 'active' | 'bis' | 'value' | 'boost', row: 0..3, col: 0..2
+  Ausgabe: mode active = 1/0 (Aktion laeuft), bis = Enddatum dd.mm.yyyy, value = Prozentwert der aktuell gueltigen Tabelle, boost = 1 wenn Aktionswert > Standardwert.
+{%- endcomment -%}
+{%- liquid
+  assign mf = shop.metafields.custom.cashback_matrix.value
+  assign bis_raw = '2026-12-31'
+  if mf.aktion_bis != blank
+    assign bis_raw = mf.aktion_bis
+  endif
+  assign bis_parts = bis_raw | split: '-'
+  assign bis_num = bis_raw | remove: '-' | plus: 0
+  assign today_num = 'now' | date: '%Y%m%d' | plus: 0
+  assign is_active = false
+  if today_num <= bis_num
+    assign is_active = true
+  endif
+-%}
+{%- if mode == 'active' -%}
+  {%- if is_active -%}1{%- else -%}0{%- endif -%}
+{%- elsif mode == 'bis' -%}
+  {{- bis_parts[2] }}.{{ bis_parts[1] }}.{{ bis_parts[0] -}}
+{%- else -%}
+  {%- liquid
+    assign std_rows = '50,40,35|40,35,25|35,30,20|0,0,0' | split: '|'
+    assign akt_rows = '50,50,35|45,45,25|35,30,20|0,0,0' | split: '|'
+    assign std_cells = std_rows[row] | split: ','
+    assign akt_cells = akt_rows[row] | split: ','
+    assign std_val = std_cells[col] | plus: 0
+    assign akt_val = akt_cells[col] | plus: 0
+    if mf.standard
+      assign std_val = mf.standard[row][col] | plus: 0
+    endif
+    if mf.aktion
+      assign akt_val = mf.aktion[row][col] | plus: 0
+    endif
+  -%}
+  {%- if mode == 'boost' -%}
+    {%- if is_active and akt_val > std_val -%}1{%- else -%}0{%- endif -%}
+  {%- elsif is_active -%}
+    {{- akt_val -}}
+  {%- else -%}
+    {{- std_val -}}
+  {%- endif -%}
+{%- endif -%}

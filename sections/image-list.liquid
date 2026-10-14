@@ -1,0 +1,79 @@
+<style>
+    .image-list .image-block {
+        background-size: cover;
+        background-position: center;
+        height: {{ section.settings.image_height }}px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    @media only screen and (max-width: 767px) {
+        .image-list .image-block {
+            height: {{ section.settings.image_height_mobile }}px;
+        }
+    }
+</style>
+
+<div class="image-list">
+    <div class="page-width {% if section.settings.enable_narrow_width %}page-width--narrow{% endif %}">
+        <div class="row">
+            {% for block in section.blocks %}
+                <div class="col-md-auto col-sm-6">
+                    <div class="image-block" style="background-image: url('{{ block.settings.image | img_url: '750x750' }}');">
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% schema %}
+{
+  "name": "Image List",
+  "settings": [
+    {
+        "type": "range",
+        "id": "image_height",
+        "label": "Image Height",
+        "min": 100,
+        "max": 800,
+        "step": 10,
+        "default": 300
+    },
+    {
+        "type": "range",
+        "id": "image_height_mobile",
+        "label": "Image Height on Mobile",
+        "min": 100,
+        "max": 800,
+        "step": 10,
+        "default": 300
+    },
+    {
+        "type": "checkbox",
+        "id": "enable_narrow_width",
+        "label": "Enable Narrow Width"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image List",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

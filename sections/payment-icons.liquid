@@ -1,0 +1,76 @@
+<style>
+    .payment-icons-section {
+      text-align: center;
+    }
+    
+    .payment-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .payment-icon img {
+      height: auto;
+    }
+    </style>
+    
+<div class="payment-icons-section">
+  <h2>{{ section.settings.heading }}</h2>
+  
+  <div class="payment-icons">
+    {% for block in section.blocks %}
+      <div class="payment-icon">
+        {% if block.settings.icon_link %}
+          <a href="{{ block.settings.icon_link }}">
+            <img src="{{ block.settings.icon_image | image_url }}" alt="Payment Icon" style="width: {{ section.settings.icon_size }}px;">
+          </a>
+        {% else %}
+          <img src="{{ block.settings.icon_image | image_url }}" alt="Payment Icon" style="width: {{ section.settings.icon_size }}px;">
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Payment Icons",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Accepted Payment Methods"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon Size (in pixels)",
+      "min": 20,
+      "max": 150,
+      "step": 5,
+      "default": 50
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Payment Icon",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Payment Icon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Payment Icons",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

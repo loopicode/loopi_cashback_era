@@ -1,0 +1,77 @@
+<style>
+    {% for block in section.blocks %}
+      .color-{{ block.settings.title | handleize }} {
+        {% if block.settings.image %}
+          background-image: url('{{ block.settings.image | img_url: 'original' }}') !important;
+          background-size: cover;
+          background-position: center;
+        {% else %}
+          background-color: {{ block.settings.color }} !important;
+        {% endif %}
+      }
+    {% endfor %}
+    
+    .custom-swatches-list {
+        position: relative;
+        display: flex;
+        gap: 8px;
+        margin-top: -8px;
+        z-index: 1;
+    }
+    
+    .custom-swatches-list a {
+        position: relative;
+        display: block;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+    }
+    
+    .custom-swatches-list a:after {
+        content: '';
+        width: 20px;
+        height: 20px;
+        display: block;
+        border: 1px solid #9f9f9f;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        bottom: 50%;
+        transform: translate(-50%, 50%);
+    }
+    
+    .custom-swatches-list a:hover:after {
+        border: 1px solid #000;
+        cursor: pointer;
+    }
+</style>
+
+{% schema %}
+{
+    "name": "Product swatches",
+    "settings": [],
+    "blocks": [
+        {
+            "type": "color_swatches",
+            "name": "Color Swatches",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Color name"
+                },
+                {
+                    "type": "color",
+                    "id": "color",
+                    "label": "Swatch hex color"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Upload an image"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

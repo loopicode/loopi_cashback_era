@@ -1,0 +1,112 @@
+{%- comment -%}
+  Rechner-Pop-up (Stil: product-popup-modal, wie die bekannten Pop-ups). Aufruf am Ende von sections/main-product.liquid:
+  render 'cashback-pdp-modal', block: block
+{%- endcomment -%}
+{%- capture cb_data -%}{%- render 'cashback-pdp-data', product: product -%}{%- endcapture -%}
+{%- assign cb = cb_data | strip | split: '|' -%}
+{%- assign cb_price = cb[0] | plus: 0 -%}
+{%- if cb_price > 0 -%}
+  {%- capture price_fmt -%}{%- render 'cashback-chf', n: cb_price -%}{%- endcapture -%}
+  <modal-dialog id="CashbackCalc-{{ block.id }}" class="product-popup-modal cb-calc-modal" {{ block.shopify_attributes }}>
+    <div
+      role="dialog"
+      aria-label="{{ block.settings.modal_title | escape }}"
+      aria-modal="true"
+      class="product-popup-modal__content cb-calc"
+      tabindex="-1"
+      data-cb-calc
+      data-product="{{ product.title | escape }}"
+      data-price="{{ cb_price }}"
+      data-pcts="{{ cb[1] }}"
+      data-boosts="{{ cb[2] }}"
+    >
+      <button id="ModalClose-{{ block.id }}" type="button" class="product-popup-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">
+        {{- 'icon-close.svg' | inline_asset_content -}}
+      </button>
+      <div class="product-popup-modal__content-info cb-calc__body">
+        <h2 class="h2 cb-calc__title">{{ block.settings.modal_title | escape }}</h2>
+        {%- if block.settings.modal_intro != blank -%}
+          <p class="cb-calc__intro">{{ block.settings.modal_intro | escape }}</p>
+        {%- endif -%}
+
+        <fieldset class="cb-calc__group">
+          <legend class="cb-calc__legend">{{ block.settings.label_condition | escape }}</legend>
+          <div class="cb-calc__choices" role="radiogroup">
+            <label class="cb-calc__choice"><input type="radio" name="cb-cond-{{ block.id }}" value="0" checked><span>{{ block.settings.condition_1 | escape }}</span></label>
+            <label class="cb-calc__choice"><input type="radio" name="cb-cond-{{ block.id }}" value="1"><span>{{ block.settings.condition_2 | escape }}</span></label>
+            <label class="cb-calc__choice"><input type="radio" name="cb-cond-{{ block.id }}" value="2"><span>{{ block.settings.condition_3 | escape }}</span></label>
+          </div>
+          {%- if block.settings.condition_help != blank -%}
+            <p class="cb-calc__help">{{ block.settings.condition_help | escape }}</p>
+          {%- endif -%}
+        </fieldset>
+
+        <fieldset class="cb-calc__group">
+          <legend class="cb-calc__legend">{{ block.settings.label_duration | escape }}</legend>
+          <div class="cb-calc__choices" role="radiogroup">
+            <label class="cb-calc__choice"><input type="radio" name="cb-dur-{{ block.id }}" value="0"><span>{{ block.settings.duration_1 | escape }}</span></label>
+            <label class="cb-calc__choice"><input type="radio" name="cb-dur-{{ block.id }}" value="1" checked><span>{{ block.settings.duration_2 | escape }}</span></label>
+            <label class="cb-calc__choice"><input type="radio" name="cb-dur-{{ block.id }}" value="2"><span>{{ block.settings.duration_3 | escape }}</span></label>
+          </div>
+        </fieldset>
+
+        <div class="cb-calc__result" aria-live="polite">
+          <dl class="cb-calc__rows">
+            <div class="cb-calc__row"><dt>{{ block.settings.result_price | escape }}</dt><dd>CHF <span data-cb-price>{{ price_fmt }}</span></dd></div>
+            <div class="cb-calc__row"><dt>{{ block.settings.result_refund | escape }} <span class="cb-calc__pct">(<span data-cb-pct></span> %)</span></dt><dd>CHF <span data-cb-refund></span></dd></div>
+            <div class="cb-calc__row cb-calc__row--net"><dt data-cb-net-label data-template="{{ block.settings.result_net | escape }}"></dt><dd>CHF <span data-cb-net></span></dd></div>
+          </dl>
+        </div>
+
+        {%- assign cb_active = cb[3] | plus: 0 -%}
+        {%- if cb_active == 1 and block.settings.promo_note != blank -%}
+          <p class="cb-calc__promo">{{ block.settings.promo_note | replace: '[date]', cb[4] | escape }}</p>
+        {%- endif -%}
+        {%- if block.settings.disclaimer != blank -%}
+          <p class="cb-calc__disclaimer">{{ block.settings.disclaimer | escape }}</p>
+        {%- endif -%}
+        <button type="button" class="button button--secondary cb-calc__back" data-cb-close>{{ block.settings.back_label | escape }}</button>
+      </div>
+    </div>
+  </modal-dialog>
+  <script>
+    (function () {
+      var root = document.getElementById('CashbackCalc-{{ block.id }}');
+      if (!root || root.dataset.cbInit) return;
+      root.dataset.cbInit = '1';
+      var calc = root.querySelector('[data-cb-calc]');
+      var price = parseInt(calc.dataset.price, 10);
+      var pcts = calc.dataset.pcts.split(',').map(Number);
+      var months = [6, 12, 24];
+      function fmt(n) { var s = String(Math.round(n)); return s.length > 3 ? s.slice(0, s.length - 3) + "'" + s.slice(-3) : s; }
+      function val(name) { var el = calc.querySelector('input[name="' + name + '"]:checked'); return el ? parseInt(el.value, 10) : 0; }
+      function track(name, extra) {
+        try {
+          window.dataLayer = window.dataLayer || [];
+          var d = { event: name, cashback_product: calc.dataset.product };
+          for (var k in extra) d[k] = extra[k];
+          window.dataLayer.push(d);
+        } catch (e) {}
+      }
+      function update(fromUser) {
+        var c = val('cb-cond-{{ block.id }}'), m = val('cb-dur-{{ block.id }}');
+        var pct = pcts[c * 3 + m];
+        var refund = price * pct / 100;
+        var net = price - refund;
+        calc.querySelector('[data-cb-pct]').textContent = pct;
+        calc.querySelector('[data-cb-refund]').textContent = fmt(refund);
+        calc.querySelector('[data-cb-net]').textContent = fmt(net);
+        var lbl = calc.querySelector('[data-cb-net-label]');
+        lbl.textContent = lbl.dataset.template.replace('[months]', months[m]);
+        if (fromUser) track('cashback_calc_result', { cashback_condition: c, cashback_months: months[m], cashback_percent: pct, cashback_refund_chf: Math.round(refund) });
+      }
+      calc.addEventListener('change', function () { update(true); });
+      calc.querySelector('[data-cb-close]').addEventListener('click', function () {
+        var btn = document.getElementById('ModalClose-{{ block.id }}'); if (btn) btn.click();
+      });
+      var opener = document.getElementById('CashbackCalcOpen-{{ block.id }}');
+      if (opener) opener.addEventListener('click', function () { update(false); track('cashback_calc_open', {}); });
+      update(false);
+    })();
+  </script>
+{%- endif -%}
