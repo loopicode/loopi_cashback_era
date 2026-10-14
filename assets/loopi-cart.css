@@ -13,3 +13,5 @@
 .loopi-upsell-details [role="alert"] { color: #a32419; }
 loopi-sticky-cart { display: block; }
 [data-loopi-checkout-busy] { cursor: progress; }
+
+.drawer__footer .loopi-cart-upsells { max-height: min(26vh, 22rem); overflow-y: auto; overscroll-behavior: contain; }
