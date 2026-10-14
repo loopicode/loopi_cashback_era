@@ -25,12 +25,15 @@
               <select name="id" id="LoopiUpsell-{{ section.id }}-{{ upsell_product.id }}">
                 {% for variant in upsell_product.variants %}
                   {% if variant.available %}
-                    <option value="{{ variant.id }}">
-                      {{ variant.title | escape }} — {{ variant.price | money_with_currency | strip_html }} {% if variant.metafields.custom.subscription.value == true %}{{ 'loopi_cart.per_month' | t }}{% else %}({{ 'loopi_cart.purchase' | t }}){% endif %}
+                    {% capture variant_price %}{{ variant.price | money_with_currency | strip_html }}{% if variant.metafields.custom.subscription.value == true %} {{ 'loopi_cart.per_month' | t }}{% endif %}{% endcapture %}
+                    <option value="{{ variant.id }}" data-price="{{ variant_price | strip | escape }}">
+                      {% render 'loopi-upsell-variant-label', variant: variant, product: upsell_product %}
                     </option>
                   {% endif %}
                 {% endfor %}
               </select>
+              {% assign selected_upsell = upsell_product.selected_or_first_available_variant %}
+              <p class="loopi-upsell-price" data-loopi-upsell-price>{{ selected_upsell.price | money_with_currency }}{% if selected_upsell.metafields.custom.subscription.value == true %} {{ 'loopi_cart.per_month' | t }}{% endif %}</p>
               <button type="submit" class="button button--secondary">{{ 'loopi_cart.add' | t }}</button>
               <p data-loopi-upsell-error role="alert" hidden></p>
             </form>

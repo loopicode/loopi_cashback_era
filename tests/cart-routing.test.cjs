@@ -44,5 +44,6 @@ const meta=(id,subscription,duration)=>({key:String(id),variant_id:id,quantity:1
  await test('Missing rental term blocks transfer',async()=>{const t=fixture([line(1)],[meta(1,true)]);await t.router.navigate();assert.equal(t.destinations.length,0);assert.equal(t.errors[0].textContent,'VERIFY');});
  await test('Purchase length is omitted from mixed payload',()=>{const t=fixture([line(1),line(2)],[meta(1,true,12),meta(2,false,1)]);assert.equal(t.router.buildPayload(t.cart,t.snapshot).items[1].subscription_duration,undefined);});
  await test('Unverified custom properties block Circuly transfer',async()=>{const item={...line(1),properties:{gift:'yes'}};const t=fixture([item],[meta(1,true,6)]);await t.router.navigate();assert.equal(t.destinations.length,0);assert.equal(t.errors[0].textContent,'UNSUPPORTED');});
+ await test('Shopify discounts are omitted from the Circuly basket',()=>{const t=fixture([line(1),line(2)],[meta(1,true,6),meta(2,false,1)]);t.cart.total_discount=940;const payload=t.router.buildPayload(t.cart,t.snapshot);assert.equal(payload.items.length,2);assert.equal(payload.discount,undefined);assert.equal(payload.items[1].subscription,false);});
  console.log(`${passed} tests passed`);
 })().catch(e=>{console.error(e);process.exit(1);});

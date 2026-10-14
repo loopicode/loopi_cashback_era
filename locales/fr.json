@@ -568,6 +568,9 @@
     "empty": "Ton panier est vide.",
     "added": "Ajouté au panier",
     "pending": "Patiente pendant la mise à jour du panier.",
-    "unsupported": "Contacte-nous pour commander cette combinaison d’articles."
+    "unsupported": "Contacte-nous pour commander cette combinaison d’articles.",
+    "checkout": "Passer au paiement",
+    "total": "Total",
+    "purchase_option": "Acheter"
   }
 }

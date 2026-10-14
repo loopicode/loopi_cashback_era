@@ -8,10 +8,12 @@
 .loopi-upsell-image img { width: 65px; height: 65px; object-fit: contain; }
 .loopi-upsell-details { flex: 1; min-width: 0; font-size: 1.3rem; }
 .loopi-upsell-details a { color: inherit; text-decoration: none; }
-.loopi-upsell-details select { width: 100%; max-width: 100%; padding: .7rem; margin: .7rem 0; font: inherit; }
+.loopi-upsell-details select { width: 100%; max-width: 100%; min-height: 42px; padding: .8rem 3.2rem .8rem 1.4rem; margin: .7rem 0 0; font: inherit; border-radius: 24px; border: 1px solid rgba(var(--color-foreground), .25); color: rgb(var(--color-foreground)); background-color: rgb(var(--color-background)); appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23333' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1.3rem center; cursor: pointer; }
+.loopi-upsell-details select:focus-visible { outline: 2px solid rgb(var(--color-foreground)); outline-offset: 2px; }
+.loopi-upsell-price { margin: .6rem 0 .8rem; font-weight: 600; }
+.drawer__footer .cart__ctas .cart__checkout-button { width: 100%; border-radius: 999px; min-height: 48px; }
 .loopi-upsell-details .button { min-height: 36px; padding: .6rem 1.2rem; font-size: 1.3rem; }
 .loopi-upsell-details [role="alert"] { color: #a32419; }
 loopi-sticky-cart { display: block; }
 [data-loopi-checkout-busy] { cursor: progress; }
-
 .drawer__footer .loopi-cart-upsells { max-height: min(26vh, 22rem); overflow-y: auto; overscroll-behavior: contain; }

@@ -56,7 +56,7 @@
   };
   const buildPayload = (cart, snapshot) => {
     validateSnapshot(cart, snapshot);
-    if (cart.total_discount > 0 || cart.items.some((item) => item.selling_plan_allocation ||
+    if (cart.items.some((item) => item.selling_plan_allocation ||
         Object.keys(item.properties || {}).length > 0 || item.gift_card)) throw new Error('unsupported');
     const cartId = cart.token?.split('?')[0];
     if (!cartId) throw new Error('metadata_error');
@@ -232,6 +232,12 @@
     connectedCallback() {
       this.controller = new AbortController();
       this.addEventListener('submit', this.onSubmit.bind(this), { signal: this.controller.signal });
+      this.addEventListener('change', (event) => {
+        if (event.target.name !== 'id') return;
+        const option = event.target.selectedOptions[0];
+        const price = event.target.closest('form').querySelector('[data-loopi-upsell-price]');
+        if (price && option) price.textContent = option.dataset.price;
+      }, { signal: this.controller.signal });
       this.load();
     }
     disconnectedCallback() { this.controller?.abort(); }

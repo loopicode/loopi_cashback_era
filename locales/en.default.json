@@ -556,6 +556,9 @@
     "empty": "Your cart is empty.",
     "added": "Added to your cart",
     "pending": "Please wait until your cart has finished updating.",
-    "unsupported": "Please contact us to complete checkout for this combination of items."
+    "unsupported": "Please contact us to complete checkout for this combination of items.",
+    "checkout": "Checkout",
+    "total": "Total",
+    "purchase_option": "Buy"
   }
 }

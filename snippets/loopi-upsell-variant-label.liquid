@@ -1,0 +1,29 @@
+{% doc %}
+  Renders a short, unambiguous recommendation variant label.
+  @param {variant} variant - The available variant.
+  @param {product} product - The recommended product.
+{% enddoc %}
+{%- assign rental = variant.metafields.custom.subscription.value -%}
+{%- if rental == true -%}
+  {%- assign months = variant.metafields.custom.subscription_length.value | default: variant.metafields.custom.subscription_duration.value | plus: 0 -%}
+  {%- if months == 0 -%}
+    {%- for option_value in variant.options -%}
+      {%- assign lower_value = option_value | downcase -%}
+      {%- if lower_value contains 'monat' or lower_value contains 'month' or lower_value contains 'mois' -%}
+        {%- assign months = option_value | split: '+' | first | plus: 0 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+  {%- if months > 0 -%}{{ months }}m{%- else -%}{{ 'loopi_cart.rental' | t }}{%- endif -%}
+{%- else -%}
+  {{- 'loopi_cart.purchase_option' | t -}}
+{%- endif -%}
+{%- for option in product.options_with_values -%}
+  {%- assign option_name = option.name | downcase -%}
+  {%- unless option_name contains 'laufzeit' or option_name contains 'duration' or option_name contains 'durée' or option_name contains 'rental length' or option_name contains 'subscription length' -%}
+    {%- if option.values.size > 1 -%}
+      {%- assign option_index = option.position | minus: 1 -%}
+      {{- ' · ' -}}{{- variant.options[option_index] | escape -}}
+    {%- endif -%}
+  {%- endunless -%}
+{%- endfor -%}

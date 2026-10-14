@@ -556,6 +556,9 @@
     "empty": "Dein Warenkorb ist leer.",
     "added": "Zum Warenkorb hinzugefügt",
     "pending": "Bitte warte, bis dein Warenkorb aktualisiert wurde.",
-    "unsupported": "Bitte kontaktiere uns, um diese Kombination von Artikeln zu bestellen."
+    "unsupported": "Bitte kontaktiere uns, um diese Kombination von Artikeln zu bestellen.",
+    "checkout": "Zur Kasse",
+    "total": "Total",
+    "purchase_option": "Kaufen"
   }
 }

@@ -1,3 +1,15 @@
+{% liquid
+  assign loopi_circuly_cart = false
+  for cart_line in cart.items
+    if cart_line.variant.metafields.custom.subscription.value == true
+      assign loopi_circuly_cart = true
+    endif
+  endfor
+  assign loopi_total = cart.total_price
+  if loopi_circuly_cart
+    assign loopi_total = cart.original_total_price
+  endif
+%}
 {{ 'component-cart.css' | asset_url | stylesheet_tag }}
 {{ 'component-totals.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -45,7 +57,7 @@
             {%- when 'subtotal' -%}
               <div class="js-contents" {{ block.shopify_attributes }}>
                 <div>
-                  {%- if cart.cart_level_discount_applications.size > 0 -%}
+                  {%- if cart.cart_level_discount_applications.size > 0 and loopi_circuly_cart == false -%}
                     <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
                       {%- for discount in cart.cart_level_discount_applications -%}
                         <li class="discounts__discount discounts__discount--position">
@@ -59,8 +71,8 @@
                 </div>
 
                   <div class="totals" >
-                    <h4 class="totals__total" style="font-weight: 400 !important">Jetzt bezahlen: {{ cart.total_price | money_with_currency }}</h4>
-                    <h4 class="totals__total">Total Bestellung: {{ cart.total_price | money_with_currency }}</h4>
+                    <h4 class="totals__total" style="font-weight: 400 !important">Jetzt bezahlen: {{ loopi_total | money_with_currency }}</h4>
+                    <h4 class="totals__total">Total Bestellung: {{ loopi_total | money_with_currency }}</h4>
 
                   </div>
  
@@ -117,7 +129,7 @@
                   {% endif %}
                   form="cart"
                 >
-                  {{ 'sections.cart.checkout' | t }}
+                  {{ 'loopi_cart.checkout' | t }}
                 </button>
               </div>
 

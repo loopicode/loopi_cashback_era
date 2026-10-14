@@ -1,3 +1,15 @@
+{% liquid
+  assign loopi_circuly_cart = false
+  for cart_line in cart.items
+    if cart_line.variant.metafields.custom.subscription.value == true
+      assign loopi_circuly_cart = true
+    endif
+  endfor
+  assign loopi_total = cart.total_price
+  if loopi_circuly_cart
+    assign loopi_total = cart.original_total_price
+  endif
+%}
 {{ 'component-cart.css' | asset_url | stylesheet_tag }}
 {{ 'component-cart-items.css' | asset_url | stylesheet_tag }}
 {{ 'component-totals.css' | asset_url | stylesheet_tag }}
@@ -104,7 +116,7 @@
 
                       <a href="{{ item.url }}" class="cart-item__name h4 break">{{ item.product.title | escape }}</a>
 
-                      {%- if item.original_price != item.final_price -%}
+                      {%- if item.original_price != item.final_price and loopi_circuly_cart == false -%}
                         <div class="cart-item__discounted-prices">
                           <span class="visually-hidden">
                             {{ 'products.product.price.regular_price' | t }}
@@ -116,7 +128,7 @@
                             {{ 'products.product.price.sale_price' | t }}
                           </span>
                           <strong class="cart-item__final-price product-option">
-                            {{ item.final_price | money }}
+                            {% if loopi_circuly_cart %}{{ item.original_price | money }}{% else %}{{ item.final_price | money }}{% endif %}
                           </strong>
                         </div>
                       {%- else -%}
@@ -132,6 +144,13 @@
                         <dl>
                           {%- if item.product.has_only_default_variant == false -%}
                             {%- for option in item.options_with_values -%}
+{%- assign option_name = option.name | downcase -%}
+{%- assign duration_option = false -%}
+{%- if option_name contains 'laufzeit' or option_name contains 'duration' or option_name contains 'durée' or option_name contains 'rental length' or option_name contains 'subscription length' -%}
+  {%- assign duration_option = true -%}
+{%- endif -%}
+{%- if item.variant.metafields.custom.subscription.value != true and duration_option -%}{% continue %}{%- endif -%}
+
                               <div class="product-option">
                                 <dt>{{ option.name }}:</dt>
                                 <dd>{{ option.value }}</dd>
@@ -162,19 +181,19 @@
                       {%- endif -%}
 
                       <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
-                        {%- for discount in item.line_level_discount_allocations -%}
+                        {% unless loopi_circuly_cart %}{%- for discount in item.line_level_discount_allocations -%}
                           <li class="discounts__discount">
                             {{- 'icon-discount.svg' | inline_asset_content -}}
                             {{ discount.discount_application.title | escape }}
                           </li>
-                        {%- endfor -%}
+                        {%- endfor -%}{% endunless %}
                       </ul>
                     </td>
 
                     <td class="cart-item__totals right medium-hide large-up-hide">
                       {%- render 'loading-spinner' -%}
                       <div class="cart-item__price-wrapper">
-                        {%- if item.original_line_price != item.final_line_price -%}
+                        {%- if item.original_line_price != item.final_line_price and loopi_circuly_cart == false -%}
                           <dl class="cart-item__discounted-prices">
                             <dt class="visually-hidden">
                               {{ 'products.product.price.regular_price' | t }}
@@ -188,7 +207,7 @@
                               {{ 'products.product.price.sale_price' | t }}
                             </dt>
                             <dd class="price price--end">
-                              {{ item.final_line_price | money }}
+                              {% if loopi_circuly_cart %}{{ item.original_line_price | money }}{% else %}{{ item.final_line_price | money }}{% endif %}
                             </dd>
                           </dl>
                         {%- else -%}
@@ -390,7 +409,7 @@
                     <td class="cart-item__totals right small-hide">
                       {%- render 'loading-spinner' -%}
                       <div class="cart-item__price-wrapper">
-                        {%- if item.original_line_price != item.final_line_price -%}
+                        {%- if item.original_line_price != item.final_line_price and loopi_circuly_cart == false -%}
                           <dl class="cart-item__discounted-prices">
                             <dt class="visually-hidden">
                               {{ 'products.product.price.regular_price' | t }}
@@ -404,7 +423,7 @@
                               {{ 'products.product.price.sale_price' | t }}
                             </dt>
                             <dd class="price price--end">
-                              {{ item.final_line_price | money }}
+                              {% if loopi_circuly_cart %}{{ item.original_line_price | money }}{% else %}{{ item.final_line_price | money }}{% endif %}
                             </dd>
                           </dl>
                         {%- else -%}

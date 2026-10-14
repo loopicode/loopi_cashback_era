@@ -49,10 +49,18 @@ Theme Check was run for all changed theme files using Shopify’s official valid
 
 ## Limits before production
 
-Circuly’s external create endpoint and mixed-basket totals still require a controlled end-to-end test. The router uses the create contract from Nick’s March cart migration; no checkout/payment was fabricated during unit tests.
+Circuly’s external create endpoint and mixed-basket totals still require a controlled end-to-end test. The router uses the create contract from Nick’s March cart migration. Preview checks reached Shopify checkout for a purchase-only basket and Circuly checkout for a rental-only basket at the correct CHF 9 monthly price. No payment or order was submitted.
 
-Rental baskets containing Shopify discounts, custom line properties, gift cards or Shopify selling-plan allocations are explicitly blocked rather than silently losing unverified data. These require an agreed mapping before production use. Purchase-only baskets continue through normal Shopify checkout.
+Shopify discounts are intentionally omitted from rental/mixed Circuly baskets at the merchant’s request. Those baskets display original prices and undiscounted totals in the drawer and cart page; purchase-only Shopify checkout retains the store’s normal discount behavior. Rental baskets containing custom line properties, gift cards or Shopify selling-plan allocations are explicitly blocked rather than silently losing unverified data. These require an agreed mapping before production use. Purchase-only baskets continue through normal Shopify checkout.
 
 Theme JavaScript cannot enforce routing for direct checkout URLs or JavaScript-disabled clients. Backend rental protections remain a separate integration concern. Paid-cart clearing/reconciliation is not automated here; do not use the previous guessed-cookie deletion workaround.
 
 Rollback: revert this migration in `dev` through GitHub, preserving unrelated later commits. The GitHub-connected Shopify dev theme will resync; do not delete/recreate the theme.
+
+## Preview refinements
+
+The old layout referenced the sticky control with a section-group tag although it is a Liquid section. The tag was corrected, and the sticky variant selector synchronized a purchase variant with the main form and added it through Shopify. Its rental/purchase price labels update with selection.
+
+Recommendation selectors are rounded, use compact rental/purchase labels, and show price separately. Colour or model qualifiers remain when needed to distinguish variants. Purchase duration fields are hidden. Recommendations scroll within a bounded region to keep cart items and the direct checkout button visible. The extra View cart action was removed from the drawer; the full cart page remains a fallback.
+
+The Circuly checkout currently defaults to English; forwarding storefront language still needs a supported integration setting. Shopify Pay remains disabled as configured by the merchant. Payment completion is outside these preview checks.
