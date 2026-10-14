@@ -332,6 +332,9 @@
       if (image && option?.dataset.img) image.src = option.dataset.img;
       const price = this.querySelector('.price-item--regular');
       if (price && option) price.textContent = option.dataset.price;
+      const rental = option?.dataset.subscription === 'true';
+      this.querySelectorAll('.per-month').forEach((node) => { node.style.display = rental ? 'block' : 'none'; });
+      this.querySelectorAll('.one-time').forEach((node) => { node.style.display = rental ? 'none' : 'block'; });
     }
     disconnectedCallback() {
       this.controller?.abort();
