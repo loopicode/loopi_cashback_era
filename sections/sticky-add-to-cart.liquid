@@ -166,6 +166,7 @@
                                             data-img="{{ variant_image | image_url: width: 160 }}"
                                             data-price="{{ variant.price | money | escape }}"
                                             data-available="{{ variant.available }}"
+                                            data-subscription="{{ variant.metafields.custom.subscription.value | default: false }}"
                                             {% if current_variant.id == variant.id %}selected{% endif %}>
                                             {{ variant.title }} - {{ variant.price | money }}
                                         </option>
