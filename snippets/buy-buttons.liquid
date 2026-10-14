@@ -93,33 +93,7 @@
             </span>
             {%- render 'loading-spinner' -%}
           </button>
-          {%- if show_dynamic_checkout -%}
-            <!--
-            <button type="button" class="button product-form__cart-submit btn--secondary-accent" data-buy-now style="width: 100%">
-              <span>
-                {{ section.settings.cta_button_text }}              
-              </span>
-            </button>
-            -->
-            <script>
-              document.querySelector('[data-buy-now]').addEventListener('click', () => {
-                let addToCartForm = document.querySelector('form[action$="/cart/add"]');
-                let formData = new FormData(addToCartForm);
-                fetch(window.Shopify.routes.root + 'cart/add.js', {
-                  method: 'POST',
-                  body: formData
-                })
-                .then(response => {
-                  window.location.href = '/checkout';
-                  return response.json();
-                })
-                .catch((error) => {
-                  console.error('Error:', error);
-                });
-              });
-            </script>
-          
-          {%- endif -%}
+
         </div>
       {%- endform -%}
     </product-form>

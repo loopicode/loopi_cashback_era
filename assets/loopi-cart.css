@@ -1,0 +1,15 @@
+#cart-icon-bubble { position: relative; overflow: visible; isolation: isolate; min-width: 44px; min-height: 44px; }
+#cart-icon-bubble .cart-count-bubble { position: absolute; top: 0; right: 0; bottom: auto; left: auto; transform: translate(15%, -10%); min-width: 22px; width: auto; height: 22px; padding: 0 5px; border-radius: 999px; background: #b52d22; color: #fff; border: 2px solid rgb(var(--color-background)); font-size: 12px; font-weight: 700; line-height: 1; display: flex; align-items: center; justify-content: center; z-index: 2; pointer-events: none; }
+.loopi-checkout-error { color: #a32419; font-size: 1.4rem; }
+.loopi-cart-upsells { display: block; margin: 1.5rem 0; }
+.loopi-upsell-list h3 { margin: 0 0 1rem; font-size: 1.6rem; }
+.loopi-upsell-card { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 0; border-top: 1px solid rgba(var(--color-foreground), .15); }
+.loopi-upsell-image { flex: 0 0 65px; }
+.loopi-upsell-image img { width: 65px; height: 65px; object-fit: contain; }
+.loopi-upsell-details { flex: 1; min-width: 0; font-size: 1.3rem; }
+.loopi-upsell-details a { color: inherit; text-decoration: none; }
+.loopi-upsell-details select { width: 100%; max-width: 100%; padding: .7rem; margin: .7rem 0; font: inherit; }
+.loopi-upsell-details .button { min-height: 36px; padding: .6rem 1.2rem; font-size: 1.3rem; }
+.loopi-upsell-details [role="alert"] { color: #a32419; }
+loopi-sticky-cart { display: block; }
+[data-loopi-checkout-busy] { cursor: progress; }

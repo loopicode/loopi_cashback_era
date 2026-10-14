@@ -121,15 +121,13 @@
                 </button>
               </div>
 
-              {%- if additional_checkout_buttons -%}
-                <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
-                  {{ content_for_additional_checkout_buttons }}
-                </div>
-              {%- endif -%}
+
           {%- endcase -%}
         {% endfor %}
 
         <div id="cart-errors"></div>
+        <p class="loopi-checkout-error" data-loopi-checkout-error role="alert" hidden></p>
+        {% render 'upsell-cart-drawer' %}
       </div>
     </div>
   </div>

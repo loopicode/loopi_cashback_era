@@ -1,0 +1,20 @@
+{% doc %}
+  Provides checkout configuration and localized cart messages.
+{% enddoc %}
+{% capture config_json %}
+{
+  "apiKey": {{ settings.circuly_api_key | json }},
+  "apiBase": "https://checkout3.api.circuly.io",
+  "checkoutBase": "https://payment.loopi.ch",
+  "locale": {{ request.locale.iso_code | json }},
+  "messages": {
+    "checkout_error": {{ 'loopi_cart.checkout_error' | t | json }},
+    "metadata_error": {{ 'loopi_cart.metadata_error' | t | json }},
+    "empty": {{ 'loopi_cart.empty' | t | json }},
+    "added": {{ 'loopi_cart.added' | t | json }},
+    "pending": {{ 'loopi_cart.pending' | t | json }},
+    "unsupported": {{ 'loopi_cart.unsupported' | t | json }}
+  }
+}
+{% endcapture %}
+<script type="application/json" id="loopi-cart-config">{{ config_json | replace: '<', '\u003c' }}</script>

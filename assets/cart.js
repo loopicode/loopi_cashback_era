@@ -83,6 +83,7 @@ class CartItems extends HTMLElement {
   }
 
   onChange(event) {
+    if (!event.target.isConnected || event.target.value === event.target.getAttribute('value')) return;
     this.validateQuantity(event);
   }
 
@@ -105,12 +106,22 @@ class CartItems extends HTMLElement {
           console.error(e);
         });
     } else {
-      fetch(`${routes.cart_url}?section_id=main-cart-items`)
-        .then((response) => response.text())
-        .then((responseText) => {
-          const html = new DOMParser().parseFromString(responseText, 'text/html');
-          const sourceQty = html.querySelector('cart-items');
-          this.innerHTML = sourceQty.innerHTML;
+      const footer = document.getElementById('main-cart-footer');
+      const ids = [document.getElementById('main-cart-items').dataset.id, footer?.dataset.id, 'cart-icon-bubble'].filter(Boolean);
+      fetch(`${routes.cart_url}?sections=${ids.join(',')}`)
+        .then((response) => response.json())
+        .then((sections) => {
+          ids.forEach((id) => {
+            if (!sections[id]) return;
+            const html = new DOMParser().parseFromString(sections[id], 'text/html');
+            if (id === 'cart-icon-bubble') {
+              document.getElementById(id).innerHTML = html.querySelector('.shopify-section').innerHTML;
+            } else if (id === footer?.dataset.id) {
+              footer.innerHTML = html.getElementById('main-cart-footer').innerHTML;
+            } else {
+              this.innerHTML = html.querySelector('cart-items').innerHTML;
+            }
+          });
         })
         .catch((e) => {
           console.error(e);

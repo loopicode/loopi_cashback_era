@@ -1,0 +1,45 @@
+{% if recommendations.performed %}
+  {% assign upsell_products = recommendations.products %}
+{% else %}
+  {% assign upsell_products = collections[settings.cart_drawer_collection].products %}
+{% endif %}
+{% if upsell_products.size > 0 %}
+  <div class="loopi-upsell-list">
+    <h3>{{ 'loopi_cart.recommendations' | t }}</h3>
+    {% assign shown = 0 %}
+    {% for upsell_product in upsell_products %}
+      {% assign already_added = false %}
+      {% for item in cart.items %}
+        {% if item.product_id == upsell_product.id %}{% assign already_added = true %}{% endif %}
+      {% endfor %}
+      {% if upsell_product.available and already_added == false and shown < 3 %}
+        {% assign shown = shown | plus: 1 %}
+        <article class="loopi-upsell-card">
+          <a href="{{ upsell_product.url }}" class="loopi-upsell-image">
+            {% if upsell_product.featured_image %}{{ upsell_product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80,160', sizes: '80px' }}{% endif %}
+          </a>
+          <div class="loopi-upsell-details">
+            <a href="{{ upsell_product.url }}">{{ upsell_product.title | escape }}</a>
+            <form data-loopi-upsell-form action="{{ routes.cart_add_url }}" method="post">
+              <label class="visually-hidden" for="LoopiUpsell-{{ section.id }}-{{ upsell_product.id }}">{{ 'loopi_cart.choose' | t }}</label>
+              <select name="id" id="LoopiUpsell-{{ section.id }}-{{ upsell_product.id }}">
+                {% for variant in upsell_product.variants %}
+                  {% if variant.available %}
+                    <option value="{{ variant.id }}">
+                      {{ variant.title | escape }} — {{ variant.price | money_with_currency | strip_html }} {% if variant.metafields.custom.subscription.value == true %}{{ 'loopi_cart.per_month' | t }}{% else %}({{ 'loopi_cart.purchase' | t }}){% endif %}
+                    </option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+              <button type="submit" class="button button--secondary">{{ 'loopi_cart.add' | t }}</button>
+              <p data-loopi-upsell-error role="alert" hidden></p>
+            </form>
+          </div>
+        </article>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+{% schema %}
+{"name":"Cart recommendations","settings":[]}
+{% endschema %}

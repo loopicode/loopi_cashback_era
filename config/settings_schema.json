@@ -1496,5 +1496,21 @@
         "label": "Vertiefungs-Seite: Mietlaufzeit"
       }
     ]
+  },
+  {
+    "name": "Cart checkout routing",
+    "settings": [
+      {
+        "type": "text",
+        "id": "circuly_api_key",
+        "label": "Circuly public checkout key"
+      },
+      {
+        "type": "checkbox",
+        "id": "loopi_cart_upsells",
+        "label": "Show recommendations in cart",
+        "default": true
+      }
+    ]
   }
 ]
