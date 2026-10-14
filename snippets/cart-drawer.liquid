@@ -541,18 +541,12 @@
           </small> {% endcomment %}
         </div>
 
+        {% render 'upsell-cart-drawer' %}
+        <p class="loopi-checkout-error" data-loopi-checkout-error role="alert" hidden></p>
         <!-- CTAs -->
 
         <div class="cart__ctas" {{ block.shopify_attributes }}>
-          <button
-            onclick="window.location.href='/cart';"
-            class="button btn-ghost"
-            {% if cart == empty %}
-              disabled
-            {% endif %}
-          >
-            Warenkorb
-          </button>
+          <a href="{{ routes.cart_url }}" class="button btn-ghost">{{ 'loopi_cart.view_cart' | t }}</a>
           <button
             type="submit"
             id="CartDrawer-Checkout"
@@ -565,7 +559,7 @@
           >
             {{ 'sections.cart.checkout' | t }}
           </button>
-          {% render 'upsell-cart-drawer' %}
+
 
         </div>
       </div>

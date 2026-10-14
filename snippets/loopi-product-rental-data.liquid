@@ -1,0 +1,8 @@
+{% doc %}
+  Provides variant rental flags for product price labels.
+  @param {product} product - The displayed product.
+{% enddoc %}
+{% capture rental_json %}
+{ {% for variant in product.variants %}"{{ variant.id }}": {{ variant.metafields.custom.subscription.value | default: false | json }}{% unless forloop.last %},{% endunless %}{% endfor %} }
+{% endcapture %}
+<script type="application/json" data-loopi-rental-variants>{{ rental_json | replace: '<', '\u003c' }}</script>

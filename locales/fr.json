@@ -554,5 +554,20 @@
       "expanded": "Formulaire de destinataire de carte-cadeau agrandi",
       "collapsed": "Formulaire de destinataire de carte-cadeau réduit"
     }
+  },
+  "loopi_cart": {
+    "recommendations": "Complète ta commande",
+    "add": "Ajouter au panier",
+    "choose": "Choisir les options",
+    "view_cart": "Voir le panier",
+    "per_month": "/ mois",
+    "purchase": "Achat unique",
+    "rental": "Location",
+    "checkout_error": "Impossible de préparer le paiement. Réessaie. Tes articles restent dans le panier.",
+    "metadata_error": "Impossible de vérifier les articles du panier. Actualise la page et réessaie.",
+    "empty": "Ton panier est vide.",
+    "added": "Ajouté au panier",
+    "pending": "Patiente pendant la mise à jour du panier.",
+    "unsupported": "Contacte-nous pour commander cette combinaison d’articles."
   }
 }

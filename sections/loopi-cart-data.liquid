@@ -1,0 +1,27 @@
+{% capture cart_json %}
+{
+  "currency": {{ cart.currency.iso_code | json }},
+  "total": {{ cart.total_price | json }},
+  "items": [
+    {% for item in cart.items %}
+      {% assign subscription_field = item.variant.metafields.custom.subscription %}
+      {% assign duration = item.variant.metafields.custom.subscription_length.value | default: item.variant.metafields.custom.subscription_duration.value %}
+      {
+        "key": {{ item.key | json }},
+        "variant_id": {{ item.variant_id | json }},
+        "quantity": {{ item.quantity | json }},
+        "subscription": {% if subscription_field == blank %}false{% else %}{{ subscription_field.value | json }}{% endif %},
+        "subscription_type": {{ subscription_field.type | json }},
+        "duration": {{ duration | json }},
+        "interval": {{ item.variant.metafields.custom.subscription_frequency_interval.value | json }},
+        "period": {{ item.variant.metafields.custom.subscription_frequency.value | json }},
+        "options": {{ item.options_with_values | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}
+{% endcapture %}
+<script type="application/json" data-loopi-cart-data>{{ cart_json | replace: '<', '\u003c' }}</script>
+{% schema %}
+{"name":"Cart routing data","settings":[]}
+{% endschema %}

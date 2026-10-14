@@ -542,5 +542,20 @@
       "send_on": "YYYY-MM-DD",
       "send_on_label": "Send on (optional)"
     }
+  },
+  "loopi_cart": {
+    "recommendations": "Complete your order",
+    "add": "Add to cart",
+    "choose": "Choose options",
+    "view_cart": "View cart",
+    "per_month": "/ month",
+    "purchase": "One-time purchase",
+    "rental": "Rental",
+    "checkout_error": "We could not prepare checkout. Please try again. Your items are still in your cart.",
+    "metadata_error": "We could not verify the items in your cart. Please refresh and try again.",
+    "empty": "Your cart is empty.",
+    "added": "Added to your cart",
+    "pending": "Please wait until your cart has finished updating.",
+    "unsupported": "Please contact us to complete checkout for this combination of items."
   }
 }

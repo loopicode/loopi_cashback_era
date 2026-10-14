@@ -542,5 +542,20 @@
       "expanded": "Formular für den Empfänger des Geschenkgutscheins erweitert",
       "collapsed": "Formular für den Empfänger des Geschenkgutscheins minimiert"
     }
+  },
+  "loopi_cart": {
+    "recommendations": "Passend zu deiner Bestellung",
+    "add": "In den Warenkorb",
+    "choose": "Optionen wählen",
+    "view_cart": "Warenkorb ansehen",
+    "per_month": "/ Monat",
+    "purchase": "Einmaliger Kauf",
+    "rental": "Miete",
+    "checkout_error": "Die Kasse konnte nicht vorbereitet werden. Bitte versuche es erneut. Deine Artikel bleiben im Warenkorb.",
+    "metadata_error": "Die Artikel im Warenkorb konnten nicht geprüft werden. Bitte lade die Seite neu und versuche es erneut.",
+    "empty": "Dein Warenkorb ist leer.",
+    "added": "Zum Warenkorb hinzugefügt",
+    "pending": "Bitte warte, bis dein Warenkorb aktualisiert wurde.",
+    "unsupported": "Bitte kontaktiere uns, um diese Kombination von Artikeln zu bestellen."
   }
 }

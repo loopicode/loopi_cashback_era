@@ -53,14 +53,7 @@ class CartDrawer extends HTMLElement {
     this.classList.remove('active');
     removeTrapFocus(this.activeElement);
     document.body.classList.remove('overflow-hidden');
-// Remove animate class so it can be re-added on next open() to re-trigger the slide-in transition
-+   this.addEventListener(
-+     'transitionend',
-+     () => {
-+       this.classList.remove('animate');
-+     },
-+     { once: true }
-// end mod
+    this.addEventListener('transitionend', () => this.classList.remove('animate'), { once: true });
   }
 
   setSummaryAccessibility(cartDrawerNote) {
