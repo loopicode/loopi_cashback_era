@@ -69,4 +69,10 @@ Model tags are the source for the merchant-approved family rules, not a general 
 
 ## Adapter refinement — 15 October 2026
 
-Merchant requested configuration-specific Donkey filtering and additional Fox/Thule recommendations. All available seat-brand choices remain within the matching mount. Availability continues to come from Liquid variant.available, rather than inventory quantity alone. 39 accessory tests and 17 checkout-routing tests passed. Theme Check passed the three changed theme files. Draft browser verification follows deployment.
+Merchant requested configuration-specific Donkey filtering and additional Fox/Thule recommendations. All available seat-brand choices remain within the matching mount. Availability continues to come from Liquid variant.available, rather than inventory quantity alone. 39 accessory tests and 17 checkout-routing tests passed. Theme Check passed the three changed theme files. Draft browser verification passed after commit acaf074cd794f0bb5c5fd506fecf98ae37a1de22:
+- Donkey 6 Twin: only Twin / Britax Roemer and Twin / Maxi Cosi options displayed; Add disabled until explicit selection. Adding Twin / Maxi Cosi produced the correct Twin, Maxi Cosi, 6+ Monate basket line at CHF 6.
+- Donkey 6 Double (Duo/sibling setup): only Mono / Britax Roemer and Mono / Maxi Cosi displayed.
+- Fox 5 Renew: Fox adapter displayed, Donkey adapter absent. Only the currently available Britax Roemer option was offered; Maxi Cosi was unavailable. Add required explicit choice.
+- Thule Urban Glide 3: Thule adapter appeared among the primary three recommendations. Selecting 6m updated the price to CHF 4 / Monat and enabled Add. Shared full-cart rendering verified too.
+- All test products were removed and the empty basket confirmed. No checkout or payment submitted.
+- No new cart-script console error observed; the previously documented duplicate Meta Pixel warning and tracking-manager custom-conversion helper error remain.
