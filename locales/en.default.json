@@ -233,6 +233,10 @@
     }
   },
   "templates": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "404"
+    },
     "search": {
       "no_results": "No results found for “{{ terms }}”. Check the spelling or use a different word or phrase.",
       "page": "Page",
@@ -276,10 +280,6 @@
         "post_success": "Thanks for contacting us. We'll get back to you as soon as possible.",
         "error_heading": "Please adjust the following:"
       }
-    },
-    "404": {
-      "title": "Page not found",
-      "subtext": "404"
     }
   },
   "sections": {
@@ -559,6 +559,8 @@
     "unsupported": "Please contact us to complete checkout for this combination of items.",
     "checkout": "Checkout",
     "total": "Total",
-    "purchase_option": "Buy"
+    "purchase_option": "Buy",
+    "adapter_choice": "Choose stroller and car-seat configuration",
+    "more_accessories": "More matching accessories"
   }
 }

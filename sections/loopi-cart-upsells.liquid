@@ -1,9 +1,5 @@
 {% if recommendations.performed %}
   {% assign upsell_products = recommendations.products %}
-{% else %}
-  {% assign upsell_products = collections[settings.cart_drawer_collection].products %}
-{% endif %}
-{% if upsell_products.size > 0 %}
   <div class="loopi-upsell-list">
     <h3>{{ 'loopi_cart.recommendations' | t }}</h3>
     {% assign shown = 0 %}
@@ -14,34 +10,43 @@
       {% endfor %}
       {% if upsell_product.available and already_added == false and shown < 3 %}
         {% assign shown = shown | plus: 1 %}
-        <article class="loopi-upsell-card">
-          <a href="{{ upsell_product.url }}" class="loopi-upsell-image">
-            {% if upsell_product.featured_image %}{{ upsell_product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80,160', sizes: '80px' }}{% endif %}
-          </a>
-          <div class="loopi-upsell-details">
-            <a href="{{ upsell_product.url }}">{{ upsell_product.title | split: ':' | first | strip | escape }}</a>
-            <form data-loopi-upsell-form action="{{ routes.cart_add_url }}" method="post">
-              <label class="visually-hidden" for="LoopiUpsell-{{ section.id }}-{{ upsell_product.id }}">{{ 'loopi_cart.choose' | t }}</label>
-              <select name="id" id="LoopiUpsell-{{ section.id }}-{{ upsell_product.id }}">
-                {% for variant in upsell_product.variants %}
-                  {% if variant.available %}
-                    {% capture variant_price %}{{ variant.price | money_with_currency | strip_html }}{% if variant.metafields.custom.subscription.value == true %} {{ 'loopi_cart.per_month' | t }}{% endif %}{% endcapture %}
-                    <option value="{{ variant.id }}" data-price="{{ variant_price | strip | escape }}">
-                      {% render 'loopi-upsell-variant-label', variant: variant, product: upsell_product %}
-                    </option>
-                  {% endif %}
-                {% endfor %}
-              </select>
-              {% assign selected_upsell = upsell_product.selected_or_first_available_variant %}
-              <p class="loopi-upsell-price" data-loopi-upsell-price>{{ selected_upsell.price | money_with_currency }}{% if selected_upsell.metafields.custom.subscription.value == true %} {{ 'loopi_cart.per_month' | t }}{% endif %}</p>
-              <button type="submit" class="button button--secondary">{{ 'loopi_cart.add' | t }}</button>
-              <p data-loopi-upsell-error role="alert" hidden></p>
-            </form>
-          </div>
-        </article>
+        {% render 'loopi-upsell-card', upsell_product: upsell_product, card_id: section.id %}
       {% endif %}
     {% endfor %}
   </div>
+{% else %}
+  {% capture accessory_data %}
+    {
+      "month": {{ 'now' | date: '%m' | plus: 0 | json }},
+      "messages": {
+        "heading": {{ 'loopi_cart.recommendations' | t | json }},
+        "choose": {{ 'loopi_cart.choose' | t | json }},
+        "adapter_choice": {{ 'loopi_cart.adapter_choice' | t | json }},
+        "more": {{ 'loopi_cart.more_accessories' | t | json }}
+      },
+      "items": [
+        {% for item in cart.items %}
+          {
+            "handle": {{ item.product.handle | json }},
+            "type": {{ item.product.type | json }},
+            "vendor": {{ item.product.vendor | json }},
+            "tags": {{ item.product.tags | json }},
+            "subscription": {{ item.variant.metafields.custom.subscription.value | default: false | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    }
+  {% endcapture %}
+  <script type="application/json" data-loopi-accessory-data>{{ accessory_data | replace: '<', '\u003c' }}</script>
+  {% assign accessory_handles = 'sleepytroll-baby-rocker-gen-2,bugaboo-performance-footmuff,bugaboo-comfort-wheeled-board,bugaboo-organizer,bugaboo-seat-liner,bugaboo-butterfly-transporttasche,bugaboo-komfort-transporttasche,bugaboo-donkey-car-seats-adapter,nicon-wheelblades-xl-paar-schneetaugliche-kinderwagen-in-sekundenschnelle' | split: ',' %}
+  {% for accessory_handle in accessory_handles %}
+    {% assign accessory_product = all_products[accessory_handle] %}
+    {% if accessory_product.available %}
+      <template data-loopi-accessory="{{ accessory_handle }}">
+        {% render 'loopi-upsell-card', upsell_product: accessory_product, card_id: section.id %}
+      </template>
+    {% endif %}
+  {% endfor %}
 {% endif %}
 {% schema %}
 {"name":"Cart recommendations","settings":[]}

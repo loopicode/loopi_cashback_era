@@ -1,0 +1,32 @@
+{% doc %}
+  Renders one available accessory card.
+  @param {product} upsell_product - The accessory.
+  @param {string} card_id - Unique ID prefix for this recommendation region.
+{% enddoc %}
+<article class="loopi-upsell-card" data-loopi-product="{{ upsell_product.handle }}">
+  <a href="{{ upsell_product.url }}" class="loopi-upsell-image">
+    {% if upsell_product.featured_image %}{{ upsell_product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80,160', sizes: '80px' }}{% endif %}
+  </a>
+  <div class="loopi-upsell-details">
+    <a href="{{ upsell_product.url }}">{{ upsell_product.title | split: ':' | first | strip | escape }}</a>
+    <form data-loopi-upsell-form action="{{ routes.cart_add_url }}" method="post">
+      <label class="visually-hidden" for="LoopiUpsell-{{ card_id }}-{{ upsell_product.id }}">{{ 'loopi_cart.choose' | t }}</label>
+      <select name="id" required id="LoopiUpsell-{{ card_id }}-{{ upsell_product.id }}">
+        {% for variant in upsell_product.variants %}
+          {% if variant.available %}
+            {% capture variant_price %}{{ variant.price | money_with_currency | strip_html }}{% if variant.metafields.custom.subscription.value == true %} {{ 'loopi_cart.per_month' | t }}{% endif %}{% endcapture %}
+            {% assign mounting_group = '' %}
+            {% if upsell_product.handle == 'bugaboo-comfort-wheeled-board' %}{% assign mounting_group = variant.options.first %}{% endif %}
+            <option value="{{ variant.id }}" data-subscription="{{ variant.metafields.custom.subscription.value }}" data-mount="{{ mounting_group | escape }}" data-price="{{ variant_price | strip | escape }}">
+              {% render 'loopi-upsell-variant-label', variant: variant, product: upsell_product %}
+            </option>
+          {% endif %}
+        {% endfor %}
+      </select>
+      {% assign selected_upsell = upsell_product.selected_or_first_available_variant %}
+      <p class="loopi-upsell-price" data-loopi-upsell-price>{{ selected_upsell.price | money_with_currency }}{% if selected_upsell.metafields.custom.subscription.value == true %} {{ 'loopi_cart.per_month' | t }}{% endif %}</p>
+      <button type="submit" class="button button--secondary">{{ 'loopi_cart.add' | t }}</button>
+      <p data-loopi-upsell-error role="alert" hidden></p>
+    </form>
+  </div>
+</article>

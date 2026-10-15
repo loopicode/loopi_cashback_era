@@ -233,6 +233,10 @@
     }
   },
   "templates": {
+    "404": {
+      "title": "Seite nicht gefunden",
+      "subtext": "404"
+    },
     "search": {
       "no_results": "Keine Ergebnisse gefunden für \"{{ terms }}\". Überprüfe die Schreibweise oder versuche es mit einer anderen Suchanfrage.",
       "results_with_count": {
@@ -276,10 +280,6 @@
         "error_heading": "Bitte passe Folgendes an:",
         "title": "Kontaktformular"
       }
-    },
-    "404": {
-      "title": "Seite nicht gefunden",
-      "subtext": "404"
     }
   },
   "sections": {
@@ -559,6 +559,8 @@
     "unsupported": "Bitte kontaktiere uns, um diese Kombination von Artikeln zu bestellen.",
     "checkout": "Zur Kasse",
     "total": "Total",
-    "purchase_option": "Kaufen"
+    "purchase_option": "Kaufen",
+    "adapter_choice": "Wagen- und Autositz-Ausführung wählen",
+    "more_accessories": "Weiteres passendes Zubehör"
   }
 }

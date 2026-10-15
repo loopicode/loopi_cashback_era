@@ -17,3 +17,5 @@
 loopi-sticky-cart { display: block; }
 [data-loopi-checkout-busy] { cursor: progress; }
 .drawer__footer .loopi-cart-upsells { max-height: min(26vh, 22rem); overflow-y: auto; overscroll-behavior: contain; }
+
+.loopi-upsell-more summary { padding: 1rem .2rem; min-height: 44px; cursor: pointer; font-weight: 600; }

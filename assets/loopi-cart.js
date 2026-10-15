@@ -25,6 +25,42 @@
     if (!response.ok || data.errors || data.error) throw new Error('checkout_error');
     return data;
   };
+  const accessoryPlan = (items, candidates, month) => {
+    const main = items.filter((item) => !item.tags.includes('Kategorie:Zubehör'));
+    const strollers = main.filter((item) => item.tags.includes('Kategorie:Kinderwagen') || item.type === 'Kinderwagen');
+    const trailers = main.filter((item) => item.tags.includes('Kategorie:Velo-Anhänger'));
+    const bugaboo = strollers.filter((item) => item.vendor.toLowerCase() === 'bugaboo' || item.tags.includes('Marke:Bugaboo'));
+    const model = (name) => bugaboo.some((item) => item.tags.includes('Modell:' + name));
+    const mounts = [];
+    if (model('Butterfly')) mounts.push('Butterfly');
+    if (['Fox', 'Dragonfly', 'Donkey'].some(model)) mounts.push('Donkey Fox Dragonfly');
+    const handled = strollers.length > 0 || trailers.length > 0 || items.every((item) => item.tags.includes('Kategorie:Zubehör'));
+    const winter = month >= 9 || month <= 3;
+    const scores = {
+      'sleepytroll-baby-rocker-gen-2': strollers.length ? 95 : 0,
+      'bugaboo-performance-footmuff': strollers.length || trailers.length ? (winter ? 100 : 45) : 0,
+      'bugaboo-butterfly-transporttasche': model('Butterfly') ? 90 : 0,
+      'bugaboo-komfort-transporttasche': model('Donkey') ? 90 : 0,
+      'bugaboo-comfort-wheeled-board': mounts.length ? 80 : 0,
+      'bugaboo-donkey-car-seats-adapter': model('Donkey') ? 75 : 0,
+      'bugaboo-organizer': bugaboo.length ? 60 : 0,
+      'bugaboo-seat-liner': bugaboo.length ? 50 : 0,
+      'nicon-wheelblades-xl-paar-schneetaugliche-kinderwagen-in-sekundenschnelle': strollers.length ? 40 : 0,
+    };
+    const rentalBasket = items.some((item) => item.subscription === true);
+    const present = new Set(items.map((item) => item.handle));
+    const cards = candidates.flatMap((candidate) => {
+      const score = scores[candidate.handle] || 0;
+      if (!score || present.has(candidate.handle)) return [];
+      const options = candidate.options.filter((option) => candidate.handle !== 'bugaboo-comfort-wheeled-board' || mounts.includes(option.mount));
+      if (!options.length) return [];
+      const preferred = options.find((option) => option.subscription === rentalBasket);
+      const mixedMounts = candidate.handle === 'bugaboo-comfort-wheeled-board' && new Set(options.map((option) => option.mount)).size > 1;
+      const needsChoice = candidate.handle === 'bugaboo-donkey-car-seats-adapter' || mixedMounts || !preferred;
+      return [{ handle: candidate.handle, options, score, needsChoice, selected: needsChoice ? null : preferred.id }];
+    }).sort((a, b) => b.score - a.score || a.handle.localeCompare(b.handle));
+    return { handled, cards };
+  };
   const fingerprint = (cart) => JSON.stringify([
     cart.currency, cart.total_price,
     cart.items.map((item) => [item.key, item.variant_id, item.quantity]),
@@ -179,7 +215,7 @@
     queue = operation.then(() => {}, () => {}).finally(() => { pending--; revision++; });
     return operation;
   };
-  window.LoopiCart = { navigate, prepare, buildPayload, validateSnapshot, hasSubscription, rentalTerm, fingerprint };
+  window.LoopiCart = { navigate, prepare, buildPayload, validateSnapshot, hasSubscription, rentalTerm, fingerprint, accessoryPlan };
   document.addEventListener('click', (event) => {
     const button = event.target.closest('button[name="checkout"], input[name="checkout"], [data-loopi-checkout]');
     if (!button) return;
@@ -236,12 +272,80 @@
         if (event.target.name !== 'id') return;
         const option = event.target.selectedOptions[0];
         const price = event.target.closest('form').querySelector('[data-loopi-upsell-price]');
-        if (price && option) price.textContent = option.dataset.price;
+        if (price && option) price.textContent = option.dataset.price || '';
+        const button = event.target.closest('form').querySelector('button');
+        if (button) button.disabled = !event.target.value;
       }, { signal: this.controller.signal });
       this.load();
     }
     disconnectedCallback() { this.controller?.abort(); }
+    renderPlan(html, data, plan) {
+      const list = document.createElement('div');
+      list.className = 'loopi-upsell-list';
+      const heading = document.createElement('h3');
+      heading.textContent = data.messages.heading;
+      list.append(heading);
+      let more;
+      plan.cards.forEach((card, index) => {
+        const template = html.querySelector('template[data-loopi-accessory="' + card.handle + '"]');
+        const article = template.content.firstElementChild.cloneNode(true);
+        const select = article.querySelector('select');
+        select.id = 'LoopiUpsell-' + (this.closest('#CartDrawer') ? 'drawer' : 'page') + '-' + card.handle;
+        article.querySelector('label').htmlFor = select.id;
+        const ids = new Set(card.options.map((option) => option.id));
+        Array.from(select.options).forEach((option) => { if (!ids.has(option.value)) option.remove(); });
+        if (card.needsChoice) {
+          const placeholder = document.createElement('option');
+          placeholder.value = '';
+          placeholder.disabled = true;
+          placeholder.selected = true;
+          placeholder.textContent = card.handle === 'bugaboo-donkey-car-seats-adapter' ? data.messages.adapter_choice : data.messages.choose;
+          select.prepend(placeholder);
+          select.selectedIndex = 0;
+        } else select.value = card.selected;
+        const selected = select.selectedOptions[0];
+        article.querySelector('[data-loopi-upsell-price]').textContent = selected?.dataset.price || '';
+        article.querySelector('button[type="submit"]').disabled = !select.value;
+        if (index < 3) list.append(article);
+        else {
+          if (!more) {
+            more = document.createElement('details');
+            more.className = 'loopi-upsell-more';
+            const summary = document.createElement('summary');
+            summary.textContent = data.messages.more;
+            more.append(summary);
+            list.append(more);
+          }
+          more.append(article);
+        }
+      });
+      this.querySelector('[data-loopi-upsell-content]').replaceChildren(list);
+      this.hidden = !plan.cards.length;
+    }
     async load() {
+      try {
+        const url = new URL(root(), window.location.origin);
+        url.searchParams.set('section_id', 'loopi-cart-upsells');
+        const response = await request(url, { cache: 'no-store' });
+        if (!response.ok) throw new Error('recommendations');
+        const html = new DOMParser().parseFromString(await response.text(), 'text/html');
+        if (!this.isConnected) return;
+        const data = JSON.parse(html.querySelector('[data-loopi-accessory-data]').textContent);
+        const candidates = Array.from(html.querySelectorAll('template[data-loopi-accessory]')).map((template) => ({
+          handle: template.dataset.loopiAccessory,
+          options: Array.from(template.content.querySelectorAll('option')).map((option) => ({
+            id: option.value, mount: option.dataset.mount, subscription: option.dataset.subscription === 'true',
+          })),
+        }));
+        const plan = accessoryPlan(data.items, candidates, data.month);
+        if (plan.handled) {
+          this.renderPlan(html, data, plan);
+          return;
+        }
+      } catch {
+        this.hidden = true;
+        return;
+      }
       for (const intent of ['complementary', 'related']) {
         try {
           const url = new URL(root() + 'recommendations/products', window.location.origin);
