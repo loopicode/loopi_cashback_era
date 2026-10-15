@@ -82,3 +82,9 @@ No address, email or payment details were entered, no order was placed, Shopify 
 Product link titles in the drawer, full cart page and cart recommendations now end before the first colon (`:`), with surrounding whitespace removed. For example, `Bugaboo - Performance Fusssack: Im Winter warm und gemütlich unterwegs` displays as `Bugaboo - Performance Fusssack`. Titles without a colon remain complete. The split runs on the currently translated title in Liquid, followed by HTML escaping. Catalog product titles, product pages, accessibility labels and checkout integrations are unchanged.
 
 Validation: Theme Check passed all three modified Liquid files, with one pre-existing unused-variable warning in the full cart section.
+
+## Continue shopping in the drawer — 2026-10-15
+
+The empty drawer’s localized Continue shopping control is now a `type="button"` that calls the existing cart drawer close method. It no longer navigates to `/collections/all`. The full cart page’s navigation link is unchanged because it has no drawer to dismiss.
+
+Validation: Theme Check passed the modified drawer. In the unpublished dev preview, both prior test items were removed through the drawer UI; the empty state rendered the new `Weiter shoppen` button. Keyboard activation closed the drawer while keeping the same product URL, selected variant and scroll position. The preview basket is now empty. No checkout, order or payment was created.
