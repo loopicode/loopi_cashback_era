@@ -31,6 +31,16 @@
     const trailers = main.filter((item) => item.tags.includes('Kategorie:Velo-Anhänger'));
     const bugaboo = strollers.filter((item) => item.vendor.toLowerCase() === 'bugaboo' || item.tags.includes('Marke:Bugaboo'));
     const model = (name) => bugaboo.some((item) => item.tags.includes('Modell:' + name));
+    const donkeyMounts = new Set();
+    bugaboo.filter((item) => item.tags.includes('Modell:Donkey')).forEach((item) => {
+      // Handles distinguish Mono/Duo/Double from Twin; shared model tags do not.
+      const tokens = item.handle.toLowerCase().split('-');
+      if (tokens.includes('twin')) donkeyMounts.add('Twin');
+      else if (['mono', 'duo', 'double'].some((name) => tokens.includes(name))) donkeyMounts.add('Mono');
+    });
+    const urbanGlide = strollers.some((item) =>
+      (item.vendor.toLowerCase() === 'thule' || item.tags.includes('Marke:Thule')) && item.tags.includes('Modell:Urban Glide'));
+    const adapters = new Set(['bugaboo-donkey-car-seats-adapter', 'bugaboo-fox-car-seats-adapter', 'thule-urban-glide-autositz-adapter']);
     const mounts = [];
     if (model('Butterfly')) mounts.push('Butterfly');
     if (['Fox', 'Dragonfly', 'Donkey'].some(model)) mounts.push('Donkey Fox Dragonfly');
@@ -42,7 +52,9 @@
       'bugaboo-butterfly-transporttasche': model('Butterfly') ? 90 : 0,
       'bugaboo-komfort-transporttasche': model('Donkey') ? 90 : 0,
       'bugaboo-comfort-wheeled-board': mounts.length ? 80 : 0,
-      'bugaboo-donkey-car-seats-adapter': model('Donkey') ? 75 : 0,
+      'bugaboo-donkey-car-seats-adapter': donkeyMounts.size ? 75 : 0,
+      'bugaboo-fox-car-seats-adapter': model('Fox') ? 75 : 0,
+      'thule-urban-glide-autositz-adapter': urbanGlide ? 75 : 0,
       'bugaboo-organizer': bugaboo.length ? 60 : 0,
       'bugaboo-seat-liner': bugaboo.length ? 50 : 0,
       'nicon-wheelblades-xl-paar-schneetaugliche-kinderwagen-in-sekundenschnelle': strollers.length ? 40 : 0,
@@ -52,12 +64,17 @@
     const cards = candidates.flatMap((candidate) => {
       const score = scores[candidate.handle] || 0;
       if (!score || present.has(candidate.handle)) return [];
-      const options = candidate.options.filter((option) => candidate.handle !== 'bugaboo-comfort-wheeled-board' || mounts.includes(option.mount));
+      const options = candidate.options.filter((option) => {
+        if (candidate.handle === 'bugaboo-comfort-wheeled-board') return mounts.includes(option.mount);
+        if (candidate.handle === 'bugaboo-donkey-car-seats-adapter') return donkeyMounts.has(option.mount);
+        return true;
+      });
       if (!options.length) return [];
       const preferred = options.find((option) => option.subscription === rentalBasket);
       const mixedMounts = candidate.handle === 'bugaboo-comfort-wheeled-board' && new Set(options.map((option) => option.mount)).size > 1;
-      const needsChoice = candidate.handle === 'bugaboo-donkey-car-seats-adapter' || mixedMounts || !preferred;
-      return [{ handle: candidate.handle, options, score, needsChoice, selected: needsChoice ? null : preferred.id }];
+      const adapter = adapters.has(candidate.handle);
+      const needsChoice = adapter || mixedMounts || !preferred;
+      return [{ handle: candidate.handle, options, score, adapter, needsChoice, selected: needsChoice ? null : preferred.id }];
     }).sort((a, b) => b.score - a.score || a.handle.localeCompare(b.handle));
     return { handled, cards };
   };
@@ -299,7 +316,7 @@
           placeholder.value = '';
           placeholder.disabled = true;
           placeholder.selected = true;
-          placeholder.textContent = card.handle === 'bugaboo-donkey-car-seats-adapter' ? data.messages.adapter_choice : data.messages.choose;
+          placeholder.textContent = card.adapter ? data.messages.adapter_choice : data.messages.choose;
           select.prepend(placeholder);
           select.selectedIndex = 0;
         } else select.value = card.selected;

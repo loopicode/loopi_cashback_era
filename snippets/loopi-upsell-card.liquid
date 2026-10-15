@@ -16,7 +16,7 @@
           {% if variant.available %}
             {% capture variant_price %}{{ variant.price | money_with_currency | strip_html }}{% if variant.metafields.custom.subscription.value == true %} {{ 'loopi_cart.per_month' | t }}{% endif %}{% endcapture %}
             {% assign mounting_group = '' %}
-            {% if upsell_product.handle == 'bugaboo-comfort-wheeled-board' %}{% assign mounting_group = variant.options.first %}{% endif %}
+            {% if upsell_product.handle == 'bugaboo-comfort-wheeled-board' or upsell_product.handle == 'bugaboo-donkey-car-seats-adapter' %}{% assign mounting_group = variant.options.first %}{% endif %}
             <option value="{{ variant.id }}" data-subscription="{{ variant.metafields.custom.subscription.value }}" data-mount="{{ mounting_group | escape }}" data-price="{{ variant_price | strip | escape }}">
               {% render 'loopi-upsell-variant-label', variant: variant, product: upsell_product %}
             </option>

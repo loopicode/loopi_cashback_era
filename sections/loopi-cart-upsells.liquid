@@ -38,7 +38,7 @@
     }
   {% endcapture %}
   <script type="application/json" data-loopi-accessory-data>{{ accessory_data | replace: '<', '\u003c' }}</script>
-  {% assign accessory_handles = 'sleepytroll-baby-rocker-gen-2,bugaboo-performance-footmuff,bugaboo-comfort-wheeled-board,bugaboo-organizer,bugaboo-seat-liner,bugaboo-butterfly-transporttasche,bugaboo-komfort-transporttasche,bugaboo-donkey-car-seats-adapter,nicon-wheelblades-xl-paar-schneetaugliche-kinderwagen-in-sekundenschnelle' | split: ',' %}
+  {% assign accessory_handles = 'sleepytroll-baby-rocker-gen-2,bugaboo-performance-footmuff,bugaboo-comfort-wheeled-board,bugaboo-organizer,bugaboo-seat-liner,bugaboo-butterfly-transporttasche,bugaboo-komfort-transporttasche,bugaboo-donkey-car-seats-adapter,bugaboo-fox-car-seats-adapter,thule-urban-glide-autositz-adapter,nicon-wheelblades-xl-paar-schneetaugliche-kinderwagen-in-sekundenschnelle' | split: ',' %}
   {% for accessory_handle in accessory_handles %}
     {% assign accessory_product = all_products[accessory_handle] %}
     {% if accessory_product.available %}
