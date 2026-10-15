@@ -49,7 +49,15 @@ Rules follow existing model tags, so newly added products with a correctly class
 - Theme Check passed all seven changed theme files.
 - 17 existing checkout routing tests passed.
 - 23 new tests exercise the actual policy function extracted from the theme script, including model mounting, Donkey 5/6 configurations, brand exclusions, trailers, accessory-only baskets, missing available mounts, seasonal boundaries, basket ordering, already-added products, purchase/rental defaults and explicit choice.
-- Browser checks follow deployment; no order or payment will be submitted.
+- Browser verification passed in the synced draft preview after implementation commit d41ca8fe69efcdff86768589d132452f2dc2afa0:
+  - Donkey 6 purchase basket: footmuff, Sleepytroll and large Komfort bag ranked first; purchase options preferred.
+  - Expanded board dropdown contained only Donkey Fox Dragonfly mounting options. Adding its purchase option created the correct basket line.
+  - All four available Donkey adapter configurations remained selectable. Add stayed disabled until an explicit choice; choosing Mono / Maxi Cosi updated price and enabled Add.
+  - With the board as the first basket line, Donkey context and ranking were preserved. Removing the stroller left an accessory-only basket and cleared inferred recommendations.
+  - Butterfly 2 rental basket: footmuff, Sleepytroll and small Butterfly bag ranked first; rental options preferred. Board dropdown contained only Butterfly mounting options; no Donkey adapter or large bag appeared.
+  - Full cart page rendered the same Butterfly recommendations and rounded compact selectors.
+  - Test items were removed and the empty cart confirmed. No order or payment was submitted.
+- Console monitoring observed no new cart-script error. The previously observed duplicate Meta Pixel warning and missing sl_broadcast_custom_events_prepare_custom_conversion_object error from stream.loopi.ch remain separate tracking issues. Suggested follow-up: deduplicate pixel initialization and check the tracking manager's custom-conversion helper/load order.
 
 ## Known limits
 
