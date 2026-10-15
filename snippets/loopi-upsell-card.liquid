@@ -25,7 +25,12 @@
       </select>
       {% assign selected_upsell = upsell_product.selected_or_first_available_variant %}
       <p class="loopi-upsell-price" data-loopi-upsell-price>{{ selected_upsell.price | money_with_currency }}{% if selected_upsell.metafields.custom.subscription.value == true %} {{ 'loopi_cart.per_month' | t }}{% endif %}</p>
-      <button type="submit" class="button button--secondary">{{ 'loopi_cart.add' | t }}</button>
+      <button type="submit" class="button loopi-upsell-add">
+        <span class="loopi-upsell-plus" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none" focusable="false"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
+        <span>{{ 'loopi_cart.add' | t }}</span>
+      </button>
       <p data-loopi-upsell-error role="alert" hidden></p>
     </form>
   </div>

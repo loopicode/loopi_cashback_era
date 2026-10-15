@@ -8,11 +8,21 @@
 .loopi-upsell-image img { width: 65px; height: 65px; object-fit: contain; }
 .loopi-upsell-details { flex: 1; min-width: 0; font-size: 1.3rem; }
 .loopi-upsell-details a { color: inherit; text-decoration: none; }
-.loopi-upsell-details select { width: 100%; max-width: 100%; min-height: 42px; padding: .8rem 3.2rem .8rem 1.4rem; margin: .7rem 0 0; font: inherit; border-radius: 24px; border: 1px solid rgba(var(--color-foreground), .25); color: rgb(var(--color-foreground)); background-color: rgb(var(--color-background)); appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23333' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1.3rem center; cursor: pointer; }
+.loopi-upsell-details select { width: 100%; max-width: 100%; min-height: 44px; padding: .8rem 3.2rem .8rem 1.4rem; margin: .7rem 0 0; font: inherit; border-radius: 999px; border: 1px solid rgba(var(--color-button), .45); color: rgb(var(--color-foreground)); background-color: rgba(var(--color-button), .04); appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23333' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1.3rem center; cursor: pointer; }
 .loopi-upsell-details select:focus-visible { outline: 2px solid rgb(var(--color-foreground)); outline-offset: 2px; }
 .loopi-upsell-price { margin: .6rem 0 .8rem; font-weight: 600; }
 .drawer__footer .cart__ctas .cart__checkout-button { width: 100%; border-radius: 999px; min-height: 48px; }
-.loopi-upsell-details .button { min-height: 36px; padding: .6rem 1.2rem; font-size: 1.3rem; }
+.loopi-upsell-details .loopi-upsell-add { display: inline-flex; align-items: center; justify-content: center; gap: .8rem; width: 100%; min-height: 44px; padding: .8rem 1.4rem; border: 1px solid rgba(var(--color-button), .65); border-radius: 999px; background: rgba(var(--color-button), .1); color: rgb(var(--color-foreground)); font: inherit; font-weight: 600; letter-spacing: .02em; line-height: 1.3; box-shadow: none; transition: background-color .18s ease, border-color .18s ease; }
+.loopi-upsell-add::before, .loopi-upsell-add::after { content: none; }
+.loopi-upsell-add:not(:disabled):hover { background: rgba(var(--color-button), .2); border-color: rgb(var(--color-button)); }
+.loopi-upsell-add:focus-visible { outline: 2px solid rgb(var(--color-foreground)); outline-offset: 3px; }
+.loopi-upsell-add:disabled { opacity: .45; cursor: not-allowed; }
+.loopi-upsell-plus { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 22px; width: 22px; height: 22px; border-radius: 50%; background: rgb(var(--color-button)); color: rgb(var(--color-button-text)); animation: loopi-upsell-pulse 2.8s ease-in-out infinite; }
+.loopi-upsell-plus svg { width: 12px; height: 12px; }
+.loopi-upsell-add:disabled .loopi-upsell-plus { animation: none; }
+.loopi-upsell-details select:hover { border-color: rgb(var(--color-button)); }
+@keyframes loopi-upsell-pulse { 0%, 65%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(var(--color-button), 0); } 80% { transform: scale(1.12); box-shadow: 0 0 0 5px rgba(var(--color-button), .14); } }
+@media (prefers-reduced-motion: reduce) { .loopi-upsell-plus { animation: none; } .loopi-upsell-add { transition: none; } }
 .loopi-upsell-details [role="alert"] { color: #a32419; }
 loopi-sticky-cart { display: block; }
 [data-loopi-checkout-busy] { cursor: progress; }
