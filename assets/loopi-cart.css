@@ -22,6 +22,7 @@
 .loopi-upsell-add:disabled .loopi-upsell-plus { animation: none; }
 .loopi-upsell-details select:hover { border-color: rgb(var(--color-button)); }
 @keyframes loopi-upsell-pulse { 0%, 65%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(var(--color-button), 0); } 80% { transform: scale(1.12); box-shadow: 0 0 0 5px rgba(var(--color-button), .14); } }
+@media screen and (max-width: 749px) { .loopi-upsell-details .loopi-upsell-add { gap: .5rem; padding-inline: .8rem; } .loopi-upsell-plus { flex-basis: 18px; width: 18px; height: 18px; } }
 @media (prefers-reduced-motion: reduce) { .loopi-upsell-plus { animation: none; } .loopi-upsell-add { transition: none; } }
 .loopi-upsell-details [role="alert"] { color: #a32419; }
 loopi-sticky-cart { display: block; }
