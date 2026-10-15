@@ -76,3 +76,9 @@ GitHub commit `b729c1743c062feb3d34b160e019aef6d1e0c577` synced to the existing 
 - All 17 standalone router tests passed. Official Theme Check passed the latest refinement files; the three existing layout script warnings/errors documented above remain baseline findings.
 
 No address, email or payment details were entered, no order was placed, Shopify Pay was not enabled, and the live theme was not published or changed. Two test items remain in this preview session for merchant review. Full localization, comprehensive responsive visual checks and payment completion remain on the checklist.
+
+## Compact cart titles — 2026-10-15
+
+Product link titles in the drawer, full cart page and cart recommendations now end before the first colon (`:`), with surrounding whitespace removed. For example, `Bugaboo - Performance Fusssack: Im Winter warm und gemütlich unterwegs` displays as `Bugaboo - Performance Fusssack`. Titles without a colon remain complete. The split runs on the currently translated title in Liquid, followed by HTML escaping. Catalog product titles, product pages, accessibility labels and checkout integrations are unchanged.
+
+Validation: Theme Check passed all three modified Liquid files, with one pre-existing unused-variable warning in the full cart section.

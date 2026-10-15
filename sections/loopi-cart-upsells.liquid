@@ -19,7 +19,7 @@
             {% if upsell_product.featured_image %}{{ upsell_product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80,160', sizes: '80px' }}{% endif %}
           </a>
           <div class="loopi-upsell-details">
-            <a href="{{ upsell_product.url }}">{{ upsell_product.title | escape }}</a>
+            <a href="{{ upsell_product.url }}">{{ upsell_product.title | split: ':' | first | strip | escape }}</a>
             <form data-loopi-upsell-form action="{{ routes.cart_add_url }}" method="post">
               <label class="visually-hidden" for="LoopiUpsell-{{ section.id }}-{{ upsell_product.id }}">{{ 'loopi_cart.choose' | t }}</label>
               <select name="id" id="LoopiUpsell-{{ section.id }}-{{ upsell_product.id }}">
