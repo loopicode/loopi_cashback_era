@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
   if (document.body.classList.contains("gradient") && document.body.classList.contains("page-home")) {
       var mqr = [];
       var ticketTapes = document.querySelectorAll('.ticket-wrapper');
+      if (!ticketTapes.length) return;
 
       function start() {
           ticketTapes.forEach(function(tape) {
@@ -74,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function() {
       }
 
       function mqRotate(mqr) {
-          if (!mqr) return;
+          if (!mqr || !mqr.length) return;
           for (var j = mqr.length - 1; j > -1; j--) {
               var maxa = mqr[j].ary.length;
               for (var i = 0; i < maxa; i++) {
