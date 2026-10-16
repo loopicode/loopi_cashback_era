@@ -58,9 +58,36 @@
             "custom_liquid": "<style>\n.garantie-badge-icon { display:inline-flex; flex-shrink:0; width:24px; height:24px; color:#5C6B4D; }\n.garantie-badge-icon svg { width:100%; height:100%; display:block; }\n</style>\n{% if product.metafields.custom.garantie_badge_text.value != blank %}\n  {%- liquid\n    assign use_icon = true\n    assign zustand_match = false\n    assign laufzeit_match = false\n    for opt in product.selected_or_first_available_variant.selected_options\n      if opt.name == 'Zustand' and opt.value == 'Pre-loved'\n        assign zustand_match = true\n      endif\n      if opt.name == 'Mindestlaufzeit' and opt.value == 'Kaufen'\n        assign laufzeit_match = true\n      endif\n    endfor\n    assign initial_show = false\n    if zustand_match and laufzeit_match\n      assign initial_show = true\n    endif\n  -%}\n  <div class=\"garantie-badge\" id=\"GarantieBadge-{{ section.id }}\" style=\"margin-top:8px;padding:8px 12px;background:rgba(203,195,171,0.4);border-radius:6px;font-size:14px;font-weight:normal;display:{% if initial_show %}flex{% else %}none{% endif %};align-items:center;gap:8px;\">\n    <span class=\"garantie-badge-icon\">\n      {% if use_icon %}{{ 'loopi-icon-schild.svg' | inline_asset_content }}{% else %}✓{% endif %}\n    </span>\n    <span><strong>Garantie</strong> — {{ product.metafields.custom.garantie_badge_text.value }}</span>\n  </div>\n  <script>\n  (function() {\n    var sectionId = {{ section.id | json }};\n    function init() {\n      var badge = document.getElementById('GarantieBadge-' + sectionId);\n      if (!badge) return;\n      function update() {\n        var root = document.getElementById('variant-selects-' + sectionId);\n        if (!root) return;\n        var zustand = root.querySelector('input[name^=\"Zustand-\"]:checked, select[name^=\"Zustand-\"]');\n        var laufzeit = root.querySelector('input[name^=\"Mindestlaufzeit-\"]:checked, select[name^=\"Mindestlaufzeit-\"]');\n        var show = zustand && laufzeit && zustand.value === 'Pre-loved' && laufzeit.value === 'Kaufen';\n        badge.style.display = show ? 'flex' : 'none';\n      }\n      document.addEventListener('change', function(e) {\n        var root = document.getElementById('variant-selects-' + sectionId);\n        if (root && root.contains(e.target)) update();\n      });\n    }\n    if (document.readyState === 'loading') {\n      document.addEventListener('DOMContentLoaded', init);\n    } else {\n      init();\n    }\n  })();\n  </script>\n{% endif %}"
           }
         },
+        "cashback_rechner": {
+          "type": "cashback_rechner",
+          "settings": {
+            "banner_label": "Circular Cashback",
+            "banner_text": "Bis zu CHF [amount] zurück beim Rückverkauf",
+            "button_label": "Rückkaufwert berechnen",
+            "banner_note": "Prozentsatz vom Neupreis bei loopi, abhängig von Zustand und Besitzdauer.",
+            "modal_title": "Dein Rückkaufwert",
+            "modal_intro": "Wähle Zustand und Besitzdauer und sieh, was du bei Circular Cashback zurückbekommst.",
+            "label_condition": "Zustand bei Rückgabe",
+            "condition_1": "So gut wie neu",
+            "condition_2": "Leichte Gebrauchsspuren",
+            "condition_3": "Deutliche Gebrauchsspuren",
+            "condition_help": "Prüfe das Produkt zuhause genau. Frag dich: Würdest du es guten Gewissens selbst als Secondhand kaufen?",
+            "label_duration": "Besitzdauer",
+            "duration_1": "6 Monate",
+            "duration_2": "12 Monate",
+            "duration_3": "24 Monate",
+            "result_price": "Neupreis bei loopi",
+            "result_refund": "Rückkaufwert",
+            "result_net": "Nutzungspreis nach [months] Monaten",
+            "promo_note": "Erhöhte Werte der Einführungsaktion für Käufe bis [date].",
+            "disclaimer": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi. Der konkrete Betrag wird nach der Prüfung bestätigt.",
+            "back_label": "Zurück zum Produkt"
+          }
+        },
         "custom_liquid_cashback_badge": {
           "type": "custom_liquid",
           "name": "Custom Liquid_cashback-badge",
+          "disabled": true,
           "settings": {
             "custom_liquid": "<style>\n.cashback-badge-icon { display:inline-flex; flex-shrink:0; width:24px; height:24px; color:#5C6B4D; }\n.cashback-badge-icon svg { width:100%; height:100%; display:block; }\n</style>\n{% if product.metafields.custom.cashback_badge_text.value != blank %}\n  {%- liquid\n    assign use_icon = true\n  -%}\n  <div class=\"cashback-badge\" style=\"margin-top:8px;padding:8px 12px;background:rgba(151,167,77,0.15);border-radius:6px;font-size:14px;font-weight:normal;display:flex;align-items:center;gap:8px;\">\n    <span class=\"cashback-badge-icon\">\n      {% if use_icon %}{{ 'loopi-icon-kreislauf.svg' | inline_asset_content }}{% else %}♻️{% endif %}\n    </span>\n    <span><strong>Circular Cashback</strong> — {{ product.metafields.custom.cashback_badge_text.value }}<br><a href=\"#CashbackAccordion\" data-cb-accordion style=\"font-size:13px;text-decoration:underline;color:rgba(var(--color-foreground),0.75);\">Rückkaufwerte und Details siehst du weiter unten</a></span>\n  </div>\n  <script>\n  (function(){\n    var link=document.currentScript.previousElementSibling.querySelector('[data-cb-accordion]');\n    if(!link) return;\n    link.addEventListener('click',function(e){\n      var row=document.getElementById('CashbackAccordion');\n      if(!row) return;\n      e.preventDefault();\n      var d=row.querySelector('details'); if(d) d.open=true;\n      row.scrollIntoView({behavior:'smooth',block:'center'});\n      try{window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'cashback_badge_click'});}catch(x){}\n    });\n  })();\n  </script>\n{% endif %}"
           }
@@ -84,6 +111,7 @@
         "custom_liquid_mieten_erklaerung": {
           "type": "custom_liquid",
           "name": "Custom Liquid_mieten-erklaerung",
+          "disabled": true,
           "settings": {
             "custom_liquid": "{%- liquid\n  assign is_rentable = false\n  for option in product.options_with_values\n    if option.name == 'Mindestlaufzeit'\n      for value in option.values\n        unless value contains 'Kaufen'\n          assign is_rentable = true\n        endunless\n      endfor\n    endif\n  endfor\n-%}\n{%- if is_rentable -%}\n<div class=\"product__accordion accordion quick-add-hidden\" {{ block.shopify_attributes }}>\n  <details id=\"Details-{{ block.id }}-{{ section.id }}\">\n    <summary>\n      <div class=\"summary__title\">\n        <style>.loopi-acc-icon{width:calc(var(--font-heading-scale) * 2rem);height:calc(var(--font-heading-scale) * 2rem);margin-right:calc(var(--font-heading-scale) * 1rem);color:#121212;flex-shrink:0;align-self:center}.loopi-acc-icon svg{width:100%;height:100%;display:block}</style><span class=\"svg-wrapper loopi-acc-icon\">{{ 'loopi-icon-blatt.svg' | inline_asset_content }}</span>\n        <h2 class=\"h4 accordion__title inline-richtext\">Mieten bei loopi - so einfach gehts</h2>\n      </div>\n      {{- 'icon-caret.svg' | inline_asset_content -}}\n    </summary>\n    <div class=\"accordion__content rte\" id=\"ProductAccordion-{{ block.id }}-{{ section.id }}\">\n      <ol><li>Produkt in Warenkorb und <strong>Startdatum festlegen 📆</strong></li><li>Bestellung abschliessen und erste Monatsmiete bezahlen</li><li>Produkt erhalten <strong>inkl. gratis Versand </strong>und  nach dem ersten Monat <strong>monatlich bezahlen</strong></li></ol><p></p><ul><li>Produkt kann <strong>jederzeit aus der Miete herausgekauft </strong>werden zum Restwert</li><li>oder einfach nach der Mindestdauer <strong>gratis abholen lassen</strong></li></ul><p></p>\n    </div>\n  </details>\n</div>\n{%- endif -%}"
           }
@@ -157,32 +185,6 @@
           "settings": {
             "share_label": "Share"
           }
-        },
-        "cashback_rechner": {
-          "type": "cashback_rechner",
-          "settings": {
-            "banner_label": "Circular Cashback",
-            "banner_text": "Bis zu CHF [amount] zurück beim Rückverkauf",
-            "button_label": "Rückkaufwert berechnen",
-            "banner_note": "Prozentsatz vom Neupreis bei loopi, abhängig von Zustand und Besitzdauer.",
-            "modal_title": "Dein Rückkaufwert",
-            "modal_intro": "Wähle Zustand und Besitzdauer und sieh, was du bei Circular Cashback zurückbekommst.",
-            "label_condition": "Zustand bei Rückgabe",
-            "condition_1": "So gut wie neu",
-            "condition_2": "Leichte Gebrauchsspuren",
-            "condition_3": "Deutliche Gebrauchsspuren",
-            "condition_help": "Prüfe das Produkt zuhause genau. Frag dich: Würdest du es guten Gewissens selbst als Secondhand kaufen?",
-            "label_duration": "Besitzdauer",
-            "duration_1": "6 Monate",
-            "duration_2": "12 Monate",
-            "duration_3": "24 Monate",
-            "result_price": "Neupreis bei loopi",
-            "result_refund": "Rückkaufwert",
-            "result_net": "Nutzungspreis nach [months] Monaten",
-            "promo_note": "Erhöhte Werte der Einführungsaktion für Käufe bis [date].",
-            "disclaimer": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi. Der konkrete Betrag wird nach der Prüfung bestätigt.",
-            "back_label": "Zurück zum Produkt"
-          }
         }
       },
       "block_order": [
@@ -193,11 +195,11 @@
         "popup_3je4gX",
         "custom_liquid_delivery_note",
         "custom_liquid_garantie_badge",
+        "cashback_rechner",
         "custom_liquid_cashback_badge",
         "variant_picker",
         "text_RKjYAm",
         "custom_liquid_mieten_erklaerung",
-        "cashback_rechner",
         "buy_buttons",
         "icon_with_text_hJPRjE",
         "quantity_selector",
@@ -257,7 +259,13 @@
             "heading": "{{ product.metafields.custom.accordion_heading_1.value }}",
             "icon": "none",
             "row_content": "{{ product.metafields.custom.accordion_heading_1_content_ | metafield_tag }}",
-            "page": ""
+            "page": "",
+            "show_cashback_table": false,
+            "cb_table_corner": "Zustand / Besitzdauer",
+            "cb_table_cols": "6 Monate|12 Monate|24 Monate",
+            "cb_table_rows": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+            "cb_table_promo": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+            "cb_table_note": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt."
           }
         },
         "collapsible_row_inExJw": {
@@ -266,7 +274,13 @@
             "heading": "{{ product.metafields.custom.accordion_heading_2.value }}",
             "icon": "none",
             "row_content": "{{ product.metafields.custom.accordion_heading_2_content_ | metafield_tag }}",
-            "page": ""
+            "page": "",
+            "show_cashback_table": false,
+            "cb_table_corner": "Zustand / Besitzdauer",
+            "cb_table_cols": "6 Monate|12 Monate|24 Monate",
+            "cb_table_rows": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+            "cb_table_promo": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+            "cb_table_note": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt."
           }
         },
         "collapsible_row_YX94fi": {
@@ -275,7 +289,13 @@
             "heading": "{{ product.metafields.custom.accordion_heading_3.value }}",
             "icon": "none",
             "row_content": "{{ product.metafields.custom.accordion_heading_3_content_ | metafield_tag }}",
-            "page": ""
+            "page": "",
+            "show_cashback_table": false,
+            "cb_table_corner": "Zustand / Besitzdauer",
+            "cb_table_cols": "6 Monate|12 Monate|24 Monate",
+            "cb_table_rows": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+            "cb_table_promo": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+            "cb_table_note": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt."
           }
         },
         "collapsible_row_BaAgca": {
@@ -284,7 +304,13 @@
             "heading": "{{ product.metafields.custom.accordion_heading_4.value }}",
             "icon": "none",
             "row_content": "{{ product.metafields.custom.accordion_heading_4_content | metafield_tag }}",
-            "page": ""
+            "page": "",
+            "show_cashback_table": false,
+            "cb_table_corner": "Zustand / Besitzdauer",
+            "cb_table_cols": "6 Monate|12 Monate|24 Monate",
+            "cb_table_rows": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+            "cb_table_promo": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+            "cb_table_note": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt."
           }
         }
       },
