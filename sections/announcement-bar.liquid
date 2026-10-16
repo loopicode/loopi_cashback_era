@@ -68,18 +68,18 @@
        height:auto / font-size:1.4rem meant for the desktop header switcher. */
     .utility-bar.header-localization .localization-wrapper .announcement-bar__language-trigger {
       box-sizing: border-box;
-      border: 1px solid rgba(var(--color-foreground), .25);
+      border: 0;
       border-radius: 999px;
       background: rgba(255, 255, 255, .3);
-      min-width: 6.4rem;
+      min-width: 7.2rem;
       justify-content: center;
-      height: auto;
-      min-height: 4.4rem; /* matches Dawn's own 44px touch-target convention */
-      padding: 1rem 1.2rem; /* same 1rem top/bottom as .announcement-bar__message, for text alignment */
+      height: 3.2rem;
+      min-height: 3.2rem;
+      padding: .4rem 1.8rem;
       /* !important: something in component-localization-form.css keeps winning this
          specific property with an asymmetric 8px-top/0-bottom margin, which shifts
          the centered content downward. Plain override kept losing, so force it. */
-      margin: 0 !important;
+      margin: .6rem 0 !important;
       /* Match .h5's exact typography formula (font-family/size/line-height) so the
          glyph baseline lines up with the announcement text — .caption-large/.link
          otherwise render in the body font, which has different vertical metrics. */
