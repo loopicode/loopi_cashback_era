@@ -96,6 +96,11 @@
         #md-sticky-atc .product-form .select__select {
             padding-right: 4rem;
         }
+        #md-sticky-atc option[data-available="false"],
+        #md-sticky-atc .select__select:has(option:checked[data-available="false"]) {
+            color: #767676;
+            text-decoration: line-through;
+        }
         #md-sticky-atc .product-form .quantity-input-wrapper {
             display: flex;
             align-items: center;
@@ -177,7 +182,7 @@
                                             data-available="{{ variant.available }}"
                                             data-subscription="{{ variant.metafields.custom.subscription.value | default: false }}"
                                             {% if current_variant.id == variant.id %}selected{% endif %}>
-                                            {{ variant.title }} - {{ variant.price | money }}
+                                            {{ variant.title | escape }} - {{ variant.price | money }}{% unless variant.available %} — {{ 'products.product.sold_out' | t }}{% endunless %}
                                         </option>
                                     {% endfor %}
                                 </select>
