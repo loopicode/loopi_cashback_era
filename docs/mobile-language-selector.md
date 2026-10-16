@@ -9,3 +9,7 @@ Root cause of hidden language options: dropdown z-index 2 was below the adjacent
 Validation: Theme Check passes both files with two existing unknown block warnings in announcement-bar.liquid. Preview layering, touch target, black text, open/close and responsive checks recorded after sync. No theme publication.
 
 Verified implementation commit 6b5c30451450f165b048dd37173de45c186ded6b. Shopify dev remains UNPUBLISHED; both files match GitHub (JSON structurally after generated header removal). At 390px all three options (Deutsch, English, Français) pass DOM hit-testing above the utility bar. Trigger 64x44px, radius 999px; announcement text black. Keyboard activation closes the list and section returns to static positioning. At 768px selector remains usable without horizontal overflow. At 1280px compact selector hidden, retaining existing desktop selector behavior. No actual language submission or purchase performed.
+
+## Slimmer pill revision
+
+Commit 5e0ea06: trigger changed to 32px height, minimum 72px width, 18px horizontal padding, no border, and symmetric 6px vertical margins. Supersedes initial 64x44px pill dimensions above. At 390px preview: 32x72px, approx. 6px gaps above/below, border 0, no horizontal overflow; expanded language list still hit-tests in foreground. Theme Check passes with the same two existing block warnings.
