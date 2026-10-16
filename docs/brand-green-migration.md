@@ -66,3 +66,11 @@ Per user instruction, no companion text colors or outlines were adjusted. White 
 ## Rollback
 
 Restore these theme files from pre-migration commit a434084750c228725f819dcde19b5e51c4c5702c through a normal GitHub commit to dev. Preserve any newer unrelated changes when rolling back; do not reset the entire theme or recreate it.
+
+## Deployment verification
+
+Implementation commit: 591c3e0f21056a75ef646cb5d6c0a7b82e3f5d41. All 18 changed theme files verified in Shopify on the existing UNPUBLISHED theme. Fifteen text/SVG/CSS/Liquid files match exactly after line-ending normalization; the three JSON documents match structurally after removing Shopify's generated comment header. No old olive literal remains in these synced files.
+
+Rendered preview: announcement background rgb(214,219,185), white text retained; shared root token #D6DBB9 and --color-secondary resolves to same value. At 390px viewport, mobile slideshow control background also rgb(214,219,185), with no horizontal page overflow. Cashback icon list computed color rgb(214,219,185); no old olive values found among inspected inline SVG/style attributes there. PDP announcement updated; product color selection and orange add-to-cart control retained. No loopi-cart console errors captured during cart smoke check. No purchase or live-theme publication.
+
+Known visual follow-up remains the deliberately deferred contrast (white announcement text and pale icons on white). No new layout issue identified in these spot checks. This does not cover colors baked into remote raster images, app-owned iframes or hosted checkout branding.
