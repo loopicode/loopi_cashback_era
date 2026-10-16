@@ -418,9 +418,12 @@
       this.button = this.querySelector('button[name="add"]');
       this.main = document.querySelector('product-info[id^="MainProduct"]');
       if (!this.main || !this.select) return;
+      this.variantOptions = Array.from(this.select.options);
+      this.colorIndex = Number(this.dataset.colorIndex ?? -1);
+      this.syncVariant(this.main.querySelector('input[name="id"]')?.value || this.select.value);
       this.main.addEventListener('change', (event) => {
         if (event.target.name !== 'id') return;
-        this.select.value = event.target.value;
+        this.syncVariant(event.target.value);
         this.update();
       }, { signal });
       this.select.addEventListener('change', () => {
@@ -436,7 +439,7 @@
       }, { signal });
       this.unsubscribe = subscribe(PUB_SUB_EVENTS.variantChange, ({ data }) => {
         if (data.sectionId !== this.main.dataset.section) return;
-        if (data.variant) this.select.value = String(data.variant.id);
+        if (data.variant) this.syncVariant(String(data.variant.id));
         this.update();
         this.button.disabled = !data.variant?.available;
       });
@@ -451,6 +454,19 @@
       window.addEventListener('resize', onScroll, { signal, passive: true });
       this.update();
       onScroll();
+    }
+    syncVariant(id) {
+      const selected = this.variantOptions.find((option) => option.value === String(id));
+      if (!selected) {
+        this.select.selectedIndex = -1;
+        this.button.disabled = true;
+        return;
+      }
+      const matching = this.colorIndex >= 0
+        ? this.variantOptions.filter((option) => option.dataset.color === selected.dataset.color)
+        : this.variantOptions;
+      this.select.replaceChildren(...matching);
+      this.select.value = selected.value;
     }
     update() {
       const option = this.select.selectedOptions[0];

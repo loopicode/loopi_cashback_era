@@ -1,6 +1,14 @@
 {% if section.settings.enable_section and request.page_type == 'product' and product.available %}
     {% liquid 
         assign current_variant = product.selected_or_first_available_variant
+        assign color_index = -1
+        for option in product.options_with_values
+            assign option_name = option.name | downcase
+            if option_name == 'farbe' or option_name == 'color' or option_name == 'colour' or option_name == 'couleur' or option_name == 'colore'
+                assign color_index = forloop.index0
+                break
+            endif
+        endfor
         assign product_form_id = 'product-form-' | append: section.id
         assign image = current_variant.image | default: product.featured_image 
         assign img_size = section.settings.img_width | append: 'x' | append: section.settings.img_height
@@ -124,7 +132,7 @@
 
 
 
-    <loopi-sticky-cart id="md-sticky-atc" class="color-{{ section.settings.color_scheme }}" data-offset="{{ section.settings.offset }}">
+    <loopi-sticky-cart id="md-sticky-atc" class="color-{{ section.settings.color_scheme }}" data-offset="{{ section.settings.offset }}" data-color-index="{{ color_index }}">
         <div class="page-width">
             <div class="page-width-inner">
                 <div class="product-content">
@@ -138,7 +146,7 @@
                     {% endif %}
                     <div class="content-wrapper">
                         <h3 class="product__title {{ section.settings.title_size }}">
-                            {{ product.title }}
+                            {{ product.title | split: ':' | first | strip | escape }}
                         </h3>
                         <div class="no-js-hidden" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                             {%- render 'price', product: product, use_variant: true, show_badges: true, price_class: '' -%}
@@ -163,6 +171,7 @@
                                         {% assign variant_image = variant.image | default: product.featured_image %}
                                         <option 
                                             value="{{ variant.id }}"
+                                            data-color="{% if color_index >= 0 %}{{ variant.options[color_index] | escape }}{% endif %}"
                                             data-img="{{ variant_image | image_url: width: 160 }}"
                                             data-price="{{ variant.price | money | escape }}"
                                             data-available="{{ variant.available }}"
