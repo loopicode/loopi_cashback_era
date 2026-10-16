@@ -17,6 +17,13 @@ Skip initialization when the page contains no ticker wrapper. Also stop rotation
 - JavaScript syntax passed.
 - Theme Check passed assets/custom-scripts.js.
 - Five regression cases passed against the actual ticker block: absent wrapper, missing text, moving valid ticker, pointer pause/resume, and non-home page.
-- Browser verification follows the GitHub dev sync.
+- Browser verification completed on 16 October 2026: Shopify read-only API confirmed both guards in the unpublished dev theme file; the fresh Chrome preview loaded custom-scripts.js version 101007179200775894331792086133.
+- After more than 30 seconds, no JavaScript error was captured and no recurring ticker error remained. The homepage still had zero ticker wrappers, reproducing the original trigger.
 
-Other third-party errors will be listed separately after the repeating error no longer fills the console buffer.
+## Remaining warnings
+
+The fresh preview load produced two Meta Pixel warnings, both from connect.facebook.net/en_US/fbevents.js:
+- Duplicate Pixel ID 1274063213027615: review pixel initialization across the tracking manager, GTM and Shopify integration, then keep one intended owner.
+- Pixel unavailable on this website because of traffic permission settings: this occurred on the shopifypreview.com host. Check the real storefront separately before changing production permissions; the warning does not by itself prove that live-store tracking is blocked.
+
+The previously recorded tracking-manager custom-conversion helper error did not appear during this fresh homepage observation. This is a scoped browser observation, not an assertion that all third-party tracking flows are error-free. No analytics configuration or live theme was changed.
