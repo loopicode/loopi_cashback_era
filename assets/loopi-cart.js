@@ -233,6 +233,30 @@
     return operation;
   };
   window.LoopiCart = { navigate, prepare, buildPayload, validateSnapshot, hasSubscription, rentalTerm, fingerprint, accessoryPlan };
+  const feedbackSelector = [
+    '#cart-icon-bubble', 'button[name="add"]', 'button[name="checkout"]',
+    'input[name="checkout"]', '[data-loopi-checkout]', '.shopify-payment-button__button',
+    '[data-loopi-upsell-form] button[type="submit"]',
+    'cart-drawer button', 'cart-remove-button button',
+    'cart-items .quantity__button', 'cart-drawer-items .quantity__button',
+  ].join(', ');
+  const feedbackAnimations = new WeakMap();
+  const pressFeedback = (event) => {
+    if (event.type === 'pointerdown' && (event.button !== 0 || event.isPrimary === false)) return;
+    if (event.type === 'click' && event.detail !== 0) return;
+    const button = event.target.closest(feedbackSelector);
+    if (!button || button.disabled || button.getAttribute('aria-disabled') === 'true' || !button.animate) return;
+    feedbackAnimations.get(button)?.cancel();
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const animation = button.animate(
+      reduced ? [{ opacity: 1 }, { opacity: 0.72 }, { opacity: 1 }]
+        : [{ scale: '1' }, { scale: '0.96', offset: 0.4 }, { scale: '1' }],
+      { duration: 180, easing: 'ease-out' }
+    );
+    feedbackAnimations.set(button, animation);
+  };
+  document.addEventListener('pointerdown', pressFeedback, true);
+  document.addEventListener('click', pressFeedback, true);
   document.addEventListener('click', (event) => {
     const button = event.target.closest('button[name="checkout"], input[name="checkout"], [data-loopi-checkout]');
     if (!button) return;
