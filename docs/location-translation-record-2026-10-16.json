@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-16",
+  "resourceId": "gid://shopify/OnlineStoreTheme/201053864310",
+  "changes": [
+    {
+      "key": "section.sections/header-group.json.1772140546508b67b8.ai_gen_block_442903e_G4qK3t.location_text:7unv6ygwgblx",
+      "locale": "en",
+      "value": "Store in Zug",
+      "translatableContentDigest": "5e46395f53e9d4a5ac8a2ab6cb410599962bf7bd07ccfb612fc9ba775f63279b",
+      "source": "Shop in Zug",
+      "before": null
+    },
+    {
+      "key": "section.sections/header-group.json.1772140546508b67b8.ai_gen_block_442903e_G4qK3t.hours_label:38duji9u85nqo",
+      "locale": "en",
+      "value": "Opening hours",
+      "translatableContentDigest": "cb9b4e4525b530df9022d3052efb370a76a28ce8a54e8e4c18d93b4f1deb8859",
+      "source": "Öffnungszeiten",
+      "before": null
+    },
+    {
+      "key": "section.sections/header-group.json.1772140546508b67b8.ai_gen_block_442903e_G4qK3t.hours_modal_title:55s33q4jlq6a",
+      "locale": "en",
+      "value": "Opening hours",
+      "translatableContentDigest": "cb9b4e4525b530df9022d3052efb370a76a28ce8a54e8e4c18d93b4f1deb8859",
+      "source": "Öffnungszeiten",
+      "before": null
+    }
+  ],
+  "codeCommit": "eafbffa208dbe6c4d1b90547c242df3094d3a839",
+  "verification": "English bar: Store in Zug / Opening hours. English schedule matches unchanged source times. French bar and schedule already current; preserved. Both popup close labels now use accessibility.close; French rendered Fermer. Store popup also verified."
+}
