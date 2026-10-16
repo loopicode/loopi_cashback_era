@@ -3,6 +3,26 @@
 
 {% style %}
   @media screen and (max-width: 989px) {
+    .announcement-bar-section:has(.announcement-bar__language-trigger[aria-expanded='true']) {
+      position: relative;
+      z-index: 6;
+      overflow: visible;
+    }
+    .utility-bar.header-localization .announcement-bar__language-trigger + .language-selector {
+      z-index: 2;
+      margin-top: .4rem;
+      border-radius: 1.2rem;
+      width: max-content;
+      max-width: calc(100vw - 2rem);
+    }
+    .utility-bar.header-localization .announcement-bar__language-trigger + .language-selector .disclosure__list {
+      min-width: min(20rem, calc(100vw - 2rem));
+    }
+    .utility-bar.header-localization .localization-wrapper .announcement-bar__language-trigger::before,
+    .utility-bar.header-localization .localization-wrapper .announcement-bar__language-trigger::after {
+      border-radius: 999px !important;
+      box-shadow: none;
+    }
     .utility-bar.header-localization .utility-bar__grid {
       grid-template-columns: 1fr auto;
       grid-template-areas: 'announcements language-currency';
@@ -47,6 +67,12 @@
        (0,3,0) from component-localization-form.css, which otherwise wins and sets
        height:auto / font-size:1.4rem meant for the desktop header switcher. */
     .utility-bar.header-localization .localization-wrapper .announcement-bar__language-trigger {
+      box-sizing: border-box;
+      border: 1px solid rgba(var(--color-foreground), .25);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .3);
+      min-width: 6.4rem;
+      justify-content: center;
       height: auto;
       min-height: 4.4rem; /* matches Dawn's own 44px touch-target convention */
       padding: 1rem 1.2rem; /* same 1rem top/bottom as .announcement-bar__message, for text alignment */
