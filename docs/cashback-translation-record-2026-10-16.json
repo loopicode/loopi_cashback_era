@@ -1,0 +1,731 @@
+{
+  "date": "2026-10-16",
+  "resourceId": "gid://shopify/OnlineStoreTheme/201053864310",
+  "locales": [
+    "en",
+    "fr"
+  ],
+  "sourceLocale": "de",
+  "entries": [
+    {
+      "key": "section.product.json.main.cashback_rechner.banner_text:2z2hvupw73my3",
+      "locale": "en",
+      "source": "Bis zu CHF [amount] zurück beim Rückverkauf",
+      "sourceDigest": "17af67041cf7c040cdf257e41d0bdcf5bc978faba908a2cde7d2bf7c9c036760",
+      "before": null,
+      "after": "Get up to CHF [amount] back when you sell it back"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.banner_text:2z2hvupw73my3",
+      "locale": "fr",
+      "source": "Bis zu CHF [amount] zurück beim Rückverkauf",
+      "sourceDigest": "17af67041cf7c040cdf257e41d0bdcf5bc978faba908a2cde7d2bf7c9c036760",
+      "before": null,
+      "after": "Jusqu’à CHF [amount] récupérés à la revente"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.button_label:3kq8pamdr0dwy",
+      "locale": "en",
+      "source": "Rückkaufwert berechnen",
+      "sourceDigest": "c18151040559561605da12c6972cfd5255a0851c505f0e6810c6c514d44d97c1",
+      "before": null,
+      "after": "Calculate buyback value"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.button_label:3kq8pamdr0dwy",
+      "locale": "fr",
+      "source": "Rückkaufwert berechnen",
+      "sourceDigest": "c18151040559561605da12c6972cfd5255a0851c505f0e6810c6c514d44d97c1",
+      "before": null,
+      "after": "Calculer la valeur de rachat"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.banner_note:2z2hvupfnxu06",
+      "locale": "en",
+      "source": "Prozentsatz vom Neupreis bei loopi, abhängig von Zustand und Besitzdauer.",
+      "sourceDigest": "2d886cbce9b9687d973e77651fff1b6ffee36fa477c9f7c7517fb0239a126710",
+      "before": null,
+      "after": "Percentage of the new price at loopi, depending on condition and how long you’ve owned it."
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.banner_note:2z2hvupfnxu06",
+      "locale": "fr",
+      "source": "Prozentsatz vom Neupreis bei loopi, abhängig von Zustand und Besitzdauer.",
+      "sourceDigest": "2d886cbce9b9687d973e77651fff1b6ffee36fa477c9f7c7517fb0239a126710",
+      "before": null,
+      "after": "Pourcentage du prix neuf chez loopi, selon l’état du produit et la durée de possession."
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.modal_title:z59nkw8divbd",
+      "locale": "en",
+      "source": "Dein Rückkaufwert",
+      "sourceDigest": "eb8dc86c791cabb4cbcde086f0ad21b1fcc58119fe3af385383105d082419a01",
+      "before": null,
+      "after": "Your buyback value"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.modal_title:z59nkw8divbd",
+      "locale": "fr",
+      "source": "Dein Rückkaufwert",
+      "sourceDigest": "eb8dc86c791cabb4cbcde086f0ad21b1fcc58119fe3af385383105d082419a01",
+      "before": null,
+      "after": "Ta valeur de rachat"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.modal_intro:z59nlgkfb86f",
+      "locale": "en",
+      "source": "Wähle Zustand und Besitzdauer und sieh, was du bei Circular Cashback zurückbekommst.",
+      "sourceDigest": "d4378ee48a868adf8b17aaab0892e883d5ae8209445a12d0d54ec7b33496fa29",
+      "before": null,
+      "after": "Choose the condition and ownership period to see how much you can get back with Circular Cashback."
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.modal_intro:z59nlgkfb86f",
+      "locale": "fr",
+      "source": "Wähle Zustand und Besitzdauer und sieh, was du bei Circular Cashback zurückbekommst.",
+      "sourceDigest": "d4378ee48a868adf8b17aaab0892e883d5ae8209445a12d0d54ec7b33496fa29",
+      "before": null,
+      "after": "Choisis l’état et la durée de possession pour voir combien tu peux récupérer avec Circular Cashback."
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.label_condition:36yhgfghmn7b",
+      "locale": "en",
+      "source": "Zustand bei Rückgabe",
+      "sourceDigest": "b86c269c51a2349700d9568c2983f18c0fcd37a495569de330be354a44a96eda",
+      "before": null,
+      "after": "Condition when returned"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.label_condition:36yhgfghmn7b",
+      "locale": "fr",
+      "source": "Zustand bei Rückgabe",
+      "sourceDigest": "b86c269c51a2349700d9568c2983f18c0fcd37a495569de330be354a44a96eda",
+      "before": null,
+      "after": "État au retour"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.condition_1:1ll396eliuwtc",
+      "locale": "en",
+      "source": "So gut wie neu",
+      "sourceDigest": "6fba9f4089421f79b401aaefe0cb69b92cbb044a3a3aadef63ef02b76f0104a5",
+      "before": null,
+      "after": "Like new"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.condition_1:1ll396eliuwtc",
+      "locale": "fr",
+      "source": "So gut wie neu",
+      "sourceDigest": "6fba9f4089421f79b401aaefe0cb69b92cbb044a3a3aadef63ef02b76f0104a5",
+      "before": null,
+      "after": "Comme neuf"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.condition_2:1ll396eliusrn",
+      "locale": "en",
+      "source": "Leichte Gebrauchsspuren",
+      "sourceDigest": "52495a06edb645722977daaf774ba61ac103480795a5cf00ba8d81b6a855a5ea",
+      "before": null,
+      "after": "Light signs of use"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.condition_2:1ll396eliusrn",
+      "locale": "fr",
+      "source": "Leichte Gebrauchsspuren",
+      "sourceDigest": "52495a06edb645722977daaf774ba61ac103480795a5cf00ba8d81b6a855a5ea",
+      "before": null,
+      "after": "Légères traces d’usage"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.condition_3:1ll396eliuv8i",
+      "locale": "en",
+      "source": "Deutliche Gebrauchsspuren",
+      "sourceDigest": "47a9223ed805727863c136499263864fddac8789b50a8c78f05207e4fa60470a",
+      "before": null,
+      "after": "Clear signs of use"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.condition_3:1ll396eliuv8i",
+      "locale": "fr",
+      "source": "Deutliche Gebrauchsspuren",
+      "sourceDigest": "47a9223ed805727863c136499263864fddac8789b50a8c78f05207e4fa60470a",
+      "before": null,
+      "after": "Traces d’usage visibles"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.condition_help:bu6me5axqog0",
+      "locale": "en",
+      "source": "Prüfe das Produkt zuhause genau. Frag dich: Würdest du es guten Gewissens selbst als Secondhand kaufen?",
+      "sourceDigest": "5b3a8ddae306a2f85cbbe3aa11bbbd6a0f4dc540b09a80027ec07dd66feb7977",
+      "before": null,
+      "after": "Inspect the product carefully at home. Ask yourself: would you feel comfortable buying it second-hand?"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.condition_help:bu6me5axqog0",
+      "locale": "fr",
+      "source": "Prüfe das Produkt zuhause genau. Frag dich: Würdest du es guten Gewissens selbst als Secondhand kaufen?",
+      "sourceDigest": "5b3a8ddae306a2f85cbbe3aa11bbbd6a0f4dc540b09a80027ec07dd66feb7977",
+      "before": null,
+      "after": "Examine soigneusement le produit chez toi. Pose-toi la question : l’achèterais-tu toi-même d’occasion en toute confiance ?"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.label_duration:8ldcg01n0xi2",
+      "locale": "en",
+      "source": "Besitzdauer",
+      "sourceDigest": "05ae3bfe5f3835d3be0ac2537359fe0c3ff9a982b846d0bd3bdc376a0e64ec08",
+      "before": null,
+      "after": "Ownership period"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.label_duration:8ldcg01n0xi2",
+      "locale": "fr",
+      "source": "Besitzdauer",
+      "sourceDigest": "05ae3bfe5f3835d3be0ac2537359fe0c3ff9a982b846d0bd3bdc376a0e64ec08",
+      "before": null,
+      "after": "Durée de possession"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.duration_1:35c7j81bh8obx",
+      "locale": "en",
+      "source": "6 Monate",
+      "sourceDigest": "db6c516e41a359086fe089b2985a971b3034ab7106ce71866a87eb3e10cb6ac9",
+      "before": null,
+      "after": "6 months"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.duration_1:35c7j81bh8obx",
+      "locale": "fr",
+      "source": "6 Monate",
+      "sourceDigest": "db6c516e41a359086fe089b2985a971b3034ab7106ce71866a87eb3e10cb6ac9",
+      "before": null,
+      "after": "6 mois"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.duration_2:35c7j81bh8p7y",
+      "locale": "en",
+      "source": "12 Monate",
+      "sourceDigest": "fa58a27790d05511012a8a2098a648a328d3c8ff25241a672a247a6d4dbff97d",
+      "before": null,
+      "after": "12 months"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.duration_2:35c7j81bh8p7y",
+      "locale": "fr",
+      "source": "12 Monate",
+      "sourceDigest": "fa58a27790d05511012a8a2098a648a328d3c8ff25241a672a247a6d4dbff97d",
+      "before": null,
+      "after": "12 mois"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.duration_3:35c7j81bh8mr3",
+      "locale": "en",
+      "source": "24 Monate",
+      "sourceDigest": "f2dd8c21858fe0ec1bd4d5252ddd72c7167db57f2fc89137e7afb89bfad900bf",
+      "before": null,
+      "after": "24 months"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.duration_3:35c7j81bh8mr3",
+      "locale": "fr",
+      "source": "24 Monate",
+      "sourceDigest": "f2dd8c21858fe0ec1bd4d5252ddd72c7167db57f2fc89137e7afb89bfad900bf",
+      "before": null,
+      "after": "24 mois"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.result_price:xq7ti20mxpqe",
+      "locale": "en",
+      "source": "Neupreis bei loopi",
+      "sourceDigest": "1c1166d57128c79afd5e975be317b95bd703ede88534913f5d45f5cb34ad3de7",
+      "before": null,
+      "after": "New price at loopi"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.result_price:xq7ti20mxpqe",
+      "locale": "fr",
+      "source": "Neupreis bei loopi",
+      "sourceDigest": "1c1166d57128c79afd5e975be317b95bd703ede88534913f5d45f5cb34ad3de7",
+      "before": null,
+      "after": "Prix neuf chez loopi"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.result_refund:3nzfufayn64sl",
+      "locale": "en",
+      "source": "Rückkaufwert",
+      "sourceDigest": "604b94af3cef5eb987bfc3d070853b5150f41b8ad1a8e64a3e03c59f3038ca7c",
+      "before": null,
+      "after": "Buyback value"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.result_refund:3nzfufayn64sl",
+      "locale": "fr",
+      "source": "Rückkaufwert",
+      "sourceDigest": "604b94af3cef5eb987bfc3d070853b5150f41b8ad1a8e64a3e03c59f3038ca7c",
+      "before": null,
+      "after": "Valeur de rachat"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.result_net:37llbs9h3fuqc",
+      "locale": "en",
+      "source": "Nutzungspreis nach [months] Monaten",
+      "sourceDigest": "6bb103d90dc0338ae6d31d336ffa18120212dbfbf1d57dd75ececcd2d68144ad",
+      "before": null,
+      "after": "Cost of use after [months] months"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.result_net:37llbs9h3fuqc",
+      "locale": "fr",
+      "source": "Nutzungspreis nach [months] Monaten",
+      "sourceDigest": "6bb103d90dc0338ae6d31d336ffa18120212dbfbf1d57dd75ececcd2d68144ad",
+      "before": null,
+      "after": "Coût d’utilisation après [months] mois"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.promo_note:39ks85yzh0hod",
+      "locale": "en",
+      "source": "Erhöhte Werte der Einführungsaktion für Käufe bis [date].",
+      "sourceDigest": "fa79baa8f96cdef6f6495cddf94b8cfde375316ac915398d08cc60a41cb658a0",
+      "before": null,
+      "after": "Higher launch-offer values for purchases made by [date]."
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.promo_note:39ks85yzh0hod",
+      "locale": "fr",
+      "source": "Erhöhte Werte der Einführungsaktion für Käufe bis [date].",
+      "sourceDigest": "fa79baa8f96cdef6f6495cddf94b8cfde375316ac915398d08cc60a41cb658a0",
+      "before": null,
+      "after": "Valeurs majorées de l’offre de lancement pour les achats effectués jusqu’au [date]."
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.disclaimer:35ayb27yj7p8e",
+      "locale": "en",
+      "source": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi. Der konkrete Betrag wird nach der Prüfung bestätigt.",
+      "sourceDigest": "6af3ac7d67b42552a3e2bc53e3c83db53e49e5a07f38497f6f9910814f4d9b10",
+      "before": null,
+      "after": "The percentages are binding and refer to the new price at loopi. The exact amount is confirmed after inspection."
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.disclaimer:35ayb27yj7p8e",
+      "locale": "fr",
+      "source": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi. Der konkrete Betrag wird nach der Prüfung bestätigt.",
+      "sourceDigest": "6af3ac7d67b42552a3e2bc53e3c83db53e49e5a07f38497f6f9910814f4d9b10",
+      "before": null,
+      "after": "Les pourcentages sont contraignants et se rapportent au prix neuf chez loopi. Le montant exact est confirmé après inspection."
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.back_label:31exqzsa1jxin",
+      "locale": "en",
+      "source": "Zurück zum Produkt",
+      "sourceDigest": "eab2d68b8899635c835559256f40877b8a9506ba34870450f76358d30167ad22",
+      "before": null,
+      "after": "Back to product"
+    },
+    {
+      "key": "section.product.json.main.cashback_rechner.back_label:31exqzsa1jxin",
+      "locale": "fr",
+      "source": "Zurück zum Produkt",
+      "sourceDigest": "eab2d68b8899635c835559256f40877b8a9506ba34870450f76358d30167ad22",
+      "before": null,
+      "after": "Retour au produit"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_9NKgmY.cb_table_corner:1gp6pd3k23gtb",
+      "locale": "en",
+      "source": "Zustand / Besitzdauer",
+      "sourceDigest": "4a5b1719a253fdbdb7263ae50dc1103dfb53750da9c582251d07c9f1b4d6d54e",
+      "before": null,
+      "after": "Condition / Ownership period"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_9NKgmY.cb_table_corner:1gp6pd3k23gtb",
+      "locale": "fr",
+      "source": "Zustand / Besitzdauer",
+      "sourceDigest": "4a5b1719a253fdbdb7263ae50dc1103dfb53750da9c582251d07c9f1b4d6d54e",
+      "before": null,
+      "after": "État / Durée de possession"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_9NKgmY.cb_table_cols:80zoif3ny357",
+      "locale": "en",
+      "source": "6 Monate|12 Monate|24 Monate",
+      "sourceDigest": "fe5dcb4b0d453eb8b3bf2d9ade93658f79c2477545822695d8bf87aaa1ed24f7",
+      "before": null,
+      "after": "6 months|12 months|24 months"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_9NKgmY.cb_table_cols:80zoif3ny357",
+      "locale": "fr",
+      "source": "6 Monate|12 Monate|24 Monate",
+      "sourceDigest": "fe5dcb4b0d453eb8b3bf2d9ade93658f79c2477545822695d8bf87aaa1ed24f7",
+      "before": null,
+      "after": "6 mois|12 mois|24 mois"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_9NKgmY.cb_table_rows:80zoifdfzy3l",
+      "locale": "en",
+      "source": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+      "sourceDigest": "234856a93744212723d0e7332e8722af7772fb4fc3c1633381277e1aa31655c8",
+      "before": null,
+      "after": "Like new|Light signs of use|Clear signs of use"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_9NKgmY.cb_table_rows:80zoifdfzy3l",
+      "locale": "fr",
+      "source": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+      "sourceDigest": "234856a93744212723d0e7332e8722af7772fb4fc3c1633381277e1aa31655c8",
+      "before": null,
+      "after": "Comme neuf|Légères traces d’usage|Traces d’usage visibles"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_9NKgmY.cb_table_promo:3grbfuzllqipj",
+      "locale": "en",
+      "source": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+      "sourceDigest": "cca85a40fc8e3cfb783e0b677afada03a1ecac69eaaa4e813f5159524894b6c4",
+      "before": null,
+      "after": "The highlighted values apply to all purchases made by [date], even if you return the product later."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_9NKgmY.cb_table_promo:3grbfuzllqipj",
+      "locale": "fr",
+      "source": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+      "sourceDigest": "cca85a40fc8e3cfb783e0b677afada03a1ecac69eaaa4e813f5159524894b6c4",
+      "before": null,
+      "after": "Les valeurs mises en évidence s’appliquent à tous les achats effectués jusqu’au [date], même si tu rends le produit plus tard."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_9NKgmY.cb_table_note:80zoif5j8e6g",
+      "locale": "en",
+      "source": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt.",
+      "sourceDigest": "0d888751d1cc40929d6aa4edc877786387d6ee9a03e381ad69969479030c97f7",
+      "before": null,
+      "after": "The percentages are binding and refer to the new price at loopi (CHF [price]). The exact amount is confirmed after inspection."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_9NKgmY.cb_table_note:80zoif5j8e6g",
+      "locale": "fr",
+      "source": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt.",
+      "sourceDigest": "0d888751d1cc40929d6aa4edc877786387d6ee9a03e381ad69969479030c97f7",
+      "before": null,
+      "after": "Les pourcentages sont contraignants et se rapportent au prix neuf chez loopi (CHF [price]). Le montant exact est confirmé après inspection."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_V3mBjK.cb_table_corner:34i2epejhcqor",
+      "locale": "en",
+      "source": "Zustand / Besitzdauer",
+      "sourceDigest": "4a5b1719a253fdbdb7263ae50dc1103dfb53750da9c582251d07c9f1b4d6d54e",
+      "before": null,
+      "after": "Condition / Ownership period"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_V3mBjK.cb_table_corner:34i2epejhcqor",
+      "locale": "fr",
+      "source": "Zustand / Besitzdauer",
+      "sourceDigest": "4a5b1719a253fdbdb7263ae50dc1103dfb53750da9c582251d07c9f1b4d6d54e",
+      "before": null,
+      "after": "État / Durée de possession"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_V3mBjK.cb_table_cols:2ps7atahfk1wv",
+      "locale": "en",
+      "source": "6 Monate|12 Monate|24 Monate",
+      "sourceDigest": "fe5dcb4b0d453eb8b3bf2d9ade93658f79c2477545822695d8bf87aaa1ed24f7",
+      "before": null,
+      "after": "6 months|12 months|24 months"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_V3mBjK.cb_table_cols:2ps7atahfk1wv",
+      "locale": "fr",
+      "source": "6 Monate|12 Monate|24 Monate",
+      "sourceDigest": "fe5dcb4b0d453eb8b3bf2d9ade93658f79c2477545822695d8bf87aaa1ed24f7",
+      "before": null,
+      "after": "6 mois|12 mois|24 mois"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_V3mBjK.cb_table_rows:2ps7atar24q79",
+      "locale": "en",
+      "source": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+      "sourceDigest": "234856a93744212723d0e7332e8722af7772fb4fc3c1633381277e1aa31655c8",
+      "before": null,
+      "after": "Like new|Light signs of use|Clear signs of use"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_V3mBjK.cb_table_rows:2ps7atar24q79",
+      "locale": "fr",
+      "source": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+      "sourceDigest": "234856a93744212723d0e7332e8722af7772fb4fc3c1633381277e1aa31655c8",
+      "before": null,
+      "after": "Comme neuf|Légères traces d’usage|Traces d’usage visibles"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_V3mBjK.cb_table_promo:3eq96jsse0s3",
+      "locale": "en",
+      "source": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+      "sourceDigest": "cca85a40fc8e3cfb783e0b677afada03a1ecac69eaaa4e813f5159524894b6c4",
+      "before": null,
+      "after": "The highlighted values apply to all purchases made by [date], even if you return the product later."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_V3mBjK.cb_table_promo:3eq96jsse0s3",
+      "locale": "fr",
+      "source": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+      "sourceDigest": "cca85a40fc8e3cfb783e0b677afada03a1ecac69eaaa4e813f5159524894b6c4",
+      "before": null,
+      "after": "Les valeurs mises en évidence s’appliquent à tous les achats effectués jusqu’au [date], même si tu rends le produit plus tard."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_V3mBjK.cb_table_note:2ps7atao0t2q4",
+      "locale": "en",
+      "source": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt.",
+      "sourceDigest": "0d888751d1cc40929d6aa4edc877786387d6ee9a03e381ad69969479030c97f7",
+      "before": null,
+      "after": "The percentages are binding and refer to the new price at loopi (CHF [price]). The exact amount is confirmed after inspection."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_V3mBjK.cb_table_note:2ps7atao0t2q4",
+      "locale": "fr",
+      "source": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt.",
+      "sourceDigest": "0d888751d1cc40929d6aa4edc877786387d6ee9a03e381ad69969479030c97f7",
+      "before": null,
+      "after": "Les pourcentages sont contraignants et se rapportent au prix neuf chez loopi (CHF [price]). Le montant exact est confirmé après inspection."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_inExJw.cb_table_corner:3oeum28797yqf",
+      "locale": "en",
+      "source": "Zustand / Besitzdauer",
+      "sourceDigest": "4a5b1719a253fdbdb7263ae50dc1103dfb53750da9c582251d07c9f1b4d6d54e",
+      "before": null,
+      "after": "Condition / Ownership period"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_inExJw.cb_table_corner:3oeum28797yqf",
+      "locale": "fr",
+      "source": "Zustand / Besitzdauer",
+      "sourceDigest": "4a5b1719a253fdbdb7263ae50dc1103dfb53750da9c582251d07c9f1b4d6d54e",
+      "before": null,
+      "after": "État / Durée de possession"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_inExJw.cb_table_cols:32a9lmf78jggz",
+      "locale": "en",
+      "source": "6 Monate|12 Monate|24 Monate",
+      "sourceDigest": "fe5dcb4b0d453eb8b3bf2d9ade93658f79c2477545822695d8bf87aaa1ed24f7",
+      "before": null,
+      "after": "6 months|12 months|24 months"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_inExJw.cb_table_cols:32a9lmf78jggz",
+      "locale": "fr",
+      "source": "6 Monate|12 Monate|24 Monate",
+      "sourceDigest": "fe5dcb4b0d453eb8b3bf2d9ade93658f79c2477545822695d8bf87aaa1ed24f7",
+      "before": null,
+      "after": "6 mois|12 mois|24 mois"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_inExJw.cb_table_rows:32a9lmfgurt49",
+      "locale": "en",
+      "source": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+      "sourceDigest": "234856a93744212723d0e7332e8722af7772fb4fc3c1633381277e1aa31655c8",
+      "before": null,
+      "after": "Like new|Light signs of use|Clear signs of use"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_inExJw.cb_table_rows:32a9lmfgurt49",
+      "locale": "fr",
+      "source": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+      "sourceDigest": "234856a93744212723d0e7332e8722af7772fb4fc3c1633381277e1aa31655c8",
+      "before": null,
+      "after": "Comme neuf|Légères traces d’usage|Traces d’usage visibles"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_inExJw.cb_table_promo:3ro23trip2o3j",
+      "locale": "en",
+      "source": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+      "sourceDigest": "cca85a40fc8e3cfb783e0b677afada03a1ecac69eaaa4e813f5159524894b6c4",
+      "before": null,
+      "after": "The highlighted values apply to all purchases made by [date], even if you return the product later."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_inExJw.cb_table_promo:3ro23trip2o3j",
+      "locale": "fr",
+      "source": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+      "sourceDigest": "cca85a40fc8e3cfb783e0b677afada03a1ecac69eaaa4e813f5159524894b6c4",
+      "before": null,
+      "after": "Les valeurs mises en évidence s’appliquent à tous les achats effectués jusqu’au [date], même si tu rends le produit plus tard."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_inExJw.cb_table_note:32a9lmez7sq68",
+      "locale": "en",
+      "source": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt.",
+      "sourceDigest": "0d888751d1cc40929d6aa4edc877786387d6ee9a03e381ad69969479030c97f7",
+      "before": null,
+      "after": "The percentages are binding and refer to the new price at loopi (CHF [price]). The exact amount is confirmed after inspection."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_inExJw.cb_table_note:32a9lmez7sq68",
+      "locale": "fr",
+      "source": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt.",
+      "sourceDigest": "0d888751d1cc40929d6aa4edc877786387d6ee9a03e381ad69969479030c97f7",
+      "before": null,
+      "after": "Les pourcentages sont contraignants et se rapportent au prix neuf chez loopi (CHF [price]). Le montant exact est confirmé après inspection."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_YX94fi.cb_table_corner:1hb34v1sg61ar",
+      "locale": "en",
+      "source": "Zustand / Besitzdauer",
+      "sourceDigest": "4a5b1719a253fdbdb7263ae50dc1103dfb53750da9c582251d07c9f1b4d6d54e",
+      "before": null,
+      "after": "Condition / Ownership period"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_YX94fi.cb_table_corner:1hb34v1sg61ar",
+      "locale": "fr",
+      "source": "Zustand / Besitzdauer",
+      "sourceDigest": "4a5b1719a253fdbdb7263ae50dc1103dfb53750da9c582251d07c9f1b4d6d54e",
+      "before": null,
+      "after": "État / Durée de possession"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_YX94fi.cb_table_cols:mba2ds7pb5pj",
+      "locale": "en",
+      "source": "6 Monate|12 Monate|24 Monate",
+      "sourceDigest": "fe5dcb4b0d453eb8b3bf2d9ade93658f79c2477545822695d8bf87aaa1ed24f7",
+      "before": null,
+      "after": "6 months|12 months|24 months"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_YX94fi.cb_table_cols:mba2ds7pb5pj",
+      "locale": "fr",
+      "source": "6 Monate|12 Monate|24 Monate",
+      "sourceDigest": "fe5dcb4b0d453eb8b3bf2d9ade93658f79c2477545822695d8bf87aaa1ed24f7",
+      "before": null,
+      "after": "6 mois|12 mois|24 mois"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_YX94fi.cb_table_rows:mba2dshbjict",
+      "locale": "en",
+      "source": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+      "sourceDigest": "234856a93744212723d0e7332e8722af7772fb4fc3c1633381277e1aa31655c8",
+      "before": null,
+      "after": "Like new|Light signs of use|Clear signs of use"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_YX94fi.cb_table_rows:mba2dshbjict",
+      "locale": "fr",
+      "source": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+      "sourceDigest": "234856a93744212723d0e7332e8722af7772fb4fc3c1633381277e1aa31655c8",
+      "before": null,
+      "after": "Comme neuf|Légères traces d’usage|Traces d’usage visibles"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_YX94fi.cb_table_promo:zla1hw7v0dx7",
+      "locale": "en",
+      "source": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+      "sourceDigest": "cca85a40fc8e3cfb783e0b677afada03a1ecac69eaaa4e813f5159524894b6c4",
+      "before": null,
+      "after": "The highlighted values apply to all purchases made by [date], even if you return the product later."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_YX94fi.cb_table_promo:zla1hw7v0dx7",
+      "locale": "fr",
+      "source": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+      "sourceDigest": "cca85a40fc8e3cfb783e0b677afada03a1ecac69eaaa4e813f5159524894b6c4",
+      "before": null,
+      "after": "Les valeurs mises en évidence s’appliquent à tous les achats effectués jusqu’au [date], même si tu rends le produit plus tard."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_YX94fi.cb_table_note:mba2ds4k0bus",
+      "locale": "en",
+      "source": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt.",
+      "sourceDigest": "0d888751d1cc40929d6aa4edc877786387d6ee9a03e381ad69969479030c97f7",
+      "before": null,
+      "after": "The percentages are binding and refer to the new price at loopi (CHF [price]). The exact amount is confirmed after inspection."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_YX94fi.cb_table_note:mba2ds4k0bus",
+      "locale": "fr",
+      "source": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt.",
+      "sourceDigest": "0d888751d1cc40929d6aa4edc877786387d6ee9a03e381ad69969479030c97f7",
+      "before": null,
+      "after": "Les pourcentages sont contraignants et se rapportent au prix neuf chez loopi (CHF [price]). Le montant exact est confirmé après inspection."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_BaAgca.cb_table_corner:3mpatuvwjiatz",
+      "locale": "en",
+      "source": "Zustand / Besitzdauer",
+      "sourceDigest": "4a5b1719a253fdbdb7263ae50dc1103dfb53750da9c582251d07c9f1b4d6d54e",
+      "before": null,
+      "after": "Condition / Ownership period"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_BaAgca.cb_table_corner:3mpatuvwjiatz",
+      "locale": "fr",
+      "source": "Zustand / Besitzdauer",
+      "sourceDigest": "4a5b1719a253fdbdb7263ae50dc1103dfb53750da9c582251d07c9f1b4d6d54e",
+      "before": null,
+      "after": "État / Durée de possession"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_BaAgca.cb_table_cols:3hc9yrjy9r943",
+      "locale": "en",
+      "source": "6 Monate|12 Monate|24 Monate",
+      "sourceDigest": "fe5dcb4b0d453eb8b3bf2d9ade93658f79c2477545822695d8bf87aaa1ed24f7",
+      "before": null,
+      "after": "6 months|12 months|24 months"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_BaAgca.cb_table_cols:3hc9yrjy9r943",
+      "locale": "fr",
+      "source": "6 Monate|12 Monate|24 Monate",
+      "sourceDigest": "fe5dcb4b0d453eb8b3bf2d9ade93658f79c2477545822695d8bf87aaa1ed24f7",
+      "before": null,
+      "after": "6 mois|12 mois|24 mois"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_BaAgca.cb_table_rows:3hc9yrk81gsfd",
+      "locale": "en",
+      "source": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+      "sourceDigest": "234856a93744212723d0e7332e8722af7772fb4fc3c1633381277e1aa31655c8",
+      "before": null,
+      "after": "Like new|Light signs of use|Clear signs of use"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_BaAgca.cb_table_rows:3hc9yrk81gsfd",
+      "locale": "fr",
+      "source": "So gut wie neu|Leichte Gebrauchsspuren|Deutliche Gebrauchsspuren",
+      "sourceDigest": "234856a93744212723d0e7332e8722af7772fb4fc3c1633381277e1aa31655c8",
+      "before": null,
+      "after": "Comme neuf|Légères traces d’usage|Traces d’usage visibles"
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_BaAgca.cb_table_promo:1zwu1er5lvf7j",
+      "locale": "en",
+      "source": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+      "sourceDigest": "cca85a40fc8e3cfb783e0b677afada03a1ecac69eaaa4e813f5159524894b6c4",
+      "before": null,
+      "after": "The highlighted values apply to all purchases made by [date], even if you return the product later."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_BaAgca.cb_table_promo:1zwu1er5lvf7j",
+      "locale": "fr",
+      "source": "Die hervorgehobenen Werte gelten für alle Käufe bis zum [date], auch wenn du das Produkt erst später zurückgibst.",
+      "sourceDigest": "cca85a40fc8e3cfb783e0b677afada03a1ecac69eaaa4e813f5159524894b6c4",
+      "before": null,
+      "after": "Les valeurs mises en évidence s’appliquent à tous les achats effectués jusqu’au [date], même si tu rends le produit plus tard."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_BaAgca.cb_table_note:3hc9yrjqehphc",
+      "locale": "en",
+      "source": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt.",
+      "sourceDigest": "0d888751d1cc40929d6aa4edc877786387d6ee9a03e381ad69969479030c97f7",
+      "before": null,
+      "after": "The percentages are binding and refer to the new price at loopi (CHF [price]). The exact amount is confirmed after inspection."
+    },
+    {
+      "key": "section.product.json.collapsible_content_Bdt4g4.collapsible_row_BaAgca.cb_table_note:3hc9yrjqehphc",
+      "locale": "fr",
+      "source": "Die Prozentsätze sind verbindlich und beziehen sich auf den Neupreis bei loopi (CHF [price]). Der konkrete Betrag wird nach der Prüfung bestätigt.",
+      "sourceDigest": "0d888751d1cc40929d6aa4edc877786387d6ee9a03e381ad69969479030c97f7",
+      "before": null,
+      "after": "Les pourcentages sont contraignants et se rapportent au prix neuf chez loopi (CHF [price]). Le montant exact est confirmé après inspection."
+    }
+  ]
+}
