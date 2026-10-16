@@ -331,6 +331,10 @@
             const summary = document.createElement('summary');
             summary.textContent = data.messages.more;
             more.append(summary);
+            more.addEventListener('toggle', () => {
+              if (!more.open || !this.closest('.drawer__footer')) return;
+              this.scrollTop += more.getBoundingClientRect().top - this.getBoundingClientRect().top;
+            }, { signal: this.controller.signal });
             list.append(more);
           }
           more.append(article);

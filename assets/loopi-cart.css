@@ -29,4 +29,9 @@ loopi-sticky-cart { display: block; }
 [data-loopi-checkout-busy] { cursor: progress; }
 .drawer__footer .loopi-cart-upsells { max-height: min(26vh, 22rem); overflow-y: auto; overscroll-behavior: contain; }
 
-.loopi-upsell-more summary { padding: 1rem .2rem; min-height: 44px; cursor: pointer; font-weight: 600; }
+.drawer__footer .loopi-cart-upsells:has(.loopi-upsell-more[open]) { max-height: min(45vh, 36rem); }
+.loopi-upsell-more summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem .2rem; min-height: 44px; cursor: pointer; font-weight: 600; list-style: none; }
+.loopi-upsell-more summary::-webkit-details-marker { display: none; }
+.loopi-upsell-more summary::after { content: '+'; flex-shrink: 0; font-size: 2rem; line-height: 1; }
+.loopi-upsell-more[open] summary::after { content: '−'; }
+.loopi-upsell-more summary:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
