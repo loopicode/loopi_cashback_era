@@ -1,13 +1,13 @@
 {%- comment -%}
   loopi-image: Bild-Ausgabe mit Icon-Schutz.
   Gibt Dateien namens loopi-icon-*.svg als Inline-SVG (scharf, zentriert) aus. Alle anderen Bilder laufen normal als <img>.
-  Parameter: image (Pflicht, image_picker-Wert), width (z. B. '100px' oder '100%', Standard 100px), alt, color (nur Icons, Standard #97A74D = brand-green)
+  Parameter: image (Pflicht, image_picker-Wert), width (z. B. '100px' oder '100%', Standard 100px), alt, color (nur Icons, Standard #D6DBB9 = brand-green)
   Nutzung: {% render 'loopi-image', image: block.settings.image, width: '100px' %}
 {%- endcomment -%}
 {%- liquid
   assign li_file = image.src | split: '/' | last | split: '?' | first
   assign li_width = width | default: '100px'
-  assign li_color = color | default: '#97A74D'
+  assign li_color = color | default: '#D6DBB9'
 -%}
 {%- if li_file contains 'loopi-icon-' -%}
   {%- style -%}

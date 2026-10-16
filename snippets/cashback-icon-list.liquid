@@ -11,13 +11,13 @@
   .cb-il--align-center .cb-il__item { align-items: center; text-align: center; }
   .cb-il--align-right .cb-il__item { align-items: flex-end; text-align: right; }
   .cb-il--left .cb-il__item { flex-direction: row; align-items: flex-start; text-align: left; gap: 2rem; }
-  .cb-il__icon { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; width: var(--cb-il-icon, 100px); height: var(--cb-il-icon, 100px); color: var(--cb-il-color, #97A74D); }
+  .cb-il__icon { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; width: var(--cb-il-icon, 100px); height: var(--cb-il-icon, 100px); color: var(--cb-il-color, #D6DBB9); }
   .cb-il__icon img, .cb-il__icon svg { display: block; width: 100%; height: 100%; object-fit: contain; }
   .cb-il__text { min-width: 0; }
   .cb-il__title { margin: 0; }
   .cb-il__body { margin: 0.8rem 0 0; }
 {%- endstylesheet -%}
-<ul class="cb-il cb-il--{{ icon_position | default: 'top' }} cb-il--align-{{ align | default: 'center' }}" style="--cb-il-cols: {{ columns | default: 4 }}; --cb-il-icon: {{ icon_size | default: 100 }}px; --cb-il-color: {{ icon_color | default: '#97A74D' }};" role="list">
+<ul class="cb-il cb-il--{{ icon_position | default: 'top' }} cb-il--align-{{ align | default: 'center' }}" style="--cb-il-cols: {{ columns | default: 4 }}; --cb-il-icon: {{ icon_size | default: 100 }}px; --cb-il-color: {{ icon_color | default: '#D6DBB9' }};" role="list">
   {%- for block in blocks -%}
     <li class="cb-il__item" {{ block.shopify_attributes }}>
       <div class="cb-il__icon">

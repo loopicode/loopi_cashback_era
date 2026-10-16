@@ -111,7 +111,7 @@ slideshow-component .slideshow.banner {
 
 @media screen and (max-width: 749px) {
   .slideshow__controls {
-    background: #D6DBB9 !important;
+    background: var(--loopi-brand-green, #D6DBB9) !important;
     border-color: rgba(255, 255, 255, 0.15) !important;
   }
   .slideshow__controls--border-radius-mobile {

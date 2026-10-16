@@ -3,7 +3,7 @@
 :root {
     --page-width: unset !important;
     --color-primary: #F47045;
-    --color-secondary: #97A74D;
+    --color-secondary: var(--loopi-brand-green, #D6DBB9);
     --color-tertiary: #5C6B4D;
     --color-pink: #E7D1C6;
     --color-light-green: #D9DDCF;

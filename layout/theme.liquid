@@ -137,6 +137,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {{ body_font_bold_italic | font_face: font_display: 'swap' }}
         {{ settings.type_header_font | font_face: font_display: 'swap' }}
   
+        :root {
+          --loopi-brand-green: {{ settings.color_schemes['scheme-5'].settings.background | default: '#D6DBB9' }};
+        }
         {% for scheme in settings.color_schemes -%}
           {% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
           {% if forloop.index == 1 -%}

@@ -1,5 +1,5 @@
 /* loopi Typografie-Standard v2 (2026-10-10). Vorerst von den Cashback-Sections genutzt, dazu Kern-Ueberschriften nur auf der Cashback-Seite. Gilt spaeter sitewide (nach Freigabe). */
-:root { --lp-green: #97A74D; --lp-green-dark: #5C6B4D; --lp-green-tint: #F0F2E6; --lp-grey: #646464; --lp-whatsapp: #25D366; }
+:root { --lp-green: var(--loopi-brand-green, #D6DBB9); --lp-green-dark: #5C6B4D; --lp-green-tint: #F0F2E6; --lp-grey: #646464; --lp-whatsapp: #25D366; }
 
 /* H1 = Seitentitel (einmal pro Seite). Untertitel nach dem Doppelpunkt in .lp-h1__sub */
 .lp-h1.lp-h1 { font-size: var(--lp-size, 44px) !important; font-weight: 700 !important; line-height: 1.2 !important; letter-spacing: 0 !important; margin: 0 !important; }
